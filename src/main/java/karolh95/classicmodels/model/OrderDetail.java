@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,10 +32,12 @@ public class OrderDetail {
 	private short orderLineNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "orderNumber", insertable = false, updatable = false, nullable = false)
+	@MapsId("customerNumber")
+	@JoinColumn(name = "orderNumber")
 	private Order order;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "productCode", insertable = false, updatable = false, nullable = false)
+	@MapsId("productCode")
+	@JoinColumn(name = "productCode")
 	private Product product;
 }

@@ -3,6 +3,7 @@ package karolh95.classicmodels.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -24,9 +25,6 @@ import lombok.Setter;
 @Entity(name = "customers")
 public class Customer{
 
-	// private static final long serialVersionUID = 5564889128257479563L;
-
-	// @Column(unique = true)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long customerNumber;
@@ -58,7 +56,7 @@ public class Customer{
 	@OneToMany(mappedBy = "customer")
 	private List<Order> orders;
 
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Payment> payments;
 
 	public Order addOrder(Order order) {

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Payment {
 	private BigDecimal amount;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customerNumber", insertable = false, updatable = false, nullable = false)
+	@MapsId("customerNumber")
+	@JoinColumn(name = "customerNumber")
 	private Customer customer;
 }

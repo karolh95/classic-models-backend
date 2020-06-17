@@ -3,6 +3,7 @@ package karolh95.classicmodels.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,7 +53,7 @@ public class Product {
 
 	// Mappings
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<OrderDetail> orderDetails;
 
 	public OrderDetail addOrderDetail(OrderDetail orderDetail) {
