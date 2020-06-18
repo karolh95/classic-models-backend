@@ -1,6 +1,7 @@
 package karolh95.classicmodels.dto;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DTOOrderDetail {
+public class DtoPayment {
 	
-	private Long orderNumber;
-	private String productCode;
-	private int quantityOrdered;
-	private BigDecimal priceEach;
-	private short orderLineNumber;
+	private Long customerNumber;
+	private String checkNumber;
+	private Date paymentDate;
+	private BigDecimal amount;
 }

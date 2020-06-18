@@ -7,10 +7,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DTOOffice {
+public class DtoOffice {
 	
 	private String officeCode;
-	private DTOAddress address;
+	private DtoAddress address;
 	private String postalCode;
 	private String territory;
 }

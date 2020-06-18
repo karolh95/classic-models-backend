@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import karolh95.classicmodels.dto.DTOOrder;
+import karolh95.classicmodels.dto.DtoOrder;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.repository.OrderRepository;
@@ -33,7 +33,7 @@ public class OrderMapperTests {
 		assertTrue(optional.isPresent(), "Order should exist");
 
 		Order order = optional.get();
-		DTOOrder dto = this.mapper.orderToDto(order);
+		DtoOrder dto = this.mapper.orderToDto(order);
 
 		assertEquals(order.getOrderNumber(), dto.getOrderNumber(), "Order number should match");
 		assertEquals(order.getOrderDate(), dto.getOrderDate(), "Order date should match");

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import karolh95.classicmodels.dto.DTOProductline;
+import karolh95.classicmodels.dto.DtoProductline;
 import karolh95.classicmodels.mapper.ProductlineMapper;
 import karolh95.classicmodels.model.Productline;
 import karolh95.classicmodels.repository.ProductlineRepository;
@@ -34,7 +34,7 @@ public class ProductlineMapperTests {
 		assertTrue(optional.isPresent(), "Productline should exist");
 
 		Productline productline = optional.get();
-		DTOProductline dto = this.mapper.productlineToDto(productline);
+		DtoProductline dto = this.mapper.productlineToDto(productline);
 
 		assertEquals(productline.getProductline(), dto.getProductline(), "Productline should match");
 		assertEquals(productline.getTextDescription(), dto.getTextDescription(), "Text description should match");

@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import karolh95.classicmodels.dto.DTOAddress;
-import karolh95.classicmodels.dto.DTOOffice;
+import karolh95.classicmodels.dto.DtoAddress;
+import karolh95.classicmodels.dto.DtoOffice;
 import karolh95.classicmodels.mapper.OfficeMapper;
 import karolh95.classicmodels.model.Address;
 import karolh95.classicmodels.model.Office;
@@ -36,8 +36,8 @@ public class OfficeMapperTests {
 
 		Office office = optional.get();
 		Address address = office.getAddress();
-		DTOOffice dto = this.mapper.officeToDto(office);
-		DTOAddress dtoAddress = dto.getAddress();
+		DtoOffice dto = this.mapper.officeToDto(office);
+		DtoAddress dtoAddress = dto.getAddress();
 
 		assertEquals(office.getOfficeCode(), dto.getOfficeCode(), "Office code should match");
 		assertEquals(office.getPostalCode(), dto.getPostalCode(), "Postal code should match");

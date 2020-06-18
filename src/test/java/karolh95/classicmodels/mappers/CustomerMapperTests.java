@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import karolh95.classicmodels.dto.DTOAddress;
-import karolh95.classicmodels.dto.DTOCustomer;
+import karolh95.classicmodels.dto.DtoAddress;
+import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.mapper.CustomerMapper;
 import karolh95.classicmodels.model.Address;
 import karolh95.classicmodels.model.Customer;
@@ -36,8 +36,8 @@ public class CustomerMapperTests {
 
 		Customer customer = optional.get();
 		Address address = customer.getAddress();
-		DTOCustomer dto = this.mapper.customerToDto(customer);
-		DTOAddress dtoAddress = dto.getAddress();
+		DtoCustomer dto = this.mapper.customerToDto(customer);
+		DtoAddress dtoAddress = dto.getAddress();
 
 		assertEquals(customer.getCustomerNumber(), dto.getCustomerNumber(), "Customer number should match");
 		assertEquals(customer.getCustomerName(), dto.getCustomerName(), "Customer name should match");

@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DTOEmployee {
+public class DtoEmployee {
 	
 	private Long employeeNumber;
 	private String lastName;

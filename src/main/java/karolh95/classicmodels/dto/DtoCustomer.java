@@ -9,12 +9,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DTOCustomer {
+public class DtoCustomer {
 	private Long customerNumber;
 	private String customerName;
 	private String contactLastName;
 	private String contactFirstName;
-	private DTOAddress address;
+	private DtoAddress address;
 	private String postalCode;
 	private BigDecimal creditLimit;
 	private Long salesRepEmployeeNumber;

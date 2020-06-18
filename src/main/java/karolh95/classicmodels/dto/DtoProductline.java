@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DTOProductline {
+public class DtoProductline {
 
 	private String productline;
 	private String textDescription;

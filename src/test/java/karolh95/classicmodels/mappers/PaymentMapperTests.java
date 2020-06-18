@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import karolh95.classicmodels.dto.DTOPayment;
+import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.mapper.PaymentMapper;
 import karolh95.classicmodels.model.Payment;
 import karolh95.classicmodels.model.PaymentPK;
@@ -38,7 +38,7 @@ public class PaymentMapperTests {
 		assertTrue(optional.isPresent(), "Payment should exist");
 
 		Payment payment = optional.get();
-		DTOPayment dto = this.mapper.paymentToDto(payment);
+		DtoPayment dto = this.mapper.paymentToDto(payment);
 
 		assertEquals(payment.getCustomer().getCustomerNumber(), dto.getCustomerNumber(), "Customer number should match");
 		assertEquals(payment.getPaymentPK().getCheckNumber(), dto.getCheckNumber(), "Check number should match");				

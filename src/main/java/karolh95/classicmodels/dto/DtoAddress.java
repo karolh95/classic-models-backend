@@ -4,10 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+@NoArgsConstructor 
 @Getter
 @Setter
-public class DTOAddress {
+public class DtoAddress {
 
 	private String phone;
 	private String addressLine1;

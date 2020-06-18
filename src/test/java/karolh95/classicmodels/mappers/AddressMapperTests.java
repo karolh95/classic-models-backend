@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import karolh95.classicmodels.dto.DTOAddress;
+import karolh95.classicmodels.dto.DtoAddress;
 import karolh95.classicmodels.mapper.AddressMapper;
 import karolh95.classicmodels.model.Address;
 import karolh95.classicmodels.model.Customer;
@@ -34,7 +34,7 @@ public class AddressMapperTests {
 		assertTrue(optional.isPresent());
 
 		Address address = optional.get().getAddress();
-		DTOAddress dto = this.mapper.addressToDto(address) ;
+		DtoAddress dto = this.mapper.addressToDto(address) ;
 
 		assertEquals(address.getPhone(), dto.getPhone(), "Phone should match");
 		assertEquals(address.getAddressLine1(), dto.getAddressLine1(), "Address line 1 should match");

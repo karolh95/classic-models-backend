@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import karolh95.classicmodels.dto.DTOProduct;
+import karolh95.classicmodels.dto.DtoProduct;
 import karolh95.classicmodels.mapper.ProductMapper;
 import karolh95.classicmodels.model.Product;
 import karolh95.classicmodels.repository.ProductRepository;
@@ -33,7 +33,7 @@ public class ProductMapperTests {
 		assertTrue(optional.isPresent(), "Product should exist");
 
 		Product product = optional.get();
-		DTOProduct dto = this.mapper.productToDto(product);
+		DtoProduct dto = this.mapper.productToDto(product);
 
 		assertEquals(product.getProductCode(), dto.getProductCode(), "Product code should match");
 		assertEquals(product.getProductName(), dto.getProductName(), "Product name should match");
