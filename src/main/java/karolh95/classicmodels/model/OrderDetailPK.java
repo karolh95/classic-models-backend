@@ -5,19 +5,21 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetailPK implements Serializable {
 
 	private static final long serialVersionUID = 9156646711477906187L;
 
 	@Column(insertable = false, updatable = false, nullable = false)
 	private Long orderNumber;
-	
+
 	@Column(insertable = false, updatable = false, nullable = false)
 	private String productCode;
 }
