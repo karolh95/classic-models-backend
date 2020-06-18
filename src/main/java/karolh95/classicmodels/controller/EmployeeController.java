@@ -22,13 +22,13 @@ public class EmployeeController {
 	@GetMapping("all")
 	public List<DtoEmployee> getAllEmployees() {
 
-		return this.service.getAllEmployees();
+		return service.getAllEmployees();
 	}
 
 	@GetMapping("detail/{employeeNumber}")
 	public ResponseEntity<DtoEmployee> getEmployee(@PathVariable Long employeeNumber) {
 
-		DtoEmployee response = this.service.getEmployee(employeeNumber);
+		DtoEmployee response = service.getEmployee(employeeNumber);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();

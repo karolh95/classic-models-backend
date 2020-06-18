@@ -22,13 +22,13 @@ public class OrderController {
 	@GetMapping("all")
 	public List<DtoOrder> getAllOrders() {
 
-		return this.service.getAllOrders();
+		return service.getAllOrders();
 	}
 
 	@GetMapping("detail/{orderNumber}")
 	public ResponseEntity<DtoOrder> getOrder(@PathVariable Long orderNumber) {
 
-		DtoOrder response = this.service.getOrder(orderNumber);
+		DtoOrder response = service.getOrder(orderNumber);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();

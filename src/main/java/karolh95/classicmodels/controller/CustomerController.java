@@ -28,7 +28,7 @@ public class CustomerController {
 	@GetMapping("detail/{customerNumber}")
 	public ResponseEntity<DtoCustomer> getCustomer(@PathVariable Long customerNumber) {
 
-		DtoCustomer response = this.service.getCustomer(customerNumber);
+		DtoCustomer response = service.getCustomer(customerNumber);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();

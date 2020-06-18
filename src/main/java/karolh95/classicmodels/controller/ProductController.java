@@ -22,13 +22,13 @@ public class ProductController {
 	@GetMapping("all")
 	public List<DtoProduct> getAllProducts() {
 
-		return this.productService.getAllProducts();
+		return productService.getAllProducts();
 	}
 
 	@GetMapping("detail/{productCode}")
 	public ResponseEntity<DtoProduct> getProduct(@PathVariable String productCode) {
 		
-		DtoProduct response = this.productService.getProduct(productCode);
+		DtoProduct response = productService.getProduct(productCode);
 		if (response == null) {
 			return ResponseEntity.notFound().build();
 		}

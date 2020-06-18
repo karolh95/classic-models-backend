@@ -22,18 +22,18 @@ public class PaymentController {
 	@GetMapping("all")
 	public List<DtoPayment> getAllPayments() {
 
-		return this.service.getAllPayments();
+		return service.getAllPayments();
 	}
 
 	@GetMapping("detail/{customerNumber}")
 	public List<DtoPayment> getPayments(@PathVariable Long customerNumber) {
-		return this.service.getPayments(customerNumber);
+		return service.getPayments(customerNumber);
 	}
 
 	@GetMapping("detail/{customerNumber}/{checkNumber}")
 	public ResponseEntity<DtoPayment> getPayment(@PathVariable Long customerNumber, @PathVariable String checkNumber) {
 
-		DtoPayment response = this.service.getPayment(customerNumber, checkNumber);
+		DtoPayment response = service.getPayment(customerNumber, checkNumber);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();

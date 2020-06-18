@@ -22,20 +22,20 @@ public class OrderDetailController {
 	@GetMapping("all")
 	public List<DtoOrderDetail> getAllOrderDetails() {
 
-		return this.service.getAllOrderDetails();
+		return service.getAllOrderDetails();
 	}
 
 	@GetMapping("detail/{orderNumber}")
 	public List<DtoOrderDetail> getOrderDetails(@PathVariable Long orderNumber) {
 
-		return this.service.getOrderDetails(orderNumber);
+		return service.getOrderDetails(orderNumber);
 	}
 
 	@GetMapping("detail/{orderNumber}/{productCode}")
 	public ResponseEntity<DtoOrderDetail> getOrderDetail(@PathVariable Long orderNumber,
 			@PathVariable String productCode) {
 
-		DtoOrderDetail response = this.service.getOrderDetail(orderNumber, productCode);
+		DtoOrderDetail response = service.getOrderDetail(orderNumber, productCode);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();

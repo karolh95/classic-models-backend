@@ -20,13 +20,13 @@ public class OfficeService {
 
 	public List<DtoOffice> getAllOffices() {
 
-		List<Office> offices = this.repository.findAll();
-		return this.mapper.officesToDtos(offices);
+		List<Office> offices = repository.findAll();
+		return mapper.officesToDtos(offices);
 	}
 
 	public DtoOffice getOffice(String officeCode) {
 
-		Optional<Office> optional = this.repository.findById(officeCode);
+		Optional<Office> optional = repository.findById(officeCode);
 
 		if (optional.isEmpty()) {
 			return null;

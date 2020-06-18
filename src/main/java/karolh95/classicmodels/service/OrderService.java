@@ -20,19 +20,19 @@ public class OrderService {
 
 	public List<DtoOrder> getAllOrders(){
 
-		List<Order> orders = this.repository.findAll();
-		return this.mapper.ordersToDtos(orders);
+		List<Order> orders = repository.findAll();
+		return mapper.ordersToDtos(orders);
 	}
 
 	public DtoOrder getOrder(Long orderNumber){
 
-		Optional<Order> optional = this.repository.findById(orderNumber);
+		Optional<Order> optional = repository.findById(orderNumber);
 
 		if (optional.isEmpty()){
 			return null;
 		}
 
 		Order order = optional.get();
-		return this.mapper.orderToDto(order);
+		return mapper.orderToDto(order);
 	}
 }

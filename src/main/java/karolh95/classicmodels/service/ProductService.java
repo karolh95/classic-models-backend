@@ -20,19 +20,19 @@ public class ProductService {
 
 	public List<DtoProduct> getAllProducts() {
 
-		List<Product> products = this.repository.findAll();
-		return this.mapper.productsToDtos(products);
+		List<Product> products = repository.findAll();
+		return mapper.productsToDtos(products);
 	}
 
 	public DtoProduct getProduct(String productCode) {
 
-		Optional<Product> optional = this.repository.findById(productCode);
+		Optional<Product> optional = repository.findById(productCode);
 
 		if (optional.isEmpty()) {
 			return null;
 		}
 		
 		Product product = optional.get();
-		return this.mapper.productToDto(product);
+		return mapper.productToDto(product);
 	}
 }

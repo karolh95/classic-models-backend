@@ -20,19 +20,19 @@ public class CustomerService {
 
 	public List<DtoCustomer> getAllCustomers() {
 
-		List<Customer> customers = this.repository.findAll();
-		return this.mapper.customersToDtos(customers);
+		List<Customer> customers = repository.findAll();
+		return mapper.customersToDtos(customers);
 	}
 
 	public DtoCustomer getCustomer(Long customerNumber) {
 
-		Optional<Customer> optional = this.repository.findById(customerNumber);
+		Optional<Customer> optional = repository.findById(customerNumber);
 
 		if (optional.isEmpty()) {
 			return null;
 		}
 
 		Customer customer = optional.get();
-		return this.mapper.customerToDto(customer);
+		return mapper.customerToDto(customer);
 	}
 }

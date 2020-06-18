@@ -20,13 +20,13 @@ public class EmployeeService {
 
 	public List<DtoEmployee> getAllEmployees() {
 
-		List<Employee> employees = this.repository.findAll();
-		return this.mapper.employeesToDtos(employees);
+		List<Employee> employees = repository.findAll();
+		return mapper.employeesToDtos(employees);
 	}
 
 	public DtoEmployee getEmployee(Long employeeNumber) {
 
-		Optional<Employee> optional = this.repository.findById(employeeNumber);
+		Optional<Employee> optional = repository.findById(employeeNumber);
 
 		if (optional.isEmpty()) {
 			return null;

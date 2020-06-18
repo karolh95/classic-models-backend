@@ -18,16 +18,16 @@ public class ProductlineService {
 	private final ProductlineMapper mapper;
 	private final ProductlineRepository repository;
 
-	public List<DtoProductline> getAllProductlines(){
+	public List<DtoProductline> getAllProductlines() {
 
-		List<Productline> productlines = this.repository.findAll();
-		return this.mapper.productlinesToDtos(productlines);
+		List<Productline> productlines = repository.findAll();
+		return mapper.productlinesToDtos(productlines);
 	}
 
-	public DtoProductline getProductline(String productline){
-		
+	public DtoProductline getProductline(String productline) {
+
 		Optional<Productline> optional = this.repository.findById(productline);
-		if (optional.isEmpty()){
+		if (optional.isEmpty()) {
 			return null;
 		}
 		Productline productlineObject = optional.get();

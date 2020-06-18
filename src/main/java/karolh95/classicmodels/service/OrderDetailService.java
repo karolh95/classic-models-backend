@@ -21,30 +21,32 @@ public class OrderDetailService {
 
 	public List<DtoOrderDetail> getAllOrderDetails() {
 
-		List<OrderDetail> orderDetails = this.repository.findAll();
-		return this.mapper.orderDetailsToDtos(orderDetails);
+		List<OrderDetail> orderDetails = repository.findAll();
+		return mapper.orderDetailsToDtos(orderDetails);
 	}
 
 	public List<DtoOrderDetail> getOrderDetails(Long orderNumber) {
+
 		List<OrderDetail> orderDetails = getOrderDetailsByOrderNumber(orderNumber);
-		return this.mapper.orderDetailsToDtos(orderDetails);
+		return mapper.orderDetailsToDtos(orderDetails);
 	}
 
 	private List<OrderDetail> getOrderDetailsByOrderNumber(Long orderNumber) {
-		return this.repository.findByOrderDetailPKOrderNumber(orderNumber);
+		
+		return repository.findByOrderDetailPKOrderNumber(orderNumber);
 	}
 
 	public DtoOrderDetail getOrderDetail(Long orderNumber, String productCode) {
 
 		OrderDetailPK pk = new OrderDetailPK(orderNumber, productCode);
 
-		Optional<OrderDetail> optional = this.repository.findById(pk);
+		Optional<OrderDetail> optional = repository.findById(pk);
 
 		if (optional.isEmpty()) {
 			return null;
 		}
 
 		OrderDetail orderDetail = optional.get();
-		return this.mapper.orderToDto(orderDetail);
+		return mapper.orderToDto(orderDetail);
 	}
 }

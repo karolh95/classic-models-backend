@@ -22,13 +22,13 @@ public class OfficeController {
 	@GetMapping("all")
 	public List<DtoOffice> getAllOffices() {
 
-		return this.service.getAllOffices();
+		return service.getAllOffices();
 	}
 
 	@GetMapping("detail/{officeCode}")
 	public ResponseEntity<DtoOffice> getOffice(@PathVariable String officeCode) {
 
-		DtoOffice response = this.service.getOffice(officeCode);
+		DtoOffice response = service.getOffice(officeCode);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();
