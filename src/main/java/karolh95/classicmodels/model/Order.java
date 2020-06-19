@@ -47,8 +47,6 @@ public class Order {
 	@JoinColumn(name = "customerNumber", nullable = false)
 	private Customer customer;
 
-	// Mappings
-
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 

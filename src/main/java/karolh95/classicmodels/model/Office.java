@@ -31,8 +31,6 @@ public class Office {
 	@Column(length = 10, nullable = false)
 	private String territory;
 
-	// Mappings
-
 	@OneToMany(mappedBy = "office")
 	private List<Employee> employees;
 

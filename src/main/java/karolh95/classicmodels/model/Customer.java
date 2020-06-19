@@ -51,8 +51,6 @@ public class Customer{
 	@JoinColumn(name = "salesRepEmployeeNumber")
 	private Employee employee;
 
-	// Mappings
-
 	@OneToMany(mappedBy = "customer")
 	private List<Order> orders;
 

@@ -30,8 +30,6 @@ public class Productline {
 	@Column(columnDefinition = "mediumblob")
 	private byte[] image;
 
-	// Mappings
-
 	@OneToMany(mappedBy = "productline")
 	private List<Product> products;
 

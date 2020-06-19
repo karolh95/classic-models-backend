@@ -51,8 +51,6 @@ public class Product {
 	@JoinColumn(name = "productline", nullable = false)
 	private Productline productline;
 
-	// Mappings
-
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<OrderDetail> orderDetails;
 

@@ -22,8 +22,6 @@ import lombok.Setter;
 @Entity(name = "employees")
 public class Employee{
 
-	// private static final long serialVersionUID = 2799740589882916086L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long employeeNumber;
@@ -50,8 +48,6 @@ public class Employee{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "officeCode", nullable = false)
 	private Office office;
-
-	// Mappings
 
 	@OneToMany(mappedBy = "employee")
 	private List<Employee> employees;
