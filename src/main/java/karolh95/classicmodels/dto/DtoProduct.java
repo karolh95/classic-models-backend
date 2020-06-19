@@ -20,4 +20,42 @@ public class DtoProduct {
 	private BigDecimal MSRP;
 	private BigDecimal buyPrice;
 	private String productline;
+
+	public boolean isValid() {
+
+		if (productCode == null) {
+			return false;
+		}
+
+		if (productline == null) {
+			return false;
+		}
+
+		if (productName == null) {
+			return false;
+		}
+
+		if (productScale == null) {
+			return false;
+		}
+
+		if (productVendor == null) {
+			return false;
+		}
+
+		if (productDescription == null) {
+			return false;
+		}
+
+		if (buyPrice == null) {
+			return false;
+		}
+
+		if (MSRP == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

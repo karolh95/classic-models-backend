@@ -35,4 +35,37 @@ public class CustomerService {
 		Customer customer = optional.get();
 		return mapper.customerToDto(customer);
 	}
+
+	public DtoCustomer saveCustomer(DtoCustomer dtoCustomer) {
+
+		if (dtoCustomer == null || !dtoCustomer.isValid()) {
+			return null;
+		}
+
+		Customer customer = getOne(dtoCustomer.getCustomerNumber());
+
+		mapper.updateFromDto(dtoCustomer, customer);
+
+		customer = repository.save(customer);
+
+		return mapper.customerToDto(customer);
+	}
+
+	private Customer getOne(Long customerNumber) {
+
+		Optional<Customer> optional = repository.findById(customerNumber);
+
+		if (optional.isPresent()) {
+
+			return optional.get();
+			
+		} else {
+
+			Customer customer = new Customer();
+
+			customer.setCustomerNumber(customerNumber);
+
+			return customer;
+		}
+	}
 }

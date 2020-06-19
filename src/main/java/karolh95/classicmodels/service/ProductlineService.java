@@ -33,4 +33,38 @@ public class ProductlineService {
 		Productline productlineObject = optional.get();
 		return this.mapper.productlineToDto(productlineObject);
 	}
+
+	public DtoProductline saveProductline(DtoProductline dtoProductline) {
+
+		if (dtoProductline == null || !dtoProductline.isValid()) {
+			return null;
+		}
+
+		Productline productline = getOne(dtoProductline.getProductline());
+
+		mapper.updateFromDto(dtoProductline, productline);
+
+		productline = repository.save(productline);
+
+		return mapper.productlineToDto(productline);
+
+	}
+
+	private Productline getOne(String productline) {
+
+		Optional<Productline> optional = repository.findById(productline);
+
+		if (optional.isPresent()) {
+
+			return optional.get();
+
+		} else {
+
+			Productline productlineObject = new Productline();
+
+			productlineObject.setProductline(productline);
+
+			return productlineObject;
+		}
+	}
 }

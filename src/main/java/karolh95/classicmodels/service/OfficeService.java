@@ -35,4 +35,38 @@ public class OfficeService {
 		Office office = optional.get();
 		return mapper.officeToDto(office);
 	}
+
+	public DtoOffice saveOffice(DtoOffice dtoOffice) {
+
+		if (dtoOffice == null || !dtoOffice.isValid()) {
+			return null;
+		}
+
+		Office office = getOne(dtoOffice.getOfficeCode());
+
+		mapper.updateFromDto(dtoOffice, office);
+
+		office = repository.save(office);
+
+		return mapper.officeToDto(office);
+
+	}
+
+	private Office getOne(String officeCode) {
+
+		Optional<Office> optional = repository.findById(officeCode);
+
+		if (optional.isPresent()) {
+
+			return optional.get();
+		} else {
+
+			Office office = new Office();
+
+			office.setOfficeCode(officeCode);
+
+			return office;
+
+		}
+	}
 }

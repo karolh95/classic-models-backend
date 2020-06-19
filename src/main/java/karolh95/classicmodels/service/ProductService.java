@@ -31,8 +31,41 @@ public class ProductService {
 		if (optional.isEmpty()) {
 			return null;
 		}
-		
+
 		Product product = optional.get();
 		return mapper.productToDto(product);
+	}
+
+	public DtoProduct saveProduct(DtoProduct dtoProduct) {
+
+		if (dtoProduct == null || !dtoProduct.isValid()) {
+			return null;
+		}
+
+		Product product = getOne(dtoProduct.getProductCode());
+
+		mapper.updateFromDto(dtoProduct, product);
+
+		product = repository.save(product);
+
+		return mapper.productToDto(product);
+	}
+
+	private Product getOne(String productCode) {
+
+		Optional<Product> optional = repository.findById(productCode);
+
+		if (optional.isPresent()) {
+
+			return optional.get();
+
+		} else {
+
+			Product product = new Product();
+
+			product.setProductCode(productCode);
+
+			return product;
+		}
 	}
 }

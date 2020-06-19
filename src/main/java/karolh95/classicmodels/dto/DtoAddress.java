@@ -15,4 +15,25 @@ public class DtoAddress {
 	private String city;
 	private String state;
 	private String country;
+
+	public boolean isValid() {
+
+		if (phone == null) {
+			return false;
+		}
+
+		if (addressLine1 == null) {
+			return false;
+		}
+
+		if (city == null) {
+			return false;
+		}
+
+		if (country == null) {
+			return false;
+		}
+
+		return true;
+	}
 }

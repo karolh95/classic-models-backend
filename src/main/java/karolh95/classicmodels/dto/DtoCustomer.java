@@ -18,4 +18,29 @@ public class DtoCustomer {
 	private String postalCode;
 	private BigDecimal creditLimit;
 	private Long salesRepEmployeeNumber;
+
+	public boolean isValid() {
+
+		if (customerNumber == null) {
+			return false;
+		}
+
+		if (customerName == null) {
+			return false;
+		}
+
+		if (contactLastName == null) {
+			return false;
+		}
+
+		if (contactFirstName == null) {
+			return false;
+		}
+
+		if (address == null || !address.isValid()) {
+			return false;
+		}
+
+		return true;
+	}
 }

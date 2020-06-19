@@ -35,4 +35,37 @@ public class EmployeeService {
 		Employee employee = optional.get();
 		return mapper.employeeToDto(employee);
 	}
+
+	public DtoEmployee saveEmployee(DtoEmployee dtoEmployee) {
+
+		if (dtoEmployee == null || !dtoEmployee.isValid()) {
+			return null;
+		}
+
+		Employee employee = getOne(dtoEmployee.getEmployeeNumber());
+
+		mapper.updateFromDto(dtoEmployee, employee);
+
+		employee = repository.save(employee);
+
+		return mapper.employeeToDto(employee);
+	}
+
+	private Employee getOne(Long employeeNumber) {
+
+		Optional<Employee> optional = repository.findById(employeeNumber);
+
+		if (optional.isPresent()) {
+
+			return optional.get();
+
+		} else {
+
+			Employee employee = new Employee();
+
+			employee.setEmployeeNumber(employeeNumber);
+
+			return employee;
+		}
+	}
 }

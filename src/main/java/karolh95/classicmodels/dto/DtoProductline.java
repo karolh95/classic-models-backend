@@ -13,4 +13,13 @@ public class DtoProductline {
 	private String textDescription;
 	private String htmlDescription;
 	private byte[] image;
+
+	public boolean isValid() {
+
+		if (productline == null) {
+			return false;
+		}
+
+		return true;
+	}
 }

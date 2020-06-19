@@ -18,4 +18,29 @@ public class DtoOrder {
 	private String status;
 	private String comments;
 	private Long customerNumber;
+
+	public boolean isValid() {
+
+		if (orderNumber == null) {
+			return false;
+		}
+
+		if (customerNumber == null) {
+			return false;
+		}
+
+		if (orderDate == null) {
+			return false;
+		}
+
+		if (requiredDate == null) {
+			return false;
+		}
+
+		if (status == null) {
+			return false;
+		}
+
+		return true;
+	}
 }
