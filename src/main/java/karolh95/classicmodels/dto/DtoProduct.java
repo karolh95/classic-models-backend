@@ -18,5 +18,6 @@ public class DtoProduct {
 	private String productDescription;
 	private short quantityInStock;
 	private BigDecimal MSRP;
+	private BigDecimal buyPrice;
 	private String productline;
 }
