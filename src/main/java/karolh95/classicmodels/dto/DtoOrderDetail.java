@@ -6,11 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class DtoOrderDetail {
-	
+
 	private Long orderNumber;
 	private String productCode;
 	private int quantityOrdered;

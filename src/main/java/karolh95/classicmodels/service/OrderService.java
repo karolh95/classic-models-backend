@@ -38,10 +38,6 @@ public class OrderService {
 
 	public DtoOrder saveOrder(DtoOrder dtoOrder) {
 
-		if (dtoOrder == null || !dtoOrder.isValid()) {
-			return null;
-		}
-
 		Order order = getOne(dtoOrder.getOrderNumber());
 
 		mapper.updateFromDto(dtoOrder, order);

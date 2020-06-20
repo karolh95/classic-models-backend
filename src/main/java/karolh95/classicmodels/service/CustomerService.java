@@ -38,10 +38,6 @@ public class CustomerService {
 
 	public DtoCustomer saveCustomer(DtoCustomer dtoCustomer) {
 
-		if (dtoCustomer == null || !dtoCustomer.isValid()) {
-			return null;
-		}
-
 		Customer customer = getOne(dtoCustomer.getCustomerNumber());
 
 		mapper.updateFromDto(dtoCustomer, customer);

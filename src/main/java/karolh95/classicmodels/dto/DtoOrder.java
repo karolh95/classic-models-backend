@@ -2,45 +2,34 @@ package karolh95.classicmodels.dto;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@NoArgsConstructor
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class DtoOrder {
-	
+
+	@NotNull
 	private Long orderNumber;
+
+	@NotNull
 	private Date orderDate;
+
+	@NotNull
 	private Date requiredDate;
+
+	@NotNull
 	private Date shippedDate;
+
+	@NotBlank
+	@Size(max = 15)
 	private String status;
+
 	private String comments;
+
+	@NotNull
 	private Long customerNumber;
 
-	public boolean isValid() {
-
-		if (orderNumber == null) {
-			return false;
-		}
-
-		if (customerNumber == null) {
-			return false;
-		}
-
-		if (orderDate == null) {
-			return false;
-		}
-
-		if (requiredDate == null) {
-			return false;
-		}
-
-		if (status == null) {
-			return false;
-		}
-
-		return true;
-	}
 }

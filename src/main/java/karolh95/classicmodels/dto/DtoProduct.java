@@ -2,60 +2,46 @@ package karolh95.classicmodels.dto;
 
 import java.math.BigDecimal;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@NoArgsConstructor
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class DtoProduct {
-	
+
+	@NotBlank
+	@Size(max = 15)
 	private String productCode;
+
+	@NotBlank
+	@Size(max = 70)
 	private String productName;
+
+	@NotBlank
+	@Size(max = 10)
 	private String productScale;
+
+	@NotBlank
+	@Size(max = 50)
 	private String productVendor;
+
+	@NotBlank
 	private String productDescription;
+
+	@NotNull
 	private short quantityInStock;
+
+	@NotNull
+	@Digits(integer = 8, fraction = 2)
 	private BigDecimal MSRP;
+
+	@NotNull
+	@Digits(integer = 8, fraction = 2)
 	private BigDecimal buyPrice;
+
+	@NotBlank
 	private String productline;
-
-	public boolean isValid() {
-
-		if (productCode == null) {
-			return false;
-		}
-
-		if (productline == null) {
-			return false;
-		}
-
-		if (productName == null) {
-			return false;
-		}
-
-		if (productScale == null) {
-			return false;
-		}
-
-		if (productVendor == null) {
-			return false;
-		}
-
-		if (productDescription == null) {
-			return false;
-		}
-
-		if (buyPrice == null) {
-			return false;
-		}
-
-		if (MSRP == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

@@ -36,10 +36,6 @@ public class ProductlineService {
 
 	public DtoProductline saveProductline(DtoProductline dtoProductline) {
 
-		if (dtoProductline == null || !dtoProductline.isValid()) {
-			return null;
-		}
-
 		Productline productline = getOne(dtoProductline.getProductline());
 
 		mapper.updateFromDto(dtoProductline, productline);

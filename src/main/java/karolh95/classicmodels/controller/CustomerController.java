@@ -2,8 +2,11 @@ package karolh95.classicmodels.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +42,11 @@ public class CustomerController {
 	}
 
 	@PostMapping("save")
-	public ResponseEntity<DtoCustomer> save(@RequestBody DtoCustomer customer) {
+	public ResponseEntity<DtoCustomer> save(@Valid @RequestBody DtoCustomer customer, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(customer);
+		}
 
 		DtoCustomer response = service.saveCustomer(customer);
 

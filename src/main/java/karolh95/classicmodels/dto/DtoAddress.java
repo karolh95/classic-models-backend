@@ -1,39 +1,33 @@
 package karolh95.classicmodels.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-@NoArgsConstructor 
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class DtoAddress {
 
+	@NotBlank
+	@Size(max = 50)
 	private String phone;
+
+	@NotBlank
+	@Size(max = 50)
 	private String addressLine1;
+
+	@Size(max = 50)
 	private String addressLine2;
+
+	@NotBlank
+	@Size(max = 50)
 	private String city;
+
+	@Size(max = 50)
 	private String state;
+
+	@NotBlank
+	@Size(max = 50)
 	private String country;
 
-	public boolean isValid() {
-
-		if (phone == null) {
-			return false;
-		}
-
-		if (addressLine1 == null) {
-			return false;
-		}
-
-		if (city == null) {
-			return false;
-		}
-
-		if (country == null) {
-			return false;
-		}
-
-		return true;
-	}
 }

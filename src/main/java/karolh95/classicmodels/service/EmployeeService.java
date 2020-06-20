@@ -38,10 +38,6 @@ public class EmployeeService {
 
 	public DtoEmployee saveEmployee(DtoEmployee dtoEmployee) {
 
-		if (dtoEmployee == null || !dtoEmployee.isValid()) {
-			return null;
-		}
-
 		Employee employee = getOne(dtoEmployee.getEmployeeNumber());
 
 		mapper.updateFromDto(dtoEmployee, employee);

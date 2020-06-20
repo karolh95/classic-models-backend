@@ -1,53 +1,43 @@
 package karolh95.classicmodels.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@NoArgsConstructor
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class DtoEmployee {
-	
+
+	@NotNull
 	private Long employeeNumber;
+
+	@NotBlank
+	@Size(max = 50)
 	private String lastName;
+	
+	@NotBlank
+	@Size(max = 50)
 	private String firstName;
+	
+	@NotBlank
+	@Size(max = 10)
 	private String extension;
+	
+	@NotBlank
+	@Size(max = 100)
+	@Email()
 	private String email;
+	
+	@NotBlank
+	@Size(max = 50)
 	private String jobTitle;
+	
 	private Long reportsTo;
+	
+	@NotNull
 	private String officeCode;
 
-	public boolean isValid() {
 
-		if (employeeNumber == null) {
-			return false;
-		}
-
-		if (lastName == null) {
-			return false;
-		}
-
-		if (firstName == null) {
-			return false;
-		}
-
-		if (extension == null) {
-			return false;
-		}
-
-		if (email == null) {
-			return false;
-		}
-
-		if (jobTitle == null) {
-			return false;
-		}
-
-		if (officeCode == null) {
-			return false;
-		}
-
-		return true;
-	}
 }

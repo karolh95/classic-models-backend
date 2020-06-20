@@ -38,10 +38,6 @@ public class OfficeService {
 
 	public DtoOffice saveOffice(DtoOffice dtoOffice) {
 
-		if (dtoOffice == null || !dtoOffice.isValid()) {
-			return null;
-		}
-
 		Office office = getOne(dtoOffice.getOfficeCode());
 
 		mapper.updateFromDto(dtoOffice, office);

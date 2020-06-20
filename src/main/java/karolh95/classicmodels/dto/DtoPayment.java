@@ -3,15 +3,11 @@ package karolh95.classicmodels.dto;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class DtoPayment {
-	
+
 	private Long customerNumber;
 	private String checkNumber;
 	private Date paymentDate;

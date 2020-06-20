@@ -2,8 +2,11 @@ package karolh95.classicmodels.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +34,7 @@ public class ProductlineController {
 	public ResponseEntity<DtoProductline> getProductline(@PathVariable String productline) {
 
 		DtoProductline response = service.getProductline(productline);
-		
+
 		if (response == null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -39,7 +42,12 @@ public class ProductlineController {
 	}
 
 	@PostMapping("save")
-	public ResponseEntity<DtoProductline> save(@RequestBody DtoProductline productline) {
+	public ResponseEntity<DtoProductline> save(@Valid @RequestBody DtoProductline productline,
+			BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(productline);
+		}
 
 		DtoProductline response = service.saveProductline(productline);
 

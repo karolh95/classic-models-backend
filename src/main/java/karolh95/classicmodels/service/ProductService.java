@@ -38,10 +38,6 @@ public class ProductService {
 
 	public DtoProduct saveProduct(DtoProduct dtoProduct) {
 
-		if (dtoProduct == null || !dtoProduct.isValid()) {
-			return null;
-		}
-
 		Product product = getOne(dtoProduct.getProductCode());
 
 		mapper.updateFromDto(dtoProduct, product);

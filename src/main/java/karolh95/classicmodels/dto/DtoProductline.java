@@ -1,25 +1,22 @@
 package karolh95.classicmodels.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-@NoArgsConstructor
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class DtoProductline {
 
+	@NotBlank
+	@Size(max = 50)
 	private String productline;
+
+	@NotBlank
+	@Size(max = 4000)
 	private String textDescription;
+
 	private String htmlDescription;
+	
 	private byte[] image;
-
-	public boolean isValid() {
-
-		if (productline == null) {
-			return false;
-		}
-
-		return true;
-	}
 }
