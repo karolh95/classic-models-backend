@@ -65,4 +65,17 @@ public class Product {
 		orderDetail.setProduct(null);
 		return orderDetail;
 	}
+
+	public boolean hasValidIds() {
+
+		if (productCode == null) {
+			return false;
+		}
+
+		if (productline == null) {
+			return false;
+		}
+
+		return true;
+	}
 }

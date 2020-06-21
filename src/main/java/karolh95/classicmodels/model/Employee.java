@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "employees")
-public class Employee{
+public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,4 +79,12 @@ public class Employee{
 		return customer;
 	}
 
+	public boolean hasValidIds() {
+
+		if (employeeNumber == null || office == null) {
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -42,6 +42,10 @@ public class OfficeService {
 
 		mapper.updateFromDto(dtoOffice, office);
 
+		if (!office.hasValidIds()) {
+			return null;
+		}
+
 		office = repository.save(office);
 
 		return mapper.officeToDto(office);

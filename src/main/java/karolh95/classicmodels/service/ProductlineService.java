@@ -40,6 +40,10 @@ public class ProductlineService {
 
 		mapper.updateFromDto(dtoProductline, productline);
 
+		if (!productline.hasValidIds()) {
+			return null;
+		}
+
 		productline = repository.save(productline);
 
 		return mapper.productlineToDto(productline);

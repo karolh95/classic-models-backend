@@ -45,4 +45,13 @@ public class Office {
 		employee.setOffice(null);
 		return employee;
 	}
+
+	public boolean hasValidIds() {
+
+		if (officeCode == null) {
+			return false;
+		}
+
+		return true;
+	}
 }

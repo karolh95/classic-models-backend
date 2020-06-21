@@ -42,6 +42,10 @@ public class CustomerService {
 
 		mapper.updateFromDto(dtoCustomer, customer);
 
+		if (!customer.hasValidIds()) {
+			return null;
+		}
+
 		customer = repository.save(customer);
 
 		return mapper.customerToDto(customer);
@@ -54,7 +58,7 @@ public class CustomerService {
 		if (optional.isPresent()) {
 
 			return optional.get();
-			
+
 		} else {
 
 			Customer customer = new Customer();

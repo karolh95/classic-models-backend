@@ -42,6 +42,10 @@ public class EmployeeService {
 
 		mapper.updateFromDto(dtoEmployee, employee);
 
+		if (!employee.hasValidIds()) {
+			return null;
+		}
+
 		employee = repository.save(employee);
 
 		return mapper.employeeToDto(employee);

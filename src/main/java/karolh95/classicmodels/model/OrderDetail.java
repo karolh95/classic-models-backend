@@ -40,4 +40,17 @@ public class OrderDetail {
 	@MapsId("productCode")
 	@JoinColumn(name = "productCode")
 	private Product product;
+
+	public boolean hasValidIds() {
+
+		if (orderDetailPK == null) {
+			return false;
+		}
+
+		if (order == null || product == null) {
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -23,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "customers")
-public class Customer{
+public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,5 +79,14 @@ public class Customer{
 		getPayments().remove(payment);
 		payment.setCustomer(null);
 		return payment;
+	}
+
+	public boolean hasValidIds() {
+
+		if (customerNumber == null) {
+			return false;
+		}
+		
+		return true;
 	}
 }

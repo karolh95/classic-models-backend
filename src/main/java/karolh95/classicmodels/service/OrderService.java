@@ -42,6 +42,10 @@ public class OrderService {
 
 		mapper.updateFromDto(dtoOrder, order);
 
+		if (!order.hasValidIds()) {
+			return null;
+		}
+
 		order = repository.save(order);
 
 		return mapper.orderToDto(order);

@@ -45,4 +45,13 @@ public class Productline {
 		return product;
 	}
 
+	public boolean hasValidIds() {
+
+		if (productline == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

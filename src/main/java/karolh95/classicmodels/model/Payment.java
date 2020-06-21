@@ -28,9 +28,22 @@ public class Payment {
 
 	@Column(precision = 10, scale = 2)
 	private BigDecimal amount;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("customerNumber")
 	@JoinColumn(name = "customerNumber")
 	private Customer customer;
+
+	public boolean hasValidIds() {
+
+		if (paymentPK == null) {
+			return false;
+		}
+
+		if (customer == null) {
+			return false;
+		}
+
+		return true;
+	}
 }

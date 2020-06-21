@@ -61,4 +61,17 @@ public class Order {
 		orderDetail.setOrder(null);
 		return orderDetail;
 	}
+
+	public boolean hasValidIds() {
+
+		if (orderNumber == null) {
+			return false;
+		}
+
+		if (customer == null) {
+			return false;
+		}
+
+		return true;
+	}
 }
