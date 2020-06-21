@@ -32,7 +32,7 @@ public class OrderDetailService {
 	}
 
 	private List<OrderDetail> getOrderDetailsByOrderNumber(Long orderNumber) {
-		
+
 		return repository.findByOrderDetailPKOrderNumber(orderNumber);
 	}
 
@@ -48,5 +48,39 @@ public class OrderDetailService {
 
 		OrderDetail orderDetail = optional.get();
 		return mapper.orderToDto(orderDetail);
+	}
+
+	public DtoOrderDetail saveOrderDetail(DtoOrderDetail dtoOrderDetail) {
+
+		OrderDetail orderDetail = getOne(dtoOrderDetail.getOrderNumber(), dtoOrderDetail.getProductCode());
+
+		mapper.updateFromDto(dtoOrderDetail, orderDetail);
+
+		if (!orderDetail.hasValidIds()) {
+			return null;
+		}
+
+		orderDetail = repository.save(orderDetail);
+
+		return mapper.orderToDto(orderDetail);
+	}
+
+	private OrderDetail getOne(Long orderNumber, String productCode) {
+
+		OrderDetailPK pk = new OrderDetailPK(orderNumber, productCode);
+		Optional<OrderDetail> optional = repository.findById(pk);
+
+		if (optional.isPresent()) {
+
+			return optional.get();
+
+		} else {
+
+			OrderDetail orderDetail = new OrderDetail();
+
+			orderDetail.setOrderDetailPK(pk);
+
+			return orderDetail;
+		}
 	}
 }

@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import karolh95.classicmodels.dto.DtoOrderDetail;
+import karolh95.classicmodels.mapper.resolver.OrderResolver;
+import karolh95.classicmodels.mapper.resolver.ProductResolver;
 import karolh95.classicmodels.model.OrderDetail;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { OrderResolver.class, ProductResolver.class })
 public interface OrderDetailMapper {
 
 	@Mapping(target = "orderNumber", source = "orderDetailPK.orderNumber")
@@ -16,4 +19,10 @@ public interface OrderDetailMapper {
 	DtoOrderDetail orderToDto(OrderDetail orderDetail);
 
 	List<DtoOrderDetail> orderDetailsToDtos(List<OrderDetail> orderDetails);
+
+	@Mapping(target = "order", source = "orderNumber")
+	@Mapping(target = "product", source = "productCode")
+	@Mapping(target = "orderDetailPK.orderNumber", source = "orderNumber")
+	@Mapping(target = "orderDetailPK.productCode", source = "productCode")
+	void updateFromDto(DtoOrderDetail dtoOrderDetail, @MappingTarget OrderDetail orderDetail);
 }

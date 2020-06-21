@@ -48,4 +48,38 @@ public class PaymentService {
 		Payment payment = optional.get();
 		return mapper.paymentToDto(payment);
 	}
+
+	public DtoPayment savePayment(DtoPayment dtoPayment) {
+
+		Payment payment = getOne(dtoPayment.getCustomerNumber(), dtoPayment.getCheckNumber());
+
+		mapper.updateFromDto(dtoPayment, payment);
+
+		if (!payment.hasValidIds()){
+			return null;
+		}
+
+		payment = repository.save(payment);
+
+		return null;
+	}
+
+	private Payment getOne(Long customerNumber, String checkNumber) {
+
+		PaymentPK pk = new PaymentPK(customerNumber, checkNumber);
+		Optional<Payment> optional = repository.findById(pk);
+
+		if (optional.isPresent()) {
+
+			return optional.get();
+
+		} else {
+
+			Payment payment = new Payment();
+
+			payment.setPaymentPK(pk);
+
+			return payment;
+		}
+	}
 }
