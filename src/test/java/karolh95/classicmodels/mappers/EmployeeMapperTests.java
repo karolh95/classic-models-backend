@@ -1,39 +1,44 @@
 package karolh95.classicmodels.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Optional;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doReturn;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import karolh95.classicmodels.dto.DtoEmployee;
 import karolh95.classicmodels.mapper.EmployeeMapper;
+import karolh95.classicmodels.mapper.EmployeeMapperImpl;
+import karolh95.classicmodels.mapper.resolver.EmployeeResolver;
+import karolh95.classicmodels.mapper.resolver.OfficeResolver;
 import karolh95.classicmodels.model.Employee;
-import karolh95.classicmodels.repository.EmployeeRepository;
 
-@SpringBootTest
 public class EmployeeMapperTests {
 
-	@Autowired
-	private EmployeeMapper mapper;
+	@Spy
+	private EmployeeResolver employeeResolver;
 
-	@Autowired
-	private EmployeeRepository repository;
+	@Spy
+	private OfficeResolver officeResolver;
+
+	@InjectMocks
+	private EmployeeMapper mapper = new EmployeeMapperImpl();
 
 	@Test
 	@DisplayName("Should map Employee to Dto")
 	public void mapEmployeeToDto() {
 
-		Optional<Employee> optional = this.repository.findById(1056L);
-
-		assertTrue(optional.isPresent(), "Employee should exist");
-
-		Employee employee = optional.get();
-		DtoEmployee dto = this.mapper.employeeToDto(employee);
+		MockitoAnnotations.initMocks(this);
+		doReturn(null).when(employeeResolver).map(anyLong());
+		doReturn(null).when(officeResolver).map(anyString());
+		Employee employee = employee();
+		
+		DtoEmployee dto = mapper.employeeToDto(employee);
 
 		assertEquals(employee.getEmployeeNumber(), dto.getEmployeeNumber(), "Employee number should match");
 		assertEquals(employee.getLastName(), dto.getLastName(), "Last name should match");
@@ -41,7 +46,19 @@ public class EmployeeMapperTests {
 		assertEquals(employee.getExtension(), dto.getExtension(), "Extension shouold match");
 		assertEquals(employee.getEmail(), dto.getEmail(), "Email should match");
 		assertEquals(employee.getJobTitle(), dto.getJobTitle(), "Job title should match");
-		assertEquals(employee.getEmployee().getEmployeeNumber(), dto.getReportsTo(), "Reports to should match");
-		assertEquals(employee.getOffice().getOfficeCode(), dto.getOfficeCode(), "Office code should match");
+	}
+
+	private Employee employee() {
+
+		Employee employee = new Employee();
+
+		employee.setEmployeeNumber(1L);
+		employee.setLastName("lastName");
+		employee.setFirstName("firstName");
+		employee.setExtension("extension");
+		employee.setEmail("email");
+		employee.setJobTitle("jobTitle");
+
+		return employee;
 	}
 }
