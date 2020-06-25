@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import karolh95.classicmodels.dto.DtoOrder;
+import karolh95.classicmodels.dto.DtoFullOrder;
+import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.service.OrderService;
 
 @RestController
@@ -25,15 +26,15 @@ public class OrderController {
 	private OrderService service;
 
 	@GetMapping("all")
-	public List<DtoOrder> getAllOrders() {
+	public List<DtoSimpleOrder> getAllOrders() {
 
 		return service.getAllOrders();
 	}
 
 	@GetMapping("detail/{orderNumber}")
-	public ResponseEntity<DtoOrder> getOrder(@PathVariable Long orderNumber) {
+	public ResponseEntity<DtoFullOrder> getOrder(@PathVariable Long orderNumber) {
 
-		DtoOrder response = service.getOrder(orderNumber);
+		DtoFullOrder response = service.getOrder(orderNumber);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();
@@ -42,13 +43,13 @@ public class OrderController {
 	}
 
 	@PostMapping("save")
-	public ResponseEntity<DtoOrder> save(@Valid @RequestBody DtoOrder order, BindingResult bindingResult) {
+	public ResponseEntity<DtoFullOrder> save(@Valid @RequestBody DtoFullOrder order, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(order);
 		}
 
-		DtoOrder response = service.saveOrder(order);
+		DtoFullOrder response = service.saveOrder(order);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();

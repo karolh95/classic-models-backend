@@ -5,7 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import karolh95.classicmodels.dto.DtoOrder;
+import karolh95.classicmodels.dto.DtoFullOrder;
+import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.repository.OrderRepository;
@@ -18,13 +19,13 @@ public class OrderService {
 	private final OrderMapper mapper;
 	private final OrderRepository repository;
 
-	public List<DtoOrder> getAllOrders() {
+	public List<DtoSimpleOrder> getAllOrders() {
 
 		List<Order> orders = repository.findAll();
 		return mapper.ordersToDtos(orders);
 	}
 
-	public DtoOrder getOrder(Long orderNumber) {
+	public DtoFullOrder getOrder(Long orderNumber) {
 
 		Optional<Order> optional = repository.findById(orderNumber);
 
@@ -33,10 +34,13 @@ public class OrderService {
 		}
 
 		Order order = optional.get();
-		return mapper.orderToDto(order);
+
+		order.sortOrderDetails();
+
+		return mapper.orderWithDetailsToDto(order);
 	}
 
-	public DtoOrder saveOrder(DtoOrder dtoOrder) {
+	public DtoFullOrder saveOrder(DtoFullOrder dtoOrder) {
 
 		Order order = getOne(dtoOrder.getOrderNumber());
 
@@ -48,7 +52,7 @@ public class OrderService {
 
 		order = repository.save(order);
 
-		return mapper.orderToDto(order);
+		return mapper.orderWithDetailsToDto(order);
 
 	}
 

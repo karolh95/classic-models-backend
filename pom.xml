@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>karolh95</groupId>
 	<artifactId>classic-models-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<name>classic-models</name>
 	<description>Spring Boot project for Classic Models</description>
 
