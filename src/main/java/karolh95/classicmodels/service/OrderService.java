@@ -12,6 +12,7 @@ import karolh95.classicmodels.mapper.OrderDetailMapper;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.OrderDetail;
+import karolh95.classicmodels.model.Product;
 import karolh95.classicmodels.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -71,7 +72,16 @@ public class OrderService {
 			detail.setOrderNumber(order.getOrderNumber());
 			OrderDetail orderDetail = detailMapper.orderDetailFromDto(detail);
 
-			order.addOrderDetails(orderDetail);
+			Product product = orderDetail.getProduct();
+
+			int inStock = product.getQuantityInStock();
+			int quantityOrdered = orderDetail.getQuantityOrdered();
+
+			if (inStock >= quantityOrdered) {
+
+				product.setQuantityInStock(inStock - quantityOrdered);
+				order.addOrderDetails(orderDetail);
+			}
 		});
 	}
 }
