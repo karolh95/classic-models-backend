@@ -39,7 +39,7 @@ public class Product {
 	private String productDescription;
 
 	@Column(nullable = false)
-	private short quantityInStock;
+	private int quantityInStock;
 
 	@Column(precision = 10, scale = 2, nullable = false)
 	private BigDecimal buyPrice;

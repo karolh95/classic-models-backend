@@ -11,7 +11,6 @@ import lombok.Data;
 @Data
 public class DtoSimpleOrder {
 
-	@NotNull
 	private Long orderNumber;
 
 	@NotNull

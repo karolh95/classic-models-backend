@@ -5,7 +5,6 @@ import java.util.List;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 import karolh95.classicmodels.dto.DtoFullOrder;
@@ -29,5 +28,6 @@ public interface OrderMapper {
 
 	@Mapping(target = "orderNumber", ignore = true)
 	@Mapping(target = "customer", source = "customerNumber")
-	void updateFromDto(DtoFullOrder dtoOrder, @MappingTarget Order order);
+	@Mapping(target = "orderDetails", ignore = true)
+	Order orderFromDto(DtoFullOrder dtoOrder);
 }

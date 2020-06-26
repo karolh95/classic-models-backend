@@ -1,5 +1,6 @@
 package karolh95.classicmodels.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
+import karolh95.classicmodels.mapper.OrderDetailMapper;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
+import karolh95.classicmodels.model.OrderDetail;
 import karolh95.classicmodels.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderService {
 
 	private final OrderMapper mapper;
+	private final OrderDetailMapper detailMapper;
 	private final OrderRepository repository;
 
 	public List<DtoSimpleOrder> getAllOrders() {
@@ -42,9 +46,7 @@ public class OrderService {
 
 	public DtoFullOrder saveOrder(DtoFullOrder dtoOrder) {
 
-		Order order = getOne(dtoOrder.getOrderNumber());
-
-		mapper.updateFromDto(dtoOrder, order);
+		Order order = mapper.orderFromDto(dtoOrder);
 
 		if (!order.hasValidIds()) {
 			return null;
@@ -52,24 +54,24 @@ public class OrderService {
 
 		order = repository.save(order);
 
+		addDetailsToOrder(dtoOrder, order);
+
+		order = repository.save(order);
+
 		return mapper.orderWithDetailsToDto(order);
 
 	}
 
-	private Order getOne(Long orderNumber) {
+	private void addDetailsToOrder(DtoFullOrder dtoOrder, Order order) {
 
-		Optional<Order> optional = repository.findById(orderNumber);
+		order.setOrderDetails(new ArrayList<>());
 
-		if (optional.isPresent()) {
-			return optional.get();
+		dtoOrder.getOrderDetails().forEach(detail -> {
 
-		} else {
+			detail.setOrderNumber(order.getOrderNumber());
+			OrderDetail orderDetail = detailMapper.orderDetailFromDto(detail);
 
-			Order order = new Order();
-
-			order.setOrderNumber(orderNumber);
-
-			return order;
-		}
+			order.addOrderDetails(orderDetail);
+		});
 	}
 }

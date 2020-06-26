@@ -65,10 +65,6 @@ public class Order {
 
 	public boolean hasValidIds() {
 
-		if (orderNumber == null) {
-			return false;
-		}
-
 		if (customer == null) {
 			return false;
 		}

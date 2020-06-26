@@ -11,7 +11,6 @@ import lombok.Data;
 @Data
 public class DtoOrderDetail {
 
-	@NotNull
 	private Long orderNumber;
 
 	@NotBlank
