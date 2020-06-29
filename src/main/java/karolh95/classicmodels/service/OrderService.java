@@ -1,6 +1,5 @@
 package karolh95.classicmodels.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,11 +7,9 @@ import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
-import karolh95.classicmodels.mapper.OrderDetailMapper;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.OrderDetail;
-import karolh95.classicmodels.model.Product;
 import karolh95.classicmodels.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderService {
 
 	private final OrderMapper mapper;
-	private final OrderDetailMapper detailMapper;
+	private final OrderDetailService detailService;
 	private final OrderRepository repository;
 
 	public List<DtoSimpleOrder> getAllOrders() {
@@ -55,33 +52,11 @@ public class OrderService {
 
 		order = repository.save(order);
 
-		addDetailsToOrder(dtoOrder, order);
+		List<OrderDetail> orderDetails = detailService.save(order.getOrderNumber(), dtoOrder.getOrderDetails());
 
-		order = repository.save(order);
+		order.setOrderDetails(orderDetails);
 
 		return mapper.orderWithDetailsToDto(order);
 
-	}
-
-	private void addDetailsToOrder(DtoFullOrder dtoOrder, Order order) {
-
-		order.setOrderDetails(new ArrayList<>());
-
-		dtoOrder.getOrderDetails().forEach(detail -> {
-
-			detail.setOrderNumber(order.getOrderNumber());
-			OrderDetail orderDetail = detailMapper.orderDetailFromDto(detail);
-
-			Product product = orderDetail.getProduct();
-
-			int inStock = product.getQuantityInStock();
-			int quantityOrdered = orderDetail.getQuantityOrdered();
-
-			if (inStock >= quantityOrdered) {
-
-				product.setQuantityInStock(inStock - quantityOrdered);
-				order.addOrderDetails(orderDetail);
-			}
-		});
 	}
 }
