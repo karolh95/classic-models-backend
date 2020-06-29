@@ -1,7 +1,11 @@
 package karolh95.classicmodels.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
 
@@ -23,16 +27,20 @@ public class OrderDetailService {
 
 		List<OrderDetail> savedOrderDetails = new ArrayList<>();
 
-		orderDetails.forEach(detail -> {
+		// @formatter:off
+		orderDetails.stream()
+			.filter(distinctByKey(DtoOrderDetail::getProductCode))
+			.forEach(dto->{
 
-			detail.setOrderNumber(orderNumber);
+					dto.setOrderNumber(orderNumber);
 
-			OrderDetail orderDetail = save(detail);
+					OrderDetail orderDetail = save(dto);
 
-			if (orderDetail != null) {
-				savedOrderDetails.add(orderDetail);
-			}
-		});
+					if (orderDetail!=null){
+						savedOrderDetails.add(orderDetail);
+					}
+			});
+		// @formatter:on
 
 		return savedOrderDetails;
 	}
@@ -51,9 +59,16 @@ public class OrderDetailService {
 			product.setQuantityInStock(inStock - quantityOrdered);
 
 			return repository.save(orderDetail);
-			
+
 		} else {
 			return null;
 		}
+	}
+
+	private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+
+		Set<Object> seen = new HashSet<>();
+
+		return t -> seen.add(keyExtractor.apply(t));
 	}
 }
