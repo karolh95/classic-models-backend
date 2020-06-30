@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoFullOrder;
+import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
@@ -19,6 +20,7 @@ public class OrderService {
 
 	private final OrderMapper mapper;
 	private final OrderDetailService detailService;
+	private final PaymentService paymentService;
 	private final OrderRepository repository;
 
 	public List<DtoSimpleOrder> getAllOrders() {
@@ -58,5 +60,16 @@ public class OrderService {
 
 		return mapper.orderWithDetailsToDto(order);
 
+	}
+
+	public DtoPayment generatePayment(DtoFullOrder dtoOrder) {
+
+		Order order = mapper.orderFromDto(dtoOrder);
+
+		if (!order.hasValidIds()) {
+			return null;
+		}
+
+		return paymentService.generatePayment(order);
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.mapper.PaymentMapper;
+import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.Payment;
 import karolh95.classicmodels.model.PaymentPK;
 import karolh95.classicmodels.repository.PaymentRepository;
@@ -55,7 +56,7 @@ public class PaymentService {
 
 		mapper.updateFromDto(dtoPayment, payment);
 
-		if (!payment.hasValidIds()){
+		if (!payment.hasValidIds()) {
 			return null;
 		}
 
@@ -81,5 +82,14 @@ public class PaymentService {
 
 			return payment;
 		}
+	}
+
+	public DtoPayment generatePayment(Order order) {
+
+		Payment payment = new Payment();
+		payment.setCustomer(order.getCustomer());
+		payment.setAmount(order.getPrice());
+
+		return mapper.paymentToDto(payment);
 	}
 }

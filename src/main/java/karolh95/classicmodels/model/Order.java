@@ -1,5 +1,6 @@
 package karolh95.classicmodels.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Comparator;
 import java.util.List;
@@ -74,5 +75,16 @@ public class Order {
 
 	public void sortOrderDetails() {
 		getOrderDetails().sort(Comparator.comparing(OrderDetail::getOrderLineNumber));
+	}
+
+	public BigDecimal getPrice() {
+
+		// @formatter:off
+		BigDecimal ammount = getOrderDetails().stream()
+			.map(OrderDetail::getPrice)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		// @formatter:on
+
+		return ammount;
 	}
 }

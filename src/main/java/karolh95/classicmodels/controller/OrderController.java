@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoFullOrder;
+import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.service.OrderService;
 
@@ -50,6 +51,17 @@ public class OrderController {
 		}
 
 		DtoFullOrder response = service.saveOrder(order);
+
+		if (response == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("generatePayment")
+	public ResponseEntity<DtoPayment> generatePayment(@Valid @RequestBody DtoFullOrder order) {
+
+		DtoPayment response = service.generatePayment(order);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();
