@@ -68,4 +68,16 @@ public class OrderController {
 		}
 		return ResponseEntity.ok(response);
 	}
+
+	@PostMapping("makePayment")
+	public ResponseEntity<DtoPayment> makePayment(@Valid @RequestBody DtoPayment payment) {
+
+		DtoPayment response = service.makePayment(payment);
+
+		if (response == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(response);
+
+	}
 }

@@ -72,4 +72,9 @@ public class OrderService {
 
 		return paymentService.generatePayment(order);
 	}
+
+	public DtoPayment makePayment(DtoPayment payment) {
+
+		return paymentService.savePayment(payment);
+	}
 }

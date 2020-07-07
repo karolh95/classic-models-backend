@@ -1,5 +1,6 @@
 package karolh95.classicmodels.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,36 +53,24 @@ public class PaymentService {
 
 	public DtoPayment savePayment(DtoPayment dtoPayment) {
 
-		Payment payment = getOne(dtoPayment.getCustomerNumber(), dtoPayment.getCheckNumber());
-
-		mapper.updateFromDto(dtoPayment, payment);
+		Payment payment = mapper.paymentFromDto(dtoPayment);
 
 		if (!payment.hasValidIds()) {
 			return null;
 		}
 
+		Optional<Payment> paymentInRepository = repository.findById(payment.getPaymentPK());
+
+		if (paymentInRepository.isPresent()) {
+
+			return null;
+		}
+
+		payment.setPaymentDate(currentDate());
+
 		payment = repository.save(payment);
 
-		return null;
-	}
-
-	private Payment getOne(Long customerNumber, String checkNumber) {
-
-		PaymentPK pk = new PaymentPK(customerNumber, checkNumber);
-		Optional<Payment> optional = repository.findById(pk);
-
-		if (optional.isPresent()) {
-
-			return optional.get();
-
-		} else {
-
-			Payment payment = new Payment();
-
-			payment.setPaymentPK(pk);
-
-			return payment;
-		}
+		return mapper.paymentToDto(payment);
 	}
 
 	public DtoPayment generatePayment(Order order) {
@@ -91,5 +80,10 @@ public class PaymentService {
 		payment.setAmount(order.getPrice());
 
 		return mapper.paymentToDto(payment);
+	}
+
+	private Date currentDate() {
+
+		return new Date(System.currentTimeMillis());
 	}
 }
