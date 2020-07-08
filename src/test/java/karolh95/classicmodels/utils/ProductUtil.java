@@ -1,0 +1,55 @@
+package karolh95.classicmodels.utils;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static karolh95.classicmodels.utils.ProductlineUtil.productline;
+
+import java.math.BigDecimal;
+
+import org.junit.jupiter.api.Assertions;
+
+import karolh95.classicmodels.dto.DtoProduct;
+import karolh95.classicmodels.model.Product;
+import karolh95.classicmodels.model.Productline;
+
+public class ProductUtil {
+
+	public static Product product() {
+
+		Product product = new Product();
+
+		product.setProductCode("productCode");
+		product.setProductName("productName");
+		product.setProductScale("productScale");
+		product.setProductVendor("productVendor");
+		product.setProductDescription("productDescription");
+		product.setQuantityInStock((short) 0);
+		product.setBuyPrice(new BigDecimal("1.00"));
+		product.setMSRP(new BigDecimal("0.25"));
+
+		product.setProductline(productline());
+
+		return product;
+	}
+
+	public static void assertEquals(Product product, DtoProduct dtoProduct) {
+
+		assertNotNull(product, "Product should not be null");
+		assertNotNull(dtoProduct, "DTO Product should not be null");
+
+		Assertions.assertEquals(product.getProductCode(), dtoProduct.getProductCode(), "Product code should match");
+		Assertions.assertEquals(product.getProductName(), dtoProduct.getProductName(), "Product name should match");
+		Assertions.assertEquals(product.getProductScale(), dtoProduct.getProductScale(), "Product scale should match");
+		Assertions.assertEquals(product.getProductVendor(), dtoProduct.getProductVendor(),
+				"Product vendor should match");
+		Assertions.assertEquals(product.getProductDescription(), dtoProduct.getProductDescription(),
+				"Product description should match");
+		Assertions.assertEquals(product.getQuantityInStock(), dtoProduct.getQuantityInStock(),
+				"Quantity in stock should match");
+		Assertions.assertEquals(product.getMSRP(), dtoProduct.getMSRP(), "MSRP should match");
+
+		Productline productline = product.getProductline();
+
+		assertNotNull(productline, "Productline shoud not be null");
+		Assertions.assertEquals(productline.getProductline(), dtoProduct.getProductline(), "Productline should match");
+	}
+}
