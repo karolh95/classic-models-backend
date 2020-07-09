@@ -23,6 +23,20 @@ public class AddressUtil {
 		return address;
 	}
 
+	public static DtoAddress dtoAddress() {
+
+		DtoAddress dtoAddress = new DtoAddress();
+
+		dtoAddress.setAddressLine1("new_addressLine1");
+		dtoAddress.setAddressLine2("new_addressLine2");
+		dtoAddress.setCity("new_city");
+		dtoAddress.setCountry("new_country");
+		dtoAddress.setPhone("new_phone");
+		dtoAddress.setState("new_state");
+
+		return dtoAddress;
+	}
+
 	public static void assertEquals(Address address, DtoAddress dtoAddress) {
 
 		assertNotNull(address, "Address should not be null");
@@ -34,5 +48,10 @@ public class AddressUtil {
 		Assertions.assertEquals(address.getCountry(), dtoAddress.getCountry(), "Country should match");
 		Assertions.assertEquals(address.getState(), dtoAddress.getState(), "State should match");
 		Assertions.assertEquals(address.getPhone(), dtoAddress.getPhone(), "Phone should match");
+	}
+
+	public static void assertUpdated(Address original, DtoAddress dtoAddress, Address address) {
+
+		assertEquals(address, dtoAddress);
 	}
 }

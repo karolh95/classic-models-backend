@@ -1,8 +1,15 @@
 package karolh95.classicmodels.mappers;
 
+import static karolh95.classicmodels.utils.AddressUtil.address;
+import static karolh95.classicmodels.utils.AddressUtil.dtoAddress;
+import static karolh95.classicmodels.utils.AddressUtil.assertEquals;
+import static karolh95.classicmodels.utils.AddressUtil.assertUpdated;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import karolh95.classicmodels.dto.DtoAddress;
@@ -10,42 +17,74 @@ import karolh95.classicmodels.mapper.AddressMapper;
 import karolh95.classicmodels.mapper.AddressMapperImpl;
 import karolh95.classicmodels.model.Address;
 
-public class AddressMapperTests {
+class AddressMapperTests {
 
-	private AddressMapper mapper = new AddressMapperImpl();
+	AddressMapper mapper = new AddressMapperImpl();
 
-	@Test
-	@DisplayName("Should map Address to Dto")
-	public void mapAddressToDto() {
+	Address address;
+	DtoAddress dtoAddress;
 
-		Address address = address();
+	@Nested
+	@DisplayName("addressToDto test")
+	class AddressToDtoTest {
 
-		DtoAddress dtoAddress = this.mapper.addressToDto(address);
+		@BeforeEach
+		void init() {
+			address = address();
+		}
 
-		assertAddressesEqualss(address, dtoAddress);
+		@Test
+		@DisplayName("Should not map null Address")
+		void mapNullAddressToDto() {
+
+			address = null;
+
+			dtoAddress = mapper.addressToDto(null);
+
+			assertNull(dtoAddress, "Dto address should be null");
+		}
+
+		@Test
+		@DisplayName("Should map Address to Dto")
+		void mapAddressToDto() {
+
+			dtoAddress = mapper.addressToDto(address);
+
+			assertEquals(address, dtoAddress);
+		}
 	}
 
-	private void assertAddressesEqualss(Address address, DtoAddress dtoAddress) {
+	@Nested
+	@DisplayName("updateFromDto test")
+	class UpdateFromDtoTest {
 
-		assertEquals(address.getPhone(), dtoAddress.getPhone(), "Phone should match");
-		assertEquals(address.getAddressLine1(), dtoAddress.getAddressLine1(), "Address line 1 should match");
-		assertEquals(address.getAddressLine2(), dtoAddress.getAddressLine2(), "Address line 2 should match");
-		assertEquals(address.getCity(), dtoAddress.getCity(), "City should match");
-		assertEquals(address.getState(), dtoAddress.getState(), "State should match");
-		assertEquals(address.getCountry(), dtoAddress.getCountry(), "Country should match");
+		final Address original = address();
+
+		@BeforeEach
+		void init() {
+			dtoAddress = dtoAddress();
+		}
+
+		@Test
+		@DisplayName("Should not update Address when dto is null")
+		void updateAddressFromNullDto() {
+
+			dtoAddress = null;
+
+			mapper.updateFromDto(dtoAddress, address);
+
+			assertEquals(original, address);
+		}
+
+		@Test
+		@DisplayName("Should update Address from dto")
+		void updateAddressFromDto() {
+
+			mapper.updateFromDto(dtoAddress, address);
+
+			assertUpdated(original, dtoAddress, address);
+		}
+
 	}
 
-	private Address address() {
-
-		Address address = new Address();
-
-		address.setAddressLine1("addressLine1");
-		address.setAddressLine2("addressLine2");
-		address.setCity("city");
-		address.setCountry("country");
-		address.setPhone("phone");
-		address.setState("state");
-
-		return address;
-	}
 }
