@@ -1,14 +1,18 @@
 package karolh95.classicmodels.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoOrderDetail;
 import karolh95.classicmodels.mapper.OrderDetailMapper;
 import karolh95.classicmodels.model.OrderDetail;
-import karolh95.classicmodels.model.OrderDetailPK;
+import karolh95.classicmodels.model.Product;
 import karolh95.classicmodels.repository.OrderDetailRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -16,71 +20,55 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderDetailService {
 
-	private final OrderDetailMapper mapper;
 	private final OrderDetailRepository repository;
+	private final OrderDetailMapper mapper;
 
-	public List<DtoOrderDetail> getAllOrderDetails() {
+	public List<OrderDetail> save(Long orderNumber, List<DtoOrderDetail> orderDetails) {
 
-		List<OrderDetail> orderDetails = repository.findAll();
-		return mapper.orderDetailsToDtos(orderDetails);
+		List<OrderDetail> savedOrderDetails = new ArrayList<>();
+
+		// @formatter:off
+		orderDetails.stream()
+			.filter(distinctByKey(DtoOrderDetail::getProductCode))
+			.forEach(dto->{
+
+					dto.setOrderNumber(orderNumber);
+
+					OrderDetail orderDetail = save(dto);
+
+					if (orderDetail!=null){
+						savedOrderDetails.add(orderDetail);
+					}
+			});
+		// @formatter:on
+
+		return savedOrderDetails;
 	}
 
-	public List<DtoOrderDetail> getOrderDetails(Long orderNumber) {
+	public OrderDetail save(DtoOrderDetail dtoOrderDetail) {
 
-		List<OrderDetail> orderDetails = getOrderDetailsByOrderNumber(orderNumber);
-		return mapper.orderDetailsToDtos(orderDetails);
-	}
+		OrderDetail orderDetail = mapper.orderDetailFromDto(dtoOrderDetail);
 
-	private List<OrderDetail> getOrderDetailsByOrderNumber(Long orderNumber) {
+		Product product = orderDetail.getProduct();
 
-		return repository.findByOrderDetailPKOrderNumber(orderNumber);
-	}
+		int inStock = product.getQuantityInStock();
+		int quantityOrdered = orderDetail.getQuantityOrdered();
 
-	public DtoOrderDetail getOrderDetail(Long orderNumber, String productCode) {
+		if (inStock >= quantityOrdered) {
 
-		OrderDetailPK pk = new OrderDetailPK(orderNumber, productCode);
+			product.setQuantityInStock(inStock - quantityOrdered);
 
-		Optional<OrderDetail> optional = repository.findById(pk);
-
-		if (optional.isEmpty()) {
-			return null;
-		}
-
-		OrderDetail orderDetail = optional.get();
-		return mapper.orderToDto(orderDetail);
-	}
-
-	public DtoOrderDetail saveOrderDetail(DtoOrderDetail dtoOrderDetail) {
-
-		OrderDetail orderDetail = getOne(dtoOrderDetail.getOrderNumber(), dtoOrderDetail.getProductCode());
-
-		mapper.updateFromDto(dtoOrderDetail, orderDetail);
-
-		if (!orderDetail.hasValidIds()) {
-			return null;
-		}
-
-		orderDetail = repository.save(orderDetail);
-
-		return mapper.orderToDto(orderDetail);
-	}
-
-	private OrderDetail getOne(Long orderNumber, String productCode) {
-
-		OrderDetailPK pk = new OrderDetailPK(orderNumber, productCode);
-		Optional<OrderDetail> optional = repository.findById(pk);
-
-		if (optional.isPresent()) {
-
-			return optional.get();
+			return repository.save(orderDetail);
 
 		} else {
-
-			OrderDetail orderDetail = new OrderDetail();
-
-			orderDetail.setOrderDetailPK(pk);
-
-			return orderDetail;
+			return null;
 		}
+	}
+
+	private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+
+		Set<Object> seen = new HashSet<>();
+
+		return t -> seen.add(keyExtractor.apply(t));
 	}
 }

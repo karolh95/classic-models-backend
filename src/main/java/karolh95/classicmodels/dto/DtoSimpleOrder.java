@@ -9,9 +9,8 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class DtoOrder {
+public class DtoSimpleOrder {
 
-	@NotNull
 	private Long orderNumber;
 
 	@NotNull

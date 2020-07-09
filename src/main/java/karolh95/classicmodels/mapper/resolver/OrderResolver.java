@@ -16,12 +16,16 @@ public class OrderResolver {
 
 	public Order map(Long orderNumber) {
 
+		if (orderNumber == null) {
+			return null;
+		}
+
 		Optional<Order> optional = repository.findById(orderNumber);
 
 		if (optional.isPresent()) {
 
 			return optional.get();
-			
+
 		} else {
 
 			return null;

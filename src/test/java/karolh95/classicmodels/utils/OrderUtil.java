@@ -6,7 +6,7 @@ import java.sql.Date;
 
 import org.junit.jupiter.api.Assertions;
 
-import karolh95.classicmodels.dto.DtoOrder;
+import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.model.Order;
 
@@ -36,7 +36,7 @@ public class OrderUtil {
 		return order;
 	}
 
-	public static void assertEquals(Order order, DtoOrder dtoOrder) {
+	public static void assertEquals(Order order, DtoFullOrder dtoOrder) {
 
 		assertNotNull(order, "Order should not be null");
 		assertNotNull(dtoOrder, "DTO order should not be null");

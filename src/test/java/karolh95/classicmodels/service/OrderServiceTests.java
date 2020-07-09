@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import karolh95.classicmodels.dto.DtoOrder;
+import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.model.Order;
@@ -43,8 +43,8 @@ public class OrderServiceTests {
 		when(repository.getOne(anyLong())).thenThrow(new EntityNotFoundException());
 		when(repository.save(any(Order.class))).thenReturn(order());
 
-		DtoOrder order = dtoOrder();
-		DtoOrder response = service.saveOrder(order);
+		DtoFullOrder order = DtoFullOrder();
+		DtoFullOrder response = service.saveOrder(order);
 
 		assertEquals(order, response, "Order and response should match");
 	}
@@ -56,8 +56,8 @@ public class OrderServiceTests {
 		when(repository.getOne(anyLong())).thenReturn(order());
 		when(repository.save(any(Order.class))).thenReturn(modifiedOrder());
 
-		DtoOrder order = modifiedDtoOrder();
-		DtoOrder response = service.saveOrder(order);
+		DtoFullOrder order = modifiedDtoFullOrder();
+		DtoFullOrder response = service.saveOrder(order);
 
 		assertEquals(order, response, "Order and response should match");
 	}
@@ -86,9 +86,9 @@ public class OrderServiceTests {
 		return customer;
 	}
 
-	private DtoOrder dtoOrder() {
+	private DtoFullOrder DtoFullOrder() {
 
-		return mapper.orderToDto(order());
+		return mapper.orderWithDetailsToDto(order());
 	}
 
 	private Order modifiedOrder() {
@@ -101,8 +101,8 @@ public class OrderServiceTests {
 		return order;
 	}
 
-	private DtoOrder modifiedDtoOrder() {
+	private DtoFullOrder modifiedDtoFullOrder() {
 
-		return mapper.orderToDto(modifiedOrder());
+		return mapper.orderWithDetailsToDto(modifiedOrder());
 	}
 }
