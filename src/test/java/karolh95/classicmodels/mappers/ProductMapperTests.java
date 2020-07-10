@@ -3,7 +3,7 @@ package karolh95.classicmodels.mappers;
 import static karolh95.classicmodels.utils.ProductUtil.assertEquals;
 import static karolh95.classicmodels.utils.ProductUtil.assertEqualsWithoutProductline;
 import static karolh95.classicmodels.utils.ProductUtil.assertUpdated;
-import static karolh95.classicmodels.utils.ProductUtil.dtoProduct;
+import static karolh95.classicmodels.utils.ProductUtil.dtoNewProduct;
 import static karolh95.classicmodels.utils.ProductUtil.product;
 import static karolh95.classicmodels.utils.ProductUtil.products;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -143,7 +143,7 @@ class ProductMapperTests {
 
 			MockitoAnnotations.initMocks(ProductMapperTests.this);
 			product = product();
-			dtoProduct = dtoProduct();
+			dtoProduct = dtoNewProduct();
 		}
 
 		@Test

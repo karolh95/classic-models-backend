@@ -32,7 +32,7 @@ public class OfficeUtil {
 		dtoOffice.setOfficeCode("2");
 		dtoOffice.setPostalCode("new_postalCode");
 		dtoOffice.setTerritory("new_territory");
-		dtoOffice.setAddress(AddressUtil.dtoAddress());
+		dtoOffice.setAddress(AddressUtil.dtoNewAddress());
 
 		return dtoOffice;
 	}

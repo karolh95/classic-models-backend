@@ -44,18 +44,18 @@ public class ProductUtil {
 		return products;
 	}
 
-	public static DtoProduct dtoProduct() {
+	public static DtoProduct dtoNewProduct() {
 
 		DtoProduct dtoProduct = new DtoProduct();
 
-		dtoProduct.setProductCode("productCode");
-		dtoProduct.setProductName("productName");
-		dtoProduct.setProductScale("productScale");
-		dtoProduct.setProductVendor("productVendor");
-		dtoProduct.setProductDescription("productDescription");
-		dtoProduct.setQuantityInStock((short) 0);
-		dtoProduct.setBuyPrice(new BigDecimal("1.00"));
-		dtoProduct.setMSRP(new BigDecimal("0.25"));
+		dtoProduct.setProductCode("new_productCode");
+		dtoProduct.setProductName("new_productName");
+		dtoProduct.setProductScale("new_productScale");
+		dtoProduct.setProductVendor("new_productVendor");
+		dtoProduct.setProductDescription("new_productDescription");
+		dtoProduct.setQuantityInStock((short) 1);
+		dtoProduct.setBuyPrice(new BigDecimal("2.00"));
+		dtoProduct.setMSRP(new BigDecimal("0.50"));
 
 		return dtoProduct;
 	}

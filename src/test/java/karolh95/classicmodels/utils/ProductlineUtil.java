@@ -25,14 +25,14 @@ public class ProductlineUtil {
 		return productline;
 	}
 
-	public static DtoProductline dtoProductline() {
+	public static DtoProductline dtoNewProductline() {
 
 		DtoProductline dtoProductline = new DtoProductline();
 
-		dtoProductline.setProductline("productline");
-		dtoProductline.setTextDescription("textDescription");
-		dtoProductline.setHtmlDescription("htmlDescription");
-		dtoProductline.setImage(new byte[1]);
+		dtoProductline.setProductline("new_productline");
+		dtoProductline.setTextDescription("new_textDescription");
+		dtoProductline.setHtmlDescription("new_htmlDescription");
+		dtoProductline.setImage(new byte[2]);
 
 		return dtoProductline;
 	}

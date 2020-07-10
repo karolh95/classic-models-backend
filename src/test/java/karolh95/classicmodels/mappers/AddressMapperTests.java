@@ -1,7 +1,7 @@
 package karolh95.classicmodels.mappers;
 
 import static karolh95.classicmodels.utils.AddressUtil.address;
-import static karolh95.classicmodels.utils.AddressUtil.dtoAddress;
+import static karolh95.classicmodels.utils.AddressUtil.dtoNewAddress;
 import static karolh95.classicmodels.utils.AddressUtil.assertEquals;
 import static karolh95.classicmodels.utils.AddressUtil.assertUpdated;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,14 +24,14 @@ class AddressMapperTests {
 	Address address;
 	DtoAddress dtoAddress;
 
+	@BeforeEach
+	void init() {
+		address = address();
+	}
+
 	@Nested
 	@DisplayName("addressToDto test")
 	class AddressToDtoTest {
-
-		@BeforeEach
-		void init() {
-			address = address();
-		}
 
 		@Test
 		@DisplayName("Should not map null Address")
@@ -62,7 +62,7 @@ class AddressMapperTests {
 
 		@BeforeEach
 		void init() {
-			dtoAddress = dtoAddress();
+			dtoAddress = dtoNewAddress();
 		}
 
 		@Test

@@ -23,7 +23,7 @@ public class AddressUtil {
 		return address;
 	}
 
-	public static DtoAddress dtoAddress() {
+	public static DtoAddress dtoNewAddress() {
 
 		DtoAddress dtoAddress = new DtoAddress();
 
