@@ -16,6 +16,10 @@ public class ProductResolver {
 
 	public Product map(String productCode) {
 
+		if (productCode == null) {
+			return null;
+		}
+
 		Optional<Product> optional = repository.findById(productCode);
 
 		if (optional.isPresent()) {
