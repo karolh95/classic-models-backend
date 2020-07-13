@@ -1,100 +1,188 @@
 package karolh95.classicmodels.mappers;
 
+import static karolh95.classicmodels.utils.CustomerUtil.assertEquals;
+import static karolh95.classicmodels.utils.CustomerUtil.assertUpdated;
+import static karolh95.classicmodels.utils.CustomerUtil.customer;
+import static karolh95.classicmodels.utils.CustomerUtil.customers;
+import static karolh95.classicmodels.utils.CustomerUtil.dtoNewCustomer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
+import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
-import karolh95.classicmodels.dto.DtoAddress;
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.mapper.AddressMapper;
-import karolh95.classicmodels.mapper.AddressMapperImpl;
 import karolh95.classicmodels.mapper.CustomerMapper;
 import karolh95.classicmodels.mapper.CustomerMapperImpl;
 import karolh95.classicmodels.mapper.resolver.EmployeeResolver;
 import karolh95.classicmodels.model.Address;
 import karolh95.classicmodels.model.Customer;
+import karolh95.classicmodels.utils.AddressUtil;
 
 public class CustomerMapperTests {
 
-	@Spy
-	private AddressMapper addressMapper = new AddressMapperImpl();
+	@Mock
+	private AddressMapper addressMapper;
 
-	@Spy
+	@Mock
 	private EmployeeResolver resolver;
 
 	@InjectMocks
 	private CustomerMapper mapper = new CustomerMapperImpl();
 
-	@Test
-	@DisplayName("Should map Customer to Dto")
-	public void mapCustomerToDto() {
-
+	@BeforeEach
+	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		doReturn(null).when(resolver).map(anyLong());
-		Customer customer = customer();
+		when(addressMapper.addressToDto(any(Address.class))).thenReturn(AddressUtil.dtoAddress());
 
-		DtoCustomer dtoCustomer = mapper.customerToDto(customer);
-
-		assertCustomersEquals(customer, dtoCustomer);
 	}
 
-	protected void assertCustomersEquals(Customer customer, DtoCustomer dtoCustomer) {
+	@Nested
+	class CustomerToDtoTests {
 
-		assertEquals(customer.getCustomerNumber(), dtoCustomer.getCustomerNumber(), "Customer number should match");
-		assertEquals(customer.getCustomerName(), dtoCustomer.getCustomerName(), "Customer name should match");
-		assertEquals(customer.getContactLastName(), dtoCustomer.getContactLastName(), "Contact last name should match");
-		assertEquals(customer.getContactFirstName(), dtoCustomer.getContactFirstName(),
-				"Contact first name should match");
-		assertEquals(customer.getPostalCode(), dtoCustomer.getPostalCode(), "Postal code should match");
-		assertEquals(customer.getCreditLimit(), dtoCustomer.getCreditLimit(), "Credit limit should match");
+		@Test
+		@DisplayName("Should not map null customer")
+		void mapNullCustomer() {
 
-		assertAddressesEqualss(customer.getAddress(), dtoCustomer.getAddress());
+			Customer customer = null;
+
+			DtoCustomer dtoCustomer = mapper.customerToDto(customer);
+
+			assertNull(dtoCustomer, "Dto customer should be null");
+		}
+
+		@Test
+		@DisplayName("Should map Customer to Dto")
+		public void mapCustomerToDto() {
+
+			Customer customer = customer();
+
+			DtoCustomer dtoCustomer = mapper.customerToDto(customer);
+
+			assertEquals(customer, dtoCustomer);
+		}
+
 	}
 
-	private Customer customer() {
+	@Nested
+	class CustomersToDtosTests {
 
-		Customer customer = new Customer();
+		List<Customer> customers;
+		List<DtoCustomer> dtoCustomers;
 
-		customer.setCustomerNumber(1L);
-		customer.setCustomerName("customerName");
-		customer.setContactLastName("contactLastName");
-		customer.setContactFirstName("contactFirstName");
-		customer.setAddress(address());
-		customer.setPostalCode("postalCode");
-		customer.setCreditLimit(new BigDecimal("10000.00"));
+		@BeforeEach
+		void init() {
 
-		return customer;
+			customers = customers();
+		}
+
+		@Test
+		@DisplayName("Should not map null customers")
+		void mapNullCustomersToDtos() {
+
+			customers = null;
+
+			dtoCustomers = mapper.customersToDtos(customers);
+
+			assertNull(dtoCustomers, "Customers should be null");
+		}
+
+		@Test
+		@DisplayName("Should map empty customers to empty dtos")
+		void mapEmptyCustomersToDtos() {
+
+			customers.clear();
+
+			dtoCustomers = mapper.customersToDtos(customers);
+
+			assertTrue(dtoCustomers.isEmpty(), "Customers should not contain elements");
+		}
+
+		@Test
+		@DisplayName("Should map customers to dtos")
+		void mapCustomersToDtos() {
+
+			dtoCustomers = mapper.customersToDtos(customers);
+
+			for (int i = 0; i < customers.size(); i++) {
+
+				Customer customer = customers.get(i);
+				DtoCustomer dtoCustomer = dtoCustomers.get(i);
+
+				assertEquals(customer, dtoCustomer);
+			}
+		}
 	}
 
-	private void assertAddressesEqualss(Address address, DtoAddress dtoAddress) {
+	@Nested
+	class UpdateFromDtoTests {
 
-		assertEquals(address.getPhone(), dtoAddress.getPhone(), "Phone should match");
-		assertEquals(address.getAddressLine1(), dtoAddress.getAddressLine1(), "Address line 1 should match");
-		assertEquals(address.getAddressLine2(), dtoAddress.getAddressLine2(), "Address line 2 should match");
-		assertEquals(address.getCity(), dtoAddress.getCity(), "City should match");
-		assertEquals(address.getState(), dtoAddress.getState(), "State should match");
-		assertEquals(address.getCountry(), dtoAddress.getCountry(), "Country should match");
-	}
+		final Customer original = customer();
+		Customer customer;
+		DtoCustomer dtoCustomer;
 
-	private Address address() {
+		@BeforeEach
+		void init() {
+			customer = customer();
+			dtoCustomer = dtoNewCustomer();
+		}
 
-		Address address = new Address();
+		@Test
+		@DisplayName("Should not update Customer from null dto")
+		void updateCustomerFromNullDto() {
 
-		address.setAddressLine1("addressLine1");
-		address.setAddressLine2("addressLine2");
-		address.setCity("city");
-		address.setCountry("country");
-		address.setPhone("phone");
-		address.setState("state");
+			dtoCustomer = null;
 
-		return address;
+			mapper.updateFromDto(dtoCustomer, customer);
+
+			assertEquals(original, customer);
+		}
+
+		@Test
+		@DisplayName("Should update Customer without address from dto")
+		void updateCustomerWithoutAddressFromDto() {
+
+			customer.setAddress(null);
+
+			mapper.updateFromDto(dtoCustomer, customer);
+
+			assertNotNull(customer.getAddress(), "Address should not be null");
+			assertUpdated(original, dtoCustomer, customer);
+
+		}
+
+		@Test
+		@DisplayName("Should update Customer from dto without address")
+		void updateCustomerFromDtoWithoutAddress() {
+
+			dtoCustomer.setAddress(null);
+
+			mapper.updateFromDto(dtoCustomer, customer);
+
+			assertNull(customer.getAddress(), "Address should be null");
+			assertUpdated(original, dtoCustomer, customer);
+		}
+
+		@Test
+		@DisplayName("Should update Customer from dto")
+		void updateCustomerFromDto() {
+
+			mapper.updateFromDto(dtoCustomer, customer);
+
+			assertUpdated(original, dtoCustomer, customer);
+		}
+
 	}
 }

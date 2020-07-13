@@ -3,6 +3,8 @@ package karolh95.classicmodels.utils;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 
@@ -28,6 +30,33 @@ public class CustomerUtil {
 		return customer;
 	}
 
+	public static DtoCustomer dtoNewCustomer() {
+
+		DtoCustomer customer = new DtoCustomer();
+
+		customer.setCustomerNumber(2L);
+		customer.setCustomerName("new_customerName");
+		customer.setContactLastName("new_contactLastName");
+		customer.setContactFirstName("new_contactFirstName");
+		customer.setPostalCode("new_postalCode");
+		customer.setCreditLimit(new BigDecimal("20000.00"));
+
+		customer.setAddress(AddressUtil.dtoNewAddress());
+
+		return customer;
+	}
+
+	public static List<Customer> customers() {
+
+		List<Customer> customers = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			customers.add(customer());
+		}
+
+		return customers;
+	}
+
 	public static void assertEquals(Customer customer, DtoCustomer dtoCustomer) {
 
 		assertNotNull(customer, "Customer should not be null");
@@ -50,5 +79,19 @@ public class CustomerUtil {
 
 		assertNotNull(employee, "Employee should not be null");
 		Assertions.assertEquals(employee.getEmployeeNumber(), dtoCustomer.getCustomerNumber());
+	}
+
+	public static void assertUpdated(Customer original, DtoCustomer dtoCustomer, Customer customer) {
+
+		Assertions.assertEquals(original.getCustomerNumber(), customer.getCustomerNumber(),
+				"Customer number should match");
+		Assertions.assertEquals(dtoCustomer.getCustomerName(), customer.getCustomerName(),
+				"Customer name should match");
+		Assertions.assertEquals(dtoCustomer.getContactLastName(), customer.getContactLastName(),
+				"Constact last name should match");
+		Assertions.assertEquals(dtoCustomer.getContactFirstName(), customer.getContactFirstName(),
+				"Contact first name should match");
+		Assertions.assertEquals(dtoCustomer.getPostalCode(), customer.getPostalCode(), "Postal code should match");
+		Assertions.assertEquals(dtoCustomer.getCreditLimit(), customer.getCreditLimit(), "Credit limit should match");
 	}
 }

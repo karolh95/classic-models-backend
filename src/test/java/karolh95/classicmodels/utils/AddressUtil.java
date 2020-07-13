@@ -23,6 +23,20 @@ public class AddressUtil {
 		return address;
 	}
 
+	public static DtoAddress dtoAddress() {
+
+		DtoAddress address = dtoNewAddress();
+
+		address.setAddressLine1("addressLine1");
+		address.setAddressLine2("addressLine2");
+		address.setCity("city");
+		address.setCountry("country");
+		address.setPhone("phone");
+		address.setState("state");
+
+		return address;
+	}
+
 	public static DtoAddress dtoNewAddress() {
 
 		DtoAddress dtoAddress = new DtoAddress();
