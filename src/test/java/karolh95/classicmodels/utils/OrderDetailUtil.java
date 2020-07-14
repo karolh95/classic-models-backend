@@ -3,6 +3,8 @@ package karolh95.classicmodels.utils;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 
@@ -30,6 +32,30 @@ public class OrderDetailUtil {
 		orderDetail.setOrderLineNumber((short) 1);
 
 		return orderDetail;
+	}
+
+	public static DtoOrderDetail dtoOrderDetail() {
+
+		DtoOrderDetail orderDetail = new DtoOrderDetail();
+
+		orderDetail.setOrderNumber(OrderUtil.order().getOrderNumber());
+		orderDetail.setProductCode(ProductUtil.product().getProductCode());
+		orderDetail.setQuantityOrdered(1024);
+		orderDetail.setPriceEach(new BigDecimal(10.0));
+		orderDetail.setOrderLineNumber((short) 1);
+
+		return orderDetail;
+	}
+
+	public static List<OrderDetail> orderDetails() {
+
+		List<OrderDetail> orderDetails = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			orderDetails.add(orderDetail());
+		}
+
+		return orderDetails;
 	}
 
 	public static void assertEquals(OrderDetail orderDetail, DtoOrderDetail dtoOrderDetail) {
