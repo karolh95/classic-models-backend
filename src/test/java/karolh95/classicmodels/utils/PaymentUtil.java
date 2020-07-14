@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 
@@ -32,6 +34,29 @@ public class PaymentUtil {
 		payment.setCustomer(customer);
 
 		return payment;
+	}
+
+	public static DtoPayment dtoPayment() {
+
+		DtoPayment payment = new DtoPayment();
+
+		payment.setCheckNumber("checkNumber");
+		payment.setCustomerNumber(CustomerUtil.customer().getCustomerNumber());
+		payment.setAmount(new BigDecimal("25.99"));
+		payment.setPaymentDate(new Date(NOW));
+
+		return payment;
+	}
+
+	public static List<Payment> payments() {
+
+		List<Payment> payments = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			payments.add(payment());
+		}
+
+		return payments;
 	}
 
 	public static void assertEquals(Payment payment, DtoPayment dtoPayment) {
