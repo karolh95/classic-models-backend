@@ -20,8 +20,8 @@ public class OrderDetailUtil {
 
 		OrderDetail orderDetail = new OrderDetail();
 
-		Order order = OrderUtil.order();
-		Product product = ProductUtil.product();
+		Order order = order();
+		Product product = product();
 		OrderDetailPK pk = new OrderDetailPK(order.getOrderNumber(), product.getProductCode());
 
 		orderDetail.setOrder(order);
@@ -84,6 +84,23 @@ public class OrderDetailUtil {
 
 		assertNotNull(product, "Product should not be null");
 		Assertions.assertEquals(product.getProductCode(), dtoOrderDetail.getProductCode());
+	}
 
+	private static Order order() {
+
+		Order order = new Order();
+
+		order.setOrderNumber(OrderUtil.order().getOrderNumber());
+
+		return order;
+	}
+
+	private static Product product() {
+
+		Product product = new Product();
+
+		product.setProductCode(ProductUtil.product().getProductCode());
+
+		return product;
 	}
 }

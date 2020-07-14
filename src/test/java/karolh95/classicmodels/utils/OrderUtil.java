@@ -3,10 +3,12 @@ package karolh95.classicmodels.utils;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 
-import karolh95.classicmodels.dto.DtoFullOrder;
+import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.model.Order;
 
@@ -31,12 +33,23 @@ public class OrderUtil {
 		order.setStatus("status");
 		order.setComments("comments");
 
-		order.setCustomer(CustomerUtil.customer());
+		order.setCustomer(customer());
 
 		return order;
 	}
 
-	public static void assertEquals(Order order, DtoFullOrder dtoOrder) {
+	public static List<Order> orders() {
+
+		List<Order> orders = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			orders.add(order());
+		}
+
+		return orders;
+	}
+
+	public static void assertEquals(Order order, DtoSimpleOrder dtoOrder) {
 
 		assertNotNull(order, "Order should not be null");
 		assertNotNull(dtoOrder, "DTO order should not be null");
@@ -53,5 +66,14 @@ public class OrderUtil {
 		assertNotNull(customer, "Customer should not be nnull");
 		Assertions.assertEquals(customer.getCustomerNumber(), dtoOrder.getCustomerNumber(),
 				"Customer number should match");
+	}
+
+	private static Customer customer() {
+
+		Customer customer = new Customer();
+
+		customer.setCustomerNumber(CustomerUtil.customer().getCustomerNumber());
+
+		return customer;
 	}
 }
