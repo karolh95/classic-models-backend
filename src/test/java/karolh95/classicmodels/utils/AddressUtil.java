@@ -7,18 +7,35 @@ import org.junit.jupiter.api.Assertions;
 import karolh95.classicmodels.dto.DtoAddress;
 import karolh95.classicmodels.model.Address;
 
-public class AddressUtil {
+public final class AddressUtil {
+
+	private static final String ADDRESS_LINE_1 = "addressLine1";
+	private static final String ADDRESS_LINE_2 = "addressLine2";
+	private static final String CITY = "city";
+	private static final String COUNRTY = "country";
+	private static final String PHONE = "phone";
+	private static final String STATE = "state";
+
+	private static final String NEW_ADDRESS_LINE_1 = "new_addressLine1";
+	private static final String NEW_ADDRESS_LINE_2 = "new_addressLine2";
+	private static final String NEW_CITY = "new_city";
+	private static final String NEW_COUNTRY = "new_country";
+	private static final String NEW_PHONE = "new_phone";
+	private static final String NEW_STATE = "new_state";
+
+	private AddressUtil() {
+	}
 
 	public static Address address() {
 
 		Address address = new Address();
 
-		address.setAddressLine1("addressLine1");
-		address.setAddressLine2("addressLine2");
-		address.setCity("city");
-		address.setCountry("country");
-		address.setPhone("phone");
-		address.setState("state");
+		address.setAddressLine1(ADDRESS_LINE_1);
+		address.setAddressLine2(ADDRESS_LINE_2);
+		address.setCity(CITY);
+		address.setCountry(COUNRTY);
+		address.setPhone(PHONE);
+		address.setState(STATE);
 
 		return address;
 	}
@@ -27,12 +44,12 @@ public class AddressUtil {
 
 		DtoAddress address = dtoNewAddress();
 
-		address.setAddressLine1("addressLine1");
-		address.setAddressLine2("addressLine2");
-		address.setCity("city");
-		address.setCountry("country");
-		address.setPhone("phone");
-		address.setState("state");
+		address.setAddressLine1(ADDRESS_LINE_1);
+		address.setAddressLine2(ADDRESS_LINE_2);
+		address.setCity(CITY);
+		address.setCountry(COUNRTY);
+		address.setPhone(PHONE);
+		address.setState(STATE);
 
 		return address;
 	}
@@ -41,12 +58,12 @@ public class AddressUtil {
 
 		DtoAddress dtoAddress = new DtoAddress();
 
-		dtoAddress.setAddressLine1("new_addressLine1");
-		dtoAddress.setAddressLine2("new_addressLine2");
-		dtoAddress.setCity("new_city");
-		dtoAddress.setCountry("new_country");
-		dtoAddress.setPhone("new_phone");
-		dtoAddress.setState("new_state");
+		dtoAddress.setAddressLine1(NEW_ADDRESS_LINE_1);
+		dtoAddress.setAddressLine2(NEW_ADDRESS_LINE_2);
+		dtoAddress.setCity(NEW_CITY);
+		dtoAddress.setCountry(NEW_COUNTRY);
+		dtoAddress.setPhone(NEW_PHONE);
+		dtoAddress.setState(NEW_STATE);
 
 		return dtoAddress;
 	}

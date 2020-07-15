@@ -12,17 +12,42 @@ import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.model.Employee;
 
-public class CustomerUtil {
+public final class CustomerUtil {
+
+	private static final String CUSTOMER_NAME = "customerName";
+	private static final String CONTACT_LAST_NAME = "contactLastName";
+	private static final String CONTACT_FIRST_NAME = "contactFirstName";
+	private static final String POSTAL_CODE = "postalCode";
+	private static final BigDecimal CREDIT_LIMIT = new BigDecimal("10000.00");
+
+	private static final String NEW_CUSTOMER_NAME = "new_customerName";
+	private static final String NEW_CONTACT_LAST_NAME = "new_contactLastName";
+	private static final String NEW_CONTACT_FIRST_NAME = "new_contactFirstName";
+	private static final String NEW_POSTAL_CODE = "new_postalCode";
+	private static final BigDecimal NEW_CREDIT_LIMIT = new BigDecimal("20000.00");
+
+	private static final Long CUSTOMER_NUMBER_MIN = 1L;
+	private static final Long NEW_CUSTOMER_NUMBER = 2L;
+	private static final Long CUSTOMER_NUMBER_MAX = 6L;
+
+	private CustomerUtil() {
+	}
+
 	public static Customer customer() {
+
+		return customer(CUSTOMER_NUMBER_MIN);
+	}
+
+	private static Customer customer(Long customerNumber) {
 
 		Customer customer = new Customer();
 
-		customer.setCustomerNumber(1L);
-		customer.setCustomerName("customerName");
-		customer.setContactLastName("contactLastName");
-		customer.setContactFirstName("contactFirstName");
-		customer.setPostalCode("postalCode");
-		customer.setCreditLimit(new BigDecimal("10000.00"));
+		customer.setCustomerNumber(customerNumber);
+		customer.setCustomerName(CUSTOMER_NAME);
+		customer.setContactLastName(CONTACT_LAST_NAME);
+		customer.setContactFirstName(CONTACT_FIRST_NAME);
+		customer.setPostalCode(POSTAL_CODE);
+		customer.setCreditLimit(CREDIT_LIMIT);
 
 		customer.setAddress(AddressUtil.address());
 		customer.setEmployee(EmployeeUtil.employee());
@@ -34,14 +59,15 @@ public class CustomerUtil {
 
 		DtoCustomer customer = new DtoCustomer();
 
-		customer.setCustomerNumber(2L);
-		customer.setCustomerName("new_customerName");
-		customer.setContactLastName("new_contactLastName");
-		customer.setContactFirstName("new_contactFirstName");
-		customer.setPostalCode("new_postalCode");
-		customer.setCreditLimit(new BigDecimal("20000.00"));
+		customer.setCustomerNumber(NEW_CUSTOMER_NUMBER);
+		customer.setCustomerName(NEW_CUSTOMER_NAME);
+		customer.setContactLastName(NEW_CONTACT_LAST_NAME);
+		customer.setContactFirstName(NEW_CONTACT_FIRST_NAME);
+		customer.setPostalCode(NEW_POSTAL_CODE);
+		customer.setCreditLimit(NEW_CREDIT_LIMIT);
 
 		customer.setAddress(AddressUtil.dtoNewAddress());
+		customer.setSalesRepEmployeeNumber(EmployeeUtil.dtoNewEmployee().getEmployeeNumber());
 
 		return customer;
 	}
@@ -50,8 +76,8 @@ public class CustomerUtil {
 
 		List<Customer> customers = new ArrayList<>();
 
-		for (int i = 0; i < 5; i++) {
-			customers.add(customer());
+		for (Long customerNumber = CUSTOMER_NUMBER_MIN; customerNumber < CUSTOMER_NUMBER_MAX; customerNumber++) {
+			customers.add(customer(customerNumber));
 		}
 
 		return customers;
@@ -62,36 +88,38 @@ public class CustomerUtil {
 		assertNotNull(customer, "Customer should not be null");
 		assertNotNull(dtoCustomer, "DTO customer should not be null");
 
-		Assertions.assertEquals(customer.getCustomerNumber(), dtoCustomer.getCustomerNumber(),
-				"Customer number should match");
+		assertCustomersNumbersEquals(customer.getCustomerNumber(), dtoCustomer.getCustomerNumber());
+		assertModifiableFieldsEquals(customer, dtoCustomer);
+		assertEmployeesNumbersEquals(customer.getEmployee(), dtoCustomer.getSalesRepEmployeeNumber());
+	}
+
+	public static void assertUpdated(Customer original, DtoCustomer dtoCustomer, Customer customer) {
+
+		assertCustomersNumbersEquals(original.getCustomerNumber(), customer.getCustomerNumber());
+		assertModifiableFieldsEquals(customer, dtoCustomer);
+	}
+
+	private static void assertCustomersNumbersEquals(Long expected, Long actual) {
+
+		Assertions.assertEquals(expected, actual, "Customer number should match");
+	}
+
+	private static void assertEmployeesNumbersEquals(Employee employee, Long employeeNumber) {
+
+		assertNotNull(employee, "Employee should not be null");
+		Assertions.assertEquals(employee.getEmployeeNumber(), employeeNumber, "Employee number should match");
+	}
+
+	private static void assertModifiableFieldsEquals(Customer customer, DtoCustomer dtoCustomer) {
+
 		Assertions.assertEquals(customer.getCustomerName(), dtoCustomer.getCustomerName(),
 				"Customer name should match");
 		Assertions.assertEquals(customer.getContactLastName(), dtoCustomer.getContactLastName(),
 				"Contact last name should match");
 		Assertions.assertEquals(customer.getContactFirstName(), dtoCustomer.getContactFirstName(),
 				"Contact first name should match");
+
 		Assertions.assertEquals(customer.getPostalCode(), dtoCustomer.getPostalCode(), "Postal code should match");
 		Assertions.assertEquals(customer.getCreditLimit(), dtoCustomer.getCreditLimit(), "Credit limit should match");
-
-		AddressUtil.assertEquals(customer.getAddress(), dtoCustomer.getAddress());
-
-		Employee employee = customer.getEmployee();
-
-		assertNotNull(employee, "Employee should not be null");
-		Assertions.assertEquals(employee.getEmployeeNumber(), dtoCustomer.getCustomerNumber());
-	}
-
-	public static void assertUpdated(Customer original, DtoCustomer dtoCustomer, Customer customer) {
-
-		Assertions.assertEquals(original.getCustomerNumber(), customer.getCustomerNumber(),
-				"Customer number should match");
-		Assertions.assertEquals(dtoCustomer.getCustomerName(), customer.getCustomerName(),
-				"Customer name should match");
-		Assertions.assertEquals(dtoCustomer.getContactLastName(), customer.getContactLastName(),
-				"Constact last name should match");
-		Assertions.assertEquals(dtoCustomer.getContactFirstName(), customer.getContactFirstName(),
-				"Contact first name should match");
-		Assertions.assertEquals(dtoCustomer.getPostalCode(), customer.getPostalCode(), "Postal code should match");
-		Assertions.assertEquals(dtoCustomer.getCreditLimit(), customer.getCreditLimit(), "Credit limit should match");
 	}
 }

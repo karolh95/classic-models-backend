@@ -14,22 +14,37 @@ import karolh95.classicmodels.model.OrderDetail;
 import karolh95.classicmodels.model.OrderDetailPK;
 import karolh95.classicmodels.model.Product;
 
-public class OrderDetailUtil {
+public final class OrderDetailUtil {
+
+	private static final int QUANTITY_ORDERED = 1024;
+	private static final BigDecimal PRICE_EACH = new BigDecimal(10.0);
+	private static final short ORDER_LINE_NUMBER = 1;
+
+	private static final int PRODUCT_CODE_MIN = 1;
+	private static final int PRODUCT_CODE_MAX = 6;
+	private static final Long ORDER_NUMBER = 1L;
+
+	private OrderDetailUtil() {
+
+	}
 
 	public static OrderDetail orderDetail() {
 
-		OrderDetail orderDetail = new OrderDetail();
+		return orderDetail(order(), product());
+	}
 
-		Order order = order();
-		Product product = product();
+	private static OrderDetail orderDetail(Order order, Product product) {
+
 		OrderDetailPK pk = new OrderDetailPK(order.getOrderNumber(), product.getProductCode());
+
+		OrderDetail orderDetail = new OrderDetail();
 
 		orderDetail.setOrder(order);
 		orderDetail.setProduct(product);
-		orderDetail.setQuantityOrdered(1024);
+		orderDetail.setQuantityOrdered(QUANTITY_ORDERED);
 		orderDetail.setOrderDetailPK(pk);
-		orderDetail.setPriceEach(new BigDecimal(10.0));
-		orderDetail.setOrderLineNumber((short) 1);
+		orderDetail.setPriceEach(PRICE_EACH);
+		orderDetail.setOrderLineNumber(ORDER_LINE_NUMBER);
 
 		return orderDetail;
 	}
@@ -38,21 +53,49 @@ public class OrderDetailUtil {
 
 		DtoOrderDetail orderDetail = new DtoOrderDetail();
 
-		orderDetail.setOrderNumber(OrderUtil.order().getOrderNumber());
-		orderDetail.setProductCode(ProductUtil.product().getProductCode());
-		orderDetail.setQuantityOrdered(1024);
-		orderDetail.setPriceEach(new BigDecimal(10.0));
-		orderDetail.setOrderLineNumber((short) 1);
+		orderDetail.setOrderNumber(ORDER_NUMBER);
+		orderDetail.setProductCode(String.valueOf(PRODUCT_CODE_MIN));
+		orderDetail.setQuantityOrdered(QUANTITY_ORDERED);
+		orderDetail.setPriceEach(PRICE_EACH);
+		orderDetail.setOrderLineNumber(ORDER_LINE_NUMBER);
 
 		return orderDetail;
 	}
 
+	private static Order order() {
+
+		Order order = new Order();
+
+		order.setOrderNumber(ORDER_NUMBER);
+
+		return order;
+	}
+
+	private static Product product() {
+
+		return product(PRODUCT_CODE_MIN);
+	}
+
+	private static Product product(int productCode) {
+
+		Product product = new Product();
+
+		product.setProductCode(String.valueOf(productCode));
+
+		return product;
+	}
+
 	public static List<OrderDetail> orderDetails() {
+
+		Order order = OrderUtil.order();
 
 		List<OrderDetail> orderDetails = new ArrayList<>();
 
-		for (int i = 0; i < 5; i++) {
-			orderDetails.add(orderDetail());
+		for (int productCode = PRODUCT_CODE_MIN; productCode < PRODUCT_CODE_MAX; productCode++) {
+
+			Product product = product(productCode);
+
+			orderDetails.add(orderDetail(order, product));
 		}
 
 		return orderDetails;
@@ -63,44 +106,40 @@ public class OrderDetailUtil {
 		assertNotNull(orderDetail, "Order detail should not be null");
 		assertNotNull(dtoOrderDetail, "DTO order detail should not be null");
 
-		Assertions.assertEquals(orderDetail.getQuantityOrdered(), dtoOrderDetail.getQuantityOrdered(),
-				"Quantity ordered should match");
-		Assertions.assertEquals(orderDetail.getPriceEach(), dtoOrderDetail.getPriceEach(), "Price each should match");
-		Assertions.assertEquals(orderDetail.getOrderLineNumber(), dtoOrderDetail.getOrderLineNumber(),
-				"Order line number should match");
+		assertOrderDetailPKsEquals(orderDetail, dtoOrderDetail);
+		assertModifiableFieldsEquals(orderDetail, dtoOrderDetail);
+		assertOrdersNumberEquals(orderDetail.getOrder(), dtoOrderDetail.getOrderNumber());
+		assertProductsCodesEquals(orderDetail.getProduct(), dtoOrderDetail.getProductCode());
+	}
+
+	private static void assertOrderDetailPKsEquals(OrderDetail orderDetail, DtoOrderDetail dtoOrderDetail) {
 
 		OrderDetailPK pk = orderDetail.getOrderDetailPK();
 
 		assertNotNull(pk, "Order detail PK should not be null");
 		Assertions.assertEquals(pk.getOrderNumber(), dtoOrderDetail.getOrderNumber(), "Order number should match");
 		Assertions.assertEquals(pk.getProductCode(), dtoOrderDetail.getProductCode(), "Product code should match");
+	}
 
-		Order order = orderDetail.getOrder();
+	private static void assertModifiableFieldsEquals(OrderDetail orderDetail, DtoOrderDetail dtoOrderDetail) {
+
+		Assertions.assertEquals(orderDetail.getQuantityOrdered(), dtoOrderDetail.getQuantityOrdered(),
+				"Quantity ordered should match");
+		Assertions.assertEquals(orderDetail.getPriceEach(), dtoOrderDetail.getPriceEach(), "Price each should match");
+		Assertions.assertEquals(orderDetail.getOrderLineNumber(), dtoOrderDetail.getOrderLineNumber(),
+				"Order line number should match");
+	}
+
+	private static void assertOrdersNumberEquals(Order order, Long orderNumber) {
 
 		assertNotNull(order, "Order should not be null");
-		Assertions.assertEquals(order.getOrderNumber(), dtoOrderDetail.getOrderNumber());
+		Assertions.assertEquals(order.getOrderNumber(), orderNumber, "Order number should match");
+	}
 
-		Product product = orderDetail.getProduct();
+	private static void assertProductsCodesEquals(Product product, String productCode) {
 
 		assertNotNull(product, "Product should not be null");
-		Assertions.assertEquals(product.getProductCode(), dtoOrderDetail.getProductCode());
+		Assertions.assertEquals(product.getProductCode(), productCode);
 	}
 
-	private static Order order() {
-
-		Order order = new Order();
-
-		order.setOrderNumber(OrderUtil.order().getOrderNumber());
-
-		return order;
-	}
-
-	private static Product product() {
-
-		Product product = new Product();
-
-		product.setProductCode(ProductUtil.product().getProductCode());
-
-		return product;
-	}
 }

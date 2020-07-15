@@ -6,7 +6,6 @@ import static karolh95.classicmodels.utils.CustomerUtil.customer;
 import static karolh95.classicmodels.utils.CustomerUtil.customers;
 import static karolh95.classicmodels.utils.CustomerUtil.dtoNewCustomer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,9 +20,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.mapper.AddressMapper;
+import karolh95.classicmodels.mapper.AddressMapperImpl;
 import karolh95.classicmodels.mapper.CustomerMapper;
 import karolh95.classicmodels.mapper.CustomerMapperImpl;
 import karolh95.classicmodels.mapper.resolver.EmployeeResolver;
@@ -33,8 +34,8 @@ import karolh95.classicmodels.utils.AddressUtil;
 
 public class CustomerMapperTests {
 
-	@Mock
-	private AddressMapper addressMapper;
+	@Spy
+	private AddressMapper addressMapper = new AddressMapperImpl();
 
 	@Mock
 	private EmployeeResolver resolver;
@@ -44,9 +45,9 @@ public class CustomerMapperTests {
 
 	@BeforeEach
 	public void setUp() {
+
 		MockitoAnnotations.initMocks(this);
 		when(addressMapper.addressToDto(any(Address.class))).thenReturn(AddressUtil.dtoAddress());
-
 	}
 
 	@Nested
@@ -135,6 +136,10 @@ public class CustomerMapperTests {
 
 		@BeforeEach
 		void init() {
+
+			MockitoAnnotations.initMocks(CustomerMapperTests.this);
+			when(addressMapper.addressToDto(any(Address.class))).thenReturn(AddressUtil.dtoNewAddress());
+
 			customer = customer();
 			dtoCustomer = dtoNewCustomer();
 		}
@@ -158,9 +163,8 @@ public class CustomerMapperTests {
 
 			mapper.updateFromDto(dtoCustomer, customer);
 
-			assertNotNull(customer.getAddress(), "Address should not be null");
 			assertUpdated(original, dtoCustomer, customer);
-
+			AddressUtil.assertEquals(customer.getAddress(), dtoCustomer.getAddress());
 		}
 
 		@Test
@@ -171,8 +175,8 @@ public class CustomerMapperTests {
 
 			mapper.updateFromDto(dtoCustomer, customer);
 
-			assertNull(customer.getAddress(), "Address should be null");
 			assertUpdated(original, dtoCustomer, customer);
+			assertNull(customer.getAddress(), "Address should be null");
 		}
 
 		@Test
@@ -182,6 +186,7 @@ public class CustomerMapperTests {
 			mapper.updateFromDto(dtoCustomer, customer);
 
 			assertUpdated(original, dtoCustomer, customer);
+			AddressUtil.assertEquals(customer.getAddress(), dtoCustomer.getAddress());
 		}
 
 	}

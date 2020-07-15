@@ -11,16 +11,37 @@ import org.junit.jupiter.api.Assertions;
 import karolh95.classicmodels.dto.DtoProductline;
 import karolh95.classicmodels.model.Productline;
 
-public class ProductlineUtil {
+public final class ProductlineUtil {
+
+	private static final int PRODUCTLINE_MIN = 1;
+	private static final String TEXT_DESCRIPTION = "textDescription";
+	private static final String HTML_DESCRIPTION = "htmlDescription";
+	private static final byte[] IMAGE = new byte[1];
+
+	private static final int NEW_PRODUCTLINE = 2;
+	private static final String NEW_TEXT_DESCRIPTION = "new_textDescription";
+	private static final String NEW_HTML_DESCRIPTION = "new_htmlDescription";
+	private static final byte[] NEW_IMAGE = new byte[2];
+
+	private static final int PRODUCTLINE_MAX = 6;
+
+	private ProductlineUtil() {
+
+	}
 
 	public static Productline productline() {
 
+		return productline(PRODUCTLINE_MIN);
+	}
+
+	private static Productline productline(int productlineCode) {
+
 		Productline productline = new Productline();
 
-		productline.setProductline("productline");
-		productline.setTextDescription("textDescription");
-		productline.setHtmlDescription("htmlDescription");
-		productline.setImage(new byte[1]);
+		productline.setProductline(String.valueOf(productlineCode));
+		productline.setTextDescription(TEXT_DESCRIPTION);
+		productline.setHtmlDescription(HTML_DESCRIPTION);
+		productline.setImage(IMAGE);
 
 		return productline;
 	}
@@ -29,22 +50,21 @@ public class ProductlineUtil {
 
 		DtoProductline dtoProductline = new DtoProductline();
 
-		dtoProductline.setProductline("new_productline");
-		dtoProductline.setTextDescription("new_textDescription");
-		dtoProductline.setHtmlDescription("new_htmlDescription");
-		dtoProductline.setImage(new byte[2]);
+		dtoProductline.setProductline(String.valueOf(NEW_PRODUCTLINE));
+		dtoProductline.setTextDescription(NEW_TEXT_DESCRIPTION);
+		dtoProductline.setHtmlDescription(NEW_HTML_DESCRIPTION);
+		dtoProductline.setImage(NEW_IMAGE);
 
 		return dtoProductline;
 	}
 
 	public static List<Productline> productlines() {
 
-		Productline productline = productline();
-		List<Productline> productlines = new ArrayList<>(3);
+		List<Productline> productlines = new ArrayList<>();
 
-		productlines.add(productline);
-		productlines.add(productline);
-		productlines.add(productline);
+		for (int productline = PRODUCTLINE_MIN; productline < PRODUCTLINE_MAX; productline++) {
+			productlines.add(productline(productline));
+		}
 
 		return productlines;
 	}
@@ -54,22 +74,27 @@ public class ProductlineUtil {
 		assertNotNull(productline, "Productline should not be null");
 		assertNotNull(dtoProductline, "DTO Productline should not be null");
 
-		Assertions.assertEquals(productline.getProductline(), dtoProductline.getProductline(),
-				"Productline should match");
+		assertProductlinesEquals(productline.getProductline(), dtoProductline.getProductline());
+		assertModifiableFieldsEquals(productline, dtoProductline);
+	}
+
+	public static void assertUpdated(Productline original, DtoProductline dtoProductline, Productline productline) {
+
+		assertProductlinesEquals(original.getProductline(), productline.getProductline());
+		assertModifiableFieldsEquals(productline, dtoProductline);
+	}
+
+	private static void assertProductlinesEquals(String expected, String actual) {
+
+		Assertions.assertEquals(expected, actual, "Productline should match");
+	}
+
+	private static void assertModifiableFieldsEquals(Productline productline, DtoProductline dtoProductline) {
+
 		Assertions.assertEquals(productline.getTextDescription(), dtoProductline.getTextDescription(),
 				"Text description should match");
 		Assertions.assertEquals(productline.getHtmlDescription(), dtoProductline.getHtmlDescription(),
 				"Html description should match");
 		assertArrayEquals(productline.getImage(), dtoProductline.getImage(), "Image should match");
-	}
-
-	public static void assertUpdated(Productline original, DtoProductline dtoProductline, Productline productline) {
-
-		Assertions.assertEquals(original.getProductline(), productline.getProductline(), "Productline should match");
-		Assertions.assertEquals(dtoProductline.getHtmlDescription(), productline.getHtmlDescription(),
-				"HtmlDescription should match");
-		Assertions.assertEquals(dtoProductline.getTextDescription(), productline.getTextDescription(),
-				"TextDescription should match");
-		assertArrayEquals(dtoProductline.getImage(), productline.getImage(), "Image should match");
 	}
 }

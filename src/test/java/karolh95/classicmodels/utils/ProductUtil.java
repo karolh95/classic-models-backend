@@ -13,20 +13,49 @@ import karolh95.classicmodels.dto.DtoProduct;
 import karolh95.classicmodels.model.Product;
 import karolh95.classicmodels.model.Productline;
 
-public class ProductUtil {
+public final class ProductUtil {
+
+	private static final int PRODUCT_CODE_MIN = 1;
+	private static final String PRODUCT_NAME = "productName";
+	private static final String PRODUCT_SCALE = "productScale";
+	private static final String PRODUCT_VENDOR = "productVendor";
+	private static final String PRODUCT_DESCRIPTION = "productDescription";
+	private static final int QUANTITY_IN_STOCK = 1;
+	private static final BigDecimal BUY_PRICE = new BigDecimal("1.00");
+	private static final BigDecimal MSRP = new BigDecimal("0.25");
+
+	private static final int NEW_PRODUCT_CODE = 2;
+	private static final String NEW_PRODUCT_NAME = "new_productName";
+	private static final String NEW_PRODUCT_SCALE = "new_productScale";
+	private static final String NEW_PRODUCT_VENDOR = "new_productVendor";
+	private static final String NEW_PRODUCT_DESCRIPTION = "new_productDescription";
+	private static final short NEW_QUANTITY_IN_STOCK = 2;
+	private static final BigDecimal NEW_BUY_PRICE = new BigDecimal("2.00");
+	private static final BigDecimal NEW_MSRP = new BigDecimal("0.50");
+
+	private static final int PRODUCT_CODE_MAX = 6;
+
+	private ProductUtil() {
+
+	}
 
 	public static Product product() {
 
+		return product(PRODUCT_CODE_MIN);
+	}
+
+	private static Product product(int productCode) {
+
 		Product product = new Product();
 
-		product.setProductCode("productCode");
-		product.setProductName("productName");
-		product.setProductScale("productScale");
-		product.setProductVendor("productVendor");
-		product.setProductDescription("productDescription");
-		product.setQuantityInStock((short) 0);
-		product.setBuyPrice(new BigDecimal("1.00"));
-		product.setMSRP(new BigDecimal("0.25"));
+		product.setProductCode(String.valueOf(productCode));
+		product.setProductName(PRODUCT_NAME);
+		product.setProductScale(PRODUCT_SCALE);
+		product.setProductVendor(PRODUCT_VENDOR);
+		product.setProductDescription(PRODUCT_DESCRIPTION);
+		product.setQuantityInStock(QUANTITY_IN_STOCK);
+		product.setBuyPrice(BUY_PRICE);
+		product.setMSRP(MSRP);
 
 		product.setProductline(productline());
 
@@ -37,8 +66,8 @@ public class ProductUtil {
 
 		List<Product> products = new ArrayList<>();
 
-		for (int i = 0; i < 3; i++) {
-			products.add(product());
+		for (int productCode = PRODUCT_CODE_MIN; productCode < PRODUCT_CODE_MAX; productCode++) {
+			products.add(product(productCode));
 		}
 
 		return products;
@@ -48,14 +77,14 @@ public class ProductUtil {
 
 		DtoProduct dtoProduct = new DtoProduct();
 
-		dtoProduct.setProductCode("new_productCode");
-		dtoProduct.setProductName("new_productName");
-		dtoProduct.setProductScale("new_productScale");
-		dtoProduct.setProductVendor("new_productVendor");
-		dtoProduct.setProductDescription("new_productDescription");
-		dtoProduct.setQuantityInStock((short) 1);
-		dtoProduct.setBuyPrice(new BigDecimal("2.00"));
-		dtoProduct.setMSRP(new BigDecimal("0.50"));
+		dtoProduct.setProductCode(String.valueOf(NEW_PRODUCT_CODE));
+		dtoProduct.setProductName(NEW_PRODUCT_NAME);
+		dtoProduct.setProductScale(NEW_PRODUCT_SCALE);
+		dtoProduct.setProductVendor(NEW_PRODUCT_VENDOR);
+		dtoProduct.setProductDescription(NEW_PRODUCT_DESCRIPTION);
+		dtoProduct.setQuantityInStock(NEW_QUANTITY_IN_STOCK);
+		dtoProduct.setBuyPrice(NEW_BUY_PRICE);
+		dtoProduct.setMSRP(NEW_MSRP);
 
 		return dtoProduct;
 	}
@@ -63,11 +92,7 @@ public class ProductUtil {
 	public static void assertEquals(Product product, DtoProduct dtoProduct) {
 
 		assertEqualsWithoutProductline(product, dtoProduct);
-
-		Productline productline = product.getProductline();
-
-		assertNotNull(productline, "Productline shoud not be null");
-		Assertions.assertEquals(productline.getProductline(), dtoProduct.getProductline(), "Productline should match");
+		assertProductlinesEquals(product.getProductline(), dtoProduct.getProductline());
 	}
 
 	public static void assertEqualsWithoutProductline(Product product, DtoProduct dtoProduct) {
@@ -75,21 +100,22 @@ public class ProductUtil {
 		assertNotNull(product, "Product should not be null");
 		assertNotNull(dtoProduct, "DTO Product should not be null");
 
-		Assertions.assertEquals(product.getProductCode(), dtoProduct.getProductCode(), "Product code should match");
-		Assertions.assertEquals(product.getProductName(), dtoProduct.getProductName(), "Product name should match");
-		Assertions.assertEquals(product.getProductScale(), dtoProduct.getProductScale(), "Product scale should match");
-		Assertions.assertEquals(product.getProductVendor(), dtoProduct.getProductVendor(),
-				"Product vendor should match");
-		Assertions.assertEquals(product.getProductDescription(), dtoProduct.getProductDescription(),
-				"Product description should match");
-		Assertions.assertEquals(product.getQuantityInStock(), dtoProduct.getQuantityInStock(),
-				"Quantity in stock should match");
-		Assertions.assertEquals(product.getMSRP(), dtoProduct.getMSRP(), "MSRP should match");
+		assertProductsCodesEquals(product.getProductCode(), dtoProduct.getProductCode());
+		assertModifiableFieldsEquals(product, dtoProduct);
 	}
 
 	public static void assertUpdated(Product original, DtoProduct dtoProduct, Product product) {
 
-		Assertions.assertEquals(original.getProductCode(), product.getProductCode(), "Product code should match");
+		assertProductsCodesEquals(original.getProductCode(), product.getProductCode());
+		assertModifiableFieldsEquals(product, dtoProduct);
+	}
+
+	private static void assertProductsCodesEquals(String expected, String actual) {
+
+		Assertions.assertEquals(expected, actual, "Product code should match");
+	}
+
+	private static void assertModifiableFieldsEquals(Product product, DtoProduct dtoProduct) {
 
 		Assertions.assertEquals(dtoProduct.getProductName(), product.getProductName(), "Product name should match");
 		Assertions.assertEquals(dtoProduct.getProductScale(), product.getProductScale(), "Product scale should match");
@@ -101,5 +127,11 @@ public class ProductUtil {
 				"Quantity in stock should match");
 		Assertions.assertEquals(dtoProduct.getBuyPrice(), product.getBuyPrice(), "Buy price should match");
 		Assertions.assertEquals(dtoProduct.getMSRP(), product.getMSRP(), "MSRP should match");
+	}
+
+	private static void assertProductlinesEquals(Productline productline, String actual) {
+
+		assertNotNull(productline, "Productline shoud not be null");
+		Assertions.assertEquals(productline.getProductline(), actual, "Productline should match");
 	}
 }

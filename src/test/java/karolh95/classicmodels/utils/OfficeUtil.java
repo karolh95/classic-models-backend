@@ -10,15 +10,34 @@ import org.junit.jupiter.api.Assertions;
 import karolh95.classicmodels.dto.DtoOffice;
 import karolh95.classicmodels.model.Office;
 
-public class OfficeUtil {
+public final class OfficeUtil {
+
+	private static final int OFFICE_CODE_MIN = 1;
+	private static final String POSTAL_CODE = "postalCode";
+	private static final String TERRITORY = "territory";
+
+	private static final int NEW_OFFICE_CODE = 2;
+	private static final String NEW_POSTAL_CODE = "new_postalCode";
+	private static final String NEW_TERRITORY = "new_territory";
+
+	private static final int OFFICE_CODE_MAX = 6;
+
+	private OfficeUtil() {
+
+	}
 
 	public static Office office() {
 
+		return office(OFFICE_CODE_MIN);
+	}
+
+	private static Office office(int officeCode) {
+
 		Office office = new Office();
 
-		office.setOfficeCode("1");
-		office.setPostalCode("postalCode");
-		office.setTerritory("territory");
+		office.setOfficeCode(String.valueOf(officeCode));
+		office.setPostalCode(POSTAL_CODE);
+		office.setTerritory(TERRITORY);
 
 		office.setAddress(AddressUtil.address());
 
@@ -29,9 +48,9 @@ public class OfficeUtil {
 
 		DtoOffice dtoOffice = new DtoOffice();
 
-		dtoOffice.setOfficeCode("2");
-		dtoOffice.setPostalCode("new_postalCode");
-		dtoOffice.setTerritory("new_territory");
+		dtoOffice.setOfficeCode(String.valueOf(NEW_OFFICE_CODE));
+		dtoOffice.setPostalCode(NEW_POSTAL_CODE);
+		dtoOffice.setTerritory(NEW_TERRITORY);
 		dtoOffice.setAddress(AddressUtil.dtoNewAddress());
 
 		return dtoOffice;
@@ -41,8 +60,8 @@ public class OfficeUtil {
 
 		List<Office> offices = new ArrayList<>();
 
-		for (int i = 0; i < 5; i++) {
-			offices.add(office());
+		for (int officeCode = OFFICE_CODE_MIN; officeCode < OFFICE_CODE_MAX; officeCode++) {
+			offices.add(office(officeCode));
 		}
 
 		return offices;
@@ -53,9 +72,8 @@ public class OfficeUtil {
 		assertNotNull(office, "Office should not be null");
 		assertNotNull(dtoOffice, "DTO office should not be null");
 
-		Assertions.assertEquals(office.getOfficeCode(), dtoOffice.getOfficeCode(), "Office code should match");
-		Assertions.assertEquals(office.getPostalCode(), dtoOffice.getPostalCode(), "Postal code should match");
-		Assertions.assertEquals(office.getTerritory(), dtoOffice.getTerritory(), "Territory should match");
+		assertOfficesCodesEquals(office.getOfficeCode(), dtoOffice.getOfficeCode());
+		assertModifiableFieldsEquals(office, dtoOffice);
 
 		AddressUtil.assertEquals(office.getAddress(), dtoOffice.getAddress());
 	}
@@ -63,15 +81,23 @@ public class OfficeUtil {
 	public static void assertUpdated(Office original, DtoOffice dtoOffice, Office office) {
 
 		assertUpdatedWithoutAddress(original, dtoOffice, office);
-
 		AddressUtil.assertEquals(office.getAddress(), dtoOffice.getAddress());
 	}
 
 	public static void assertUpdatedWithoutAddress(Office original, DtoOffice dtoOffice, Office office) {
-		Assertions.assertEquals(original.getOfficeCode(), office.getOfficeCode(), "Office code should match");
+
+		assertOfficesCodesEquals(original.getOfficeCode(), office.getOfficeCode());
+		assertModifiableFieldsEquals(office, dtoOffice);
+	}
+
+	private static void assertOfficesCodesEquals(String expected, String actual) {
+
+		Assertions.assertEquals(expected, actual, "Office code sshould match");
+	}
+
+	private static void assertModifiableFieldsEquals(Office office, DtoOffice dtoOffice) {
 
 		Assertions.assertEquals(office.getPostalCode(), dtoOffice.getPostalCode(), "Postal code should match");
 		Assertions.assertEquals(office.getTerritory(), dtoOffice.getTerritory(), "Territory should match");
-
 	}
 }
