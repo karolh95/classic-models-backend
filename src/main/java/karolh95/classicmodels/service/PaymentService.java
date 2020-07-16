@@ -1,5 +1,6 @@
 package karolh95.classicmodels.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.mapper.PaymentMapper;
+import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.Payment;
 import karolh95.classicmodels.model.PaymentPK;
 import karolh95.classicmodels.repository.PaymentRepository;
@@ -51,35 +53,37 @@ public class PaymentService {
 
 	public DtoPayment savePayment(DtoPayment dtoPayment) {
 
-		Payment payment = getOne(dtoPayment.getCustomerNumber(), dtoPayment.getCheckNumber());
+		Payment payment = mapper.paymentFromDto(dtoPayment);
 
-		mapper.updateFromDto(dtoPayment, payment);
-
-		if (!payment.hasValidIds()){
+		if (!payment.hasValidIds()) {
 			return null;
 		}
 
+		Optional<Payment> paymentInRepository = repository.findById(payment.getPaymentPK());
+
+		if (paymentInRepository.isPresent()) {
+
+			return null;
+		}
+
+		payment.setPaymentDate(currentDate());
+
 		payment = repository.save(payment);
 
-		return null;
+		return mapper.paymentToDto(payment);
 	}
 
-	private Payment getOne(Long customerNumber, String checkNumber) {
+	public DtoPayment generatePayment(Order order) {
 
-		PaymentPK pk = new PaymentPK(customerNumber, checkNumber);
-		Optional<Payment> optional = repository.findById(pk);
+		Payment payment = new Payment();
+		payment.setCustomer(order.getCustomer());
+		payment.setAmount(order.getPrice());
 
-		if (optional.isPresent()) {
+		return mapper.paymentToDto(payment);
+	}
 
-			return optional.get();
+	private Date currentDate() {
 
-		} else {
-
-			Payment payment = new Payment();
-
-			payment.setPaymentPK(pk);
-
-			return payment;
-		}
+		return new Date(System.currentTimeMillis());
 	}
 }

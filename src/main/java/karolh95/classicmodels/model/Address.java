@@ -3,14 +3,10 @@ package karolh95.classicmodels.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 @Embeddable
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Address {
 
 	@Column(length = 50, nullable = false)

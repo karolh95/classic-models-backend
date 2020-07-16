@@ -1,46 +1,155 @@
 package karolh95.classicmodels.mappers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.when;
 
-import java.util.Optional;
+import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import karolh95.classicmodels.dto.DtoOrder;
+import karolh95.classicmodels.dto.DtoFullOrder;
+import karolh95.classicmodels.dto.DtoSimpleOrder;
+import karolh95.classicmodels.mapper.OrderDetailMapper;
+import karolh95.classicmodels.mapper.OrderDetailMapperImpl;
 import karolh95.classicmodels.mapper.OrderMapper;
+import karolh95.classicmodels.mapper.OrderMapperImpl;
+import karolh95.classicmodels.mapper.resolver.CustomerResolver;
 import karolh95.classicmodels.model.Order;
-import karolh95.classicmodels.repository.OrderRepository;
+import karolh95.classicmodels.utils.OrderUtil;
 
-@SpringBootTest
-public class OrderMapperTests {
+class OrderMapperTests {
 
-	@Autowired
-	private OrderMapper mapper;
+	@Mock
+	CustomerResolver customerResolver;
 
-	@Autowired
-	private OrderRepository repository;
+	@Mock
+	OrderDetailMapper orderDetailMapper = new OrderDetailMapperImpl();
 
-	@Test
-	@DisplayName("Should map Order to Dto")
-	public void mapOrderToDto() {
+	@InjectMocks
+	OrderMapper mapper = new OrderMapperImpl();
 
-		Optional<Order> optional = this.repository.findById(10103L);
+	@Nested
+	@DisplayName("orderToDto tests")
+	class OrderToDtoTests {
 
-		assertTrue(optional.isPresent(), "Order should exist");
+		@Test
+		@DisplayName("Should not map from null Order to dto")
+		void mapFromNullOrderToDto() {
 
-		Order order = optional.get();
-		DtoOrder dto = this.mapper.orderToDto(order);
+			Order order = null;
 
-		assertEquals(order.getOrderNumber(), dto.getOrderNumber(), "Order number should match");
-		assertEquals(order.getOrderDate(), dto.getOrderDate(), "Order date should match");
-		assertEquals(order.getRequiredDate(), dto.getRequiredDate(), "Required date should match");
-		assertEquals(order.getShippedDate(), dto.getShippedDate(), "Shipped date should match");
-		assertEquals(order.getStatus(), dto.getStatus(), "Status should match");
-		assertEquals(order.getComments(), dto.getComments(), "Comments should match");
-		assertEquals(order.getCustomer().getCustomerNumber(), dto.getCustomerNumber(), "Customer number should match");
+			DtoSimpleOrder dtoSimpleOrder = mapper.orderToDto(order);
+
+			assertNull(dtoSimpleOrder, "Dto simple order should be null");
+		}
+
+		@Test
+		@DisplayName("Should map simple order to Dto")
+		void mapOrderToDto() {
+
+			Order order = OrderUtil.order();
+
+			DtoSimpleOrder dtoOrder = mapper.orderToDto(order);
+
+			OrderUtil.assertEquals(order, dtoOrder);
+		}
+	}
+
+	@Nested
+	@DisplayName("orderWithDetailsToDto")
+	class OrderWithDetailsToDto {
+
+		@BeforeEach
+		void init() {
+			MockitoAnnotations.initMocks(OrderMapperTests.this);
+
+			when(orderDetailMapper.orderDetailsToDtos(anyList())).thenReturn(null);
+		}
+
+		@Test
+		@DisplayName("Should not map from null order to dto")
+		void mapNullOrderToDto() {
+
+			Order order = null;
+
+			DtoFullOrder dtoFullOrder = mapper.orderWithDetailsToDto(order);
+
+			assertNull(dtoFullOrder, "Dto full order should be null");
+		}
+
+		@Test
+		@DisplayName("Should map order to dto full order")
+		void mapOrderToDtoFullOrder() {
+
+			Order order = OrderUtil.order();
+
+			DtoFullOrder dtoFullOrder = mapper.orderWithDetailsToDto(order);
+
+			OrderUtil.assertEquals(order, dtoFullOrder);
+		}
+	}
+
+	@Nested
+	@DisplayName("ordersToDtos tests")
+	class OrdersToDtosTests {
+
+		List<Order> orders;
+		List<DtoSimpleOrder> dtoSimpleOrders;
+
+		@BeforeEach
+		void init() {
+			orders = OrderUtil.orders();
+		}
+
+		@Test
+		@DisplayName("Should not map null orders to dtos")
+		void mapNullOrdersToDtos() {
+
+			orders = null;
+
+			dtoSimpleOrders = mapper.ordersToDtos(orders);
+
+			assertNull(dtoSimpleOrders, "Dto simple orders should be null");
+		}
+
+		@Test
+		@DisplayName("Should map empty orders to dtos")
+		void mapEmptyOrdersToDtos() {
+
+			orders.clear();
+
+			dtoSimpleOrders = mapper.ordersToDtos(orders);
+
+			assertTrue(dtoSimpleOrders.isEmpty(), "Dto simple orders should be empty");
+		}
+
+		@Test
+		@DisplayName("Should map orders to dtos")
+		void mapOrdersToDtos() {
+
+			dtoSimpleOrders = mapper.ordersToDtos(orders);
+
+			for (int i = 0; i < orders.size(); i++) {
+
+				Order order = orders.get(i);
+				DtoSimpleOrder dtoSimpleOrder = dtoSimpleOrders.get(i);
+
+				OrderUtil.assertEquals(order, dtoSimpleOrder);
+			}
+		}
+	}
+
+	@Nested
+	@DisplayName("orderFromDto tests")
+	class OrderFromDtoTests {
+
 	}
 }

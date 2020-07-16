@@ -53,4 +53,11 @@ public class OrderDetail {
 
 		return true;
 	}
+
+	public BigDecimal getPrice() {
+
+		BigDecimal quantity = new BigDecimal(quantityOrdered);
+
+		return priceEach.multiply(quantity);
+	}
 }

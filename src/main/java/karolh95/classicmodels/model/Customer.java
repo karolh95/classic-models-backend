@@ -15,13 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity(name = "customers")
 public class Customer {
 
@@ -47,6 +44,7 @@ public class Customer {
 	@Column(precision = 10, scale = 2)
 	private BigDecimal creditLimit;
 
+	@EqualsAndHashCode.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "salesRepEmployeeNumber")
 	private Employee employee;
@@ -86,7 +84,7 @@ public class Customer {
 		if (customerNumber == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
 }

@@ -12,13 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity(name = "products")
 public class Product {
 
@@ -39,7 +35,7 @@ public class Product {
 	private String productDescription;
 
 	@Column(nullable = false)
-	private short quantityInStock;
+	private int quantityInStock;
 
 	@Column(precision = 10, scale = 2, nullable = false)
 	private BigDecimal buyPrice;

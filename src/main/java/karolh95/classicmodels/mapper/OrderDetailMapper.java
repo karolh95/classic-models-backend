@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 import karolh95.classicmodels.dto.DtoOrderDetail;
 import karolh95.classicmodels.mapper.resolver.OrderResolver;
@@ -24,5 +23,5 @@ public interface OrderDetailMapper {
 	@Mapping(target = "product", source = "productCode")
 	@Mapping(target = "orderDetailPK.orderNumber", source = "orderNumber")
 	@Mapping(target = "orderDetailPK.productCode", source = "productCode")
-	void updateFromDto(DtoOrderDetail dtoOrderDetail, @MappingTarget OrderDetail orderDetail);
+	OrderDetail orderDetailFromDto(DtoOrderDetail dtoOrderDetail);
 }
