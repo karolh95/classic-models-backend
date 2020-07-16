@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoEmployee;
+import karolh95.classicmodels.dto.query.EmployeeSummary;
 import karolh95.classicmodels.service.EmployeeService;
 
 @RestController
@@ -54,5 +55,12 @@ public class EmployeeController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("summary")
+	public ResponseEntity<List<EmployeeSummary>> summary() {
+
+		List<EmployeeSummary> summary = service.getEmployeesSummaries();
+		return ResponseEntity.ok(summary);
 	}
 }
