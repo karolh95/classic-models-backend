@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
+import karolh95.classicmodels.dto.query.OrderDetailSummary;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.OrderDetail;
@@ -76,5 +77,10 @@ public class OrderService {
 	public DtoPayment makePayment(DtoPayment payment) {
 
 		return paymentService.savePayment(payment);
+	}
+
+	public List<OrderDetailSummary> getDetailsSummary() {
+
+		return detailService.summary();
 	}
 }

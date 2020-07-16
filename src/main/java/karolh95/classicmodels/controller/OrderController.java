@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
+import karolh95.classicmodels.dto.query.OrderDetailSummary;
 import karolh95.classicmodels.service.OrderService;
 
 @RestController
@@ -79,5 +80,13 @@ public class OrderController {
 		}
 		return ResponseEntity.ok(response);
 
+	}
+
+	@GetMapping("summary")
+	public ResponseEntity<List<OrderDetailSummary>> summary() {
+
+		List<OrderDetailSummary> summary = service.getDetailsSummary();
+
+		return ResponseEntity.ok(summary);
 	}
 }
