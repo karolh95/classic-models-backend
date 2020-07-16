@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoCustomer;
+import karolh95.classicmodels.dto.query.CustomerContact;
 import karolh95.classicmodels.service.CustomerService;
 
 @RestController
@@ -54,5 +55,13 @@ public class CustomerController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("contacts/{order}")
+	public ResponseEntity<List<CustomerContact>> contacts(@PathVariable String order) {
+
+		List<CustomerContact> contacts = service.findAllCustomerContacts(order);
+
+		return ResponseEntity.ok(contacts);
 	}
 }

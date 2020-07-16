@@ -2,10 +2,14 @@ package karolh95.classicmodels.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoCustomer;
+import karolh95.classicmodels.dto.query.CustomerContact;
 import karolh95.classicmodels.mapper.CustomerMapper;
 import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.repository.CustomerRepository;
@@ -67,5 +71,32 @@ public class CustomerService {
 
 			return customer;
 		}
+	}
+
+	public List<CustomerContact> findAllCustomerContacts(String order) {
+
+		Supplier<List<CustomerContact>> contacts = repository::findAllByOrderByContactLastName;
+
+		if (order.equalsIgnoreCase("DESC")) {
+			contacts = repository::findAllByOrderByContactLastNameDesc;
+		}
+
+		return contacts.get();
+	}
+
+	public List<CustomerContact> findAllCustomerContactsSort(String order) {
+
+		TypedSort<Customer> customer = Sort.sort(Customer.class);
+
+		Sort sortByLastName = customer.by(Customer::getContactLastName);
+		Sort sortByFirstName = customer.by(Customer::getContactFirstName);
+
+		if (order.equalsIgnoreCase("DESC")) {
+			sortByLastName = sortByLastName.descending();
+		}
+
+		Sort sort = sortByLastName.and(sortByFirstName);
+
+		return repository.findAllBy(sort);
 	}
 }
