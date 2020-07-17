@@ -70,4 +70,10 @@ public class EmployeeController {
 
 		return service.getEmployeeOfficeSummaries(jobTitle, officeCode);
 	}
+
+	@GetMapping("officeCodeBetween/{low}/{high}")
+	public List<EmployeeOfficeSummary> officeCodeBetween(@PathVariable String low, @PathVariable String high) {
+
+		return service.findEmployeeWhereOfficeCodeBetween(low, high);
+	}
 }

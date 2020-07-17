@@ -22,4 +22,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<EmployeeOfficeSummary> findAllByJobTitleAndOfficeCode(String jobTitle, String officeCode);
 
 	List<EmployeeOfficeSummary> findAllByJobTitleOrOfficeCode(String jobTitle, String officeCode, Sort sort);
+
+	List<EmployeeOfficeSummary> findAllByOfficeCodeBetween(String low, String high);
+
+	List<EmployeeOfficeSummary> findAllByOfficeCodeLessThan(String officeCode);
+
+	List<EmployeeOfficeSummary> findAllByOfficeCodeGreaterThan(String officeCode);
 }

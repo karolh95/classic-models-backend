@@ -90,4 +90,8 @@ public class EmployeeService {
 		return repository.findAllByJobTitleOrOfficeCode(jobTitle, officeCode, sort);
 
 	}
+
+	public List<EmployeeOfficeSummary> findEmployeeWhereOfficeCodeBetween(String low, String high) {
+		return repository.findAllByOfficeCodeBetween(low, high);
+	}
 }
