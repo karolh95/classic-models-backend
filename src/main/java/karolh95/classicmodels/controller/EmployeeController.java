@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoEmployee;
+import karolh95.classicmodels.dto.query.EmployeeOfficeSummary;
 import karolh95.classicmodels.dto.query.EmployeeSummary;
 import karolh95.classicmodels.service.EmployeeService;
 
@@ -62,5 +63,11 @@ public class EmployeeController {
 
 		List<EmployeeSummary> summary = service.getEmployeesSummaries();
 		return ResponseEntity.ok(summary);
+	}
+
+	@GetMapping("summary/{jobTitle}/{officeCode}")
+	public List<EmployeeOfficeSummary> summaryOffice(@PathVariable String jobTitle, @PathVariable String officeCode) {
+
+		return service.getEmployeeOfficeSummaries(jobTitle, officeCode);
 	}
 }

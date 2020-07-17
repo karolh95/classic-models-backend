@@ -45,6 +45,9 @@ public class Employee {
 	@JoinColumn(name = "officeCode", nullable = false)
 	private Office office;
 
+	@Column(name = "officeCode", insertable = false, updatable = false)
+	private String officeCode;
+
 	@OneToMany(mappedBy = "employee")
 	private List<Employee> employees;
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoEmployee;
+import karolh95.classicmodels.dto.query.EmployeeOfficeSummary;
 import karolh95.classicmodels.dto.query.EmployeeSummary;
 import karolh95.classicmodels.mapper.EmployeeMapper;
 import karolh95.classicmodels.model.Employee;
@@ -73,5 +74,11 @@ public class EmployeeService {
 	public List<EmployeeSummary> getEmployeesSummaries() {
 
 		return repository.findAllBy();
+	}
+
+	public List<EmployeeOfficeSummary> getEmployeeOfficeSummaries(String jobTitle, String officeCode) {
+
+		return repository.findAllByJobTitleAndOfficeCode(jobTitle, officeCode);
+
 	}
 }
