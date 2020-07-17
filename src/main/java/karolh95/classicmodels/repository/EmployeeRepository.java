@@ -2,6 +2,7 @@ package karolh95.classicmodels.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<EmployeeOfficeSummary> findAllByOfficeCode(String officeCode);
 
 	List<EmployeeOfficeSummary> findAllByJobTitleAndOfficeCode(String jobTitle, String officeCode);
+
+	List<EmployeeOfficeSummary> findAllByJobTitleOrOfficeCode(String jobTitle, String officeCode, Sort sort);
 }

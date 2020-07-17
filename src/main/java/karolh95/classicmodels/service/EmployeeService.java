@@ -3,6 +3,8 @@ package karolh95.classicmodels.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoEmployee;
@@ -78,7 +80,14 @@ public class EmployeeService {
 
 	public List<EmployeeOfficeSummary> getEmployeeOfficeSummaries(String jobTitle, String officeCode) {
 
-		return repository.findAllByJobTitleAndOfficeCode(jobTitle, officeCode);
+		TypedSort<Employee> employee = Sort.sort(Employee.class);
+
+		Sort sortByOfficeCode = employee.by(Employee::getOfficeCode).ascending();
+		Sort sortByJobTitle = employee.by(Employee::getJobTitle).ascending();
+
+		Sort sort = sortByOfficeCode.and(sortByJobTitle);
+
+		return repository.findAllByJobTitleOrOfficeCode(jobTitle, officeCode, sort);
 
 	}
 }
