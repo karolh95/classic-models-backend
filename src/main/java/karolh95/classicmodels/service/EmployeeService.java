@@ -92,6 +92,14 @@ public class EmployeeService {
 	}
 
 	public List<EmployeeOfficeSummary> findEmployeeWhereOfficeCodeBetween(String low, String high) {
-		return repository.findAllByOfficeCodeBetween(low, high);
+
+		TypedSort<Employee> employee = Sort.sort(Employee.class);
+
+		Sort byOfficeCode = employee.by(Employee::getOfficeCode).ascending();
+		Sort byLastName = employee.by(Employee::getLastName).ascending();
+
+		Sort sort = byOfficeCode.and(byLastName);
+
+		return repository.findByOfficeCodeBetween(low, high, sort);
 	}
 }
