@@ -76,4 +76,10 @@ public class EmployeeController {
 
 		return service.findEmployeeWhereOfficeCodeBetween(low, high);
 	}
+
+	@GetMapping("lastname/{lastName}")
+	public List<EmployeeSummary> lastNameContaining(@PathVariable String lastName) {
+		return service.findEmployeeByLastNameContaining(lastName);
+	}
+
 }

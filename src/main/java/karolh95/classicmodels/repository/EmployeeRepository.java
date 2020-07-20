@@ -28,4 +28,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<EmployeeOfficeSummary> findByOfficeCodeLessThan(String officeCode);
 
 	List<EmployeeOfficeSummary> findByOfficeCodeGreaterThan(String officeCode);
+
+	List<EmployeeSummary> findByLastNameLike(String lastName);
+
+	List<EmployeeSummary> findByLastNameNotLike(String lastName);
+
+	List<EmployeeSummary> findByLastNameStartingWith(String prefix);
+
+	List<EmployeeSummary> findByLastNameContaining(String string);
+
+	List<EmployeeSummary> findByLastNameNotContaining(String string);
+
+	List<EmployeeSummary> findByLastNameEndingWith(String suffix);
 }

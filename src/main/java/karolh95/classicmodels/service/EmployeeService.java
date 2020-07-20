@@ -101,4 +101,9 @@ public class EmployeeService {
 
 		return repository.findByOfficeCodeBetween(low, high, sort);
 	}
+
+	public List<EmployeeSummary> findEmployeeByLastNameContaining(String lastName) {
+
+		return repository.findByLastNameContaining(lastName);
+	}
 }
