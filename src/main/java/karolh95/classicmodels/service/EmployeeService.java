@@ -87,8 +87,7 @@ public class EmployeeService {
 
 		Sort sort = sortByOfficeCode.and(sortByJobTitle);
 
-		return repository.findAllByJobTitleOrOfficeCode(jobTitle, officeCode, sort);
-
+		return repository.findByJobTitleOrOfficeCode(jobTitle, officeCode, sort);
 	}
 
 	public List<EmployeeOfficeSummary> findEmployeeWhereOfficeCodeBetween(String low, String high) {

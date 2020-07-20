@@ -15,17 +15,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 	List<EmployeeSummary> findAllBy();
 
-	List<EmployeeOfficeSummary> findAllByJobTitle(String jobTitle);
+	List<EmployeeOfficeSummary> findByJobTitle(String jobTitle);
 
-	List<EmployeeOfficeSummary> findAllByOfficeCode(String officeCode);
+	List<EmployeeOfficeSummary> findByOfficeCode(String officeCode);
 
-	List<EmployeeOfficeSummary> findAllByJobTitleAndOfficeCode(String jobTitle, String officeCode);
+	List<EmployeeOfficeSummary> findByJobTitleAndOfficeCode(String jobTitle, String officeCode);
 
-	List<EmployeeOfficeSummary> findAllByJobTitleOrOfficeCode(String jobTitle, String officeCode, Sort sort);
+	List<EmployeeOfficeSummary> findByJobTitleOrOfficeCode(String jobTitle, String officeCode, Sort sort);
 
 	List<EmployeeOfficeSummary> findByOfficeCodeBetween(String low, String high, Sort sort);
 
-	List<EmployeeOfficeSummary> findAllByOfficeCodeLessThan(String officeCode);
+	List<EmployeeOfficeSummary> findByOfficeCodeLessThan(String officeCode);
 
-	List<EmployeeOfficeSummary> findAllByOfficeCodeGreaterThan(String officeCode);
+	List<EmployeeOfficeSummary> findByOfficeCodeGreaterThan(String officeCode);
 }
