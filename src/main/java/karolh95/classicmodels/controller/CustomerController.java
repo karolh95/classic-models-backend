@@ -60,7 +60,7 @@ public class CustomerController {
 	@GetMapping("contacts/{order}")
 	public ResponseEntity<List<CustomerContact>> contacts(@PathVariable String order) {
 
-		List<CustomerContact> contacts = service.findAllCustomerContacts(order);
+		List<CustomerContact> contacts = service.findAllCustomerContactsSort(order);
 
 		return ResponseEntity.ok(contacts);
 	}

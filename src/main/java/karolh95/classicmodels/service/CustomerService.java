@@ -88,8 +88,8 @@ public class CustomerService {
 
 		TypedSort<Customer> customer = Sort.sort(Customer.class);
 
-		Sort sortByLastName = customer.by(Customer::getContactLastName);
-		Sort sortByFirstName = customer.by(Customer::getContactFirstName);
+		Sort sortByLastName = customer.by(Customer::getContactLastName).ascending();
+		Sort sortByFirstName = customer.by(Customer::getContactFirstName).ascending();
 
 		if (order.equalsIgnoreCase("DESC")) {
 			sortByLastName = sortByLastName.descending();
