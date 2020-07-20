@@ -18,6 +18,7 @@ import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.dto.query.OrderDetailSummary;
+import karolh95.classicmodels.dto.query.OrderStatus;
 import karolh95.classicmodels.service.OrderService;
 
 @RestController
@@ -88,5 +89,13 @@ public class OrderController {
 		List<OrderDetailSummary> summary = service.getDetailsSummary();
 
 		return ResponseEntity.ok(summary);
+	}
+
+	@GetMapping("status")
+	public ResponseEntity<List<OrderStatus>> ordersOrderByStatus() {
+
+		List<OrderStatus> orders = service.getOrdersOrderByState();
+
+		return ResponseEntity.ok(orders);
 	}
 }
