@@ -1,5 +1,6 @@
 package karolh95.classicmodels.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -27,6 +28,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 	List<EmployeeOfficeSummary> findByOfficeCodeLessThan(String officeCode);
 
+	List<EmployeeOfficeSummary> findByOfficeCodeLessThanEqual(String officeCode);
+
+	List<EmployeeOfficeSummary> findByOfficeCodeIn(Collection<String> officeCodes);
+
 	List<EmployeeOfficeSummary> findByOfficeCodeGreaterThan(String officeCode);
 
 	List<EmployeeSummary> findByLastNameLike(String lastName);
@@ -40,4 +45,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<EmployeeSummary> findByLastNameNotContaining(String string);
 
 	List<EmployeeSummary> findByLastNameEndingWith(String suffix);
+
+	List<EmployeeSummary> findByReportsToIsNull();
+
+	List<EmployeeSummary> findByJobTitleNot(String jobTitle);
 }

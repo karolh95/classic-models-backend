@@ -41,6 +41,9 @@ public class Employee {
 	@JoinColumn(name = "reportsTo")
 	private Employee employee;
 
+	@Column(name = "reportsTo", insertable = false, updatable = false)
+	private Long reportsTo;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "officeCode", nullable = false)
 	private Office office;
