@@ -1,5 +1,6 @@
 package karolh95.classicmodels.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.CustomerContact;
+import karolh95.classicmodels.dto.query.CustomerDetail;
+import karolh95.classicmodels.dto.query.CustomerFullDetail;
 import karolh95.classicmodels.dto.query.CustomerState;
 import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.mapper.CustomerMapper;
@@ -127,5 +130,21 @@ public class CustomerService {
 	public int countStatesByCountry(String country) {
 
 		return repository.findDistinctAddress_StateByAddress_Country(country).size();
+	}
+
+	public List<CustomerDetail> findByCountryAndState(String country, String state) {
+
+		return repository.findByAddress_CountryAndAddress_State(country, state);
+	}
+
+	public List<CustomerFullDetail> findByCountryAndStateAndCreditLimitGreaterThan(String country, String state,
+			BigDecimal creditlimit) {
+
+		return repository.findByAddress_CountryAndAddress_StateAndCreditLimitGreaterThan(country, state, creditlimit);
+	}
+
+	public List<CustomerFullDetail> findByCountry(BigDecimal creditLimit, String... countries) {
+
+		return repository.findByCreditLimitGreaterThanAndAddress_CountryIn(creditLimit, countries);
 	}
 }

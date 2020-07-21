@@ -1,5 +1,6 @@
 package karolh95.classicmodels.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.CustomerContact;
+import karolh95.classicmodels.dto.query.CustomerDetail;
+import karolh95.classicmodels.dto.query.CustomerFullDetail;
 import karolh95.classicmodels.dto.query.CustomerState;
 import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.service.CustomerService;
@@ -89,4 +92,25 @@ public class CustomerController {
 
 		return service.countStatesByCountry(country);
 	}
+
+	@GetMapping("find/{country}/{state}")
+	public List<CustomerDetail> findByCountryAndState(@PathVariable String country, @PathVariable String state) {
+
+		return service.findByCountryAndState(country, state);
+	}
+
+	@GetMapping("find/{country}/{state}/{creditLimit}")
+	public List<CustomerFullDetail> findByCountryStateAndCreditlimit(@PathVariable String country,
+			@PathVariable String state, @PathVariable BigDecimal creditLimit) {
+
+		return service.findByCountryAndStateAndCreditLimitGreaterThan(country, state, creditLimit);
+	}
+
+	@GetMapping("creditlimit/{creditLimit}/countries/{country1}/{country2}")
+	public List<CustomerFullDetail> findOr(@PathVariable BigDecimal creditLimit, @PathVariable String country1,
+			@PathVariable String country2) {
+
+		return service.findByCountry(creditLimit, country1, country2);
+	}
+
 }
