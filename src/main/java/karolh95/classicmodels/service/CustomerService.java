@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.CustomerContact;
+import karolh95.classicmodels.dto.query.CustomerState;
+import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.mapper.CustomerMapper;
 import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.repository.CustomerRepository;
@@ -98,5 +100,32 @@ public class CustomerService {
 		Sort sort = sortByLastName.and(sortByFirstName);
 
 		return repository.findAllBy(sort);
+	}
+
+	public List<CustomerState> findDistinctState() {
+
+		return repository.findDistinctAddress_StateBy();
+	}
+
+	public List<CustomerState> findFirst5States() {
+
+		return repository.findFirst5DistinctAddress_StateByAddress_StateNotNull();
+	}
+
+	public List<CustomerStateCity> findDistinctStateCity() {
+
+		TypedSort<CustomerStateCity> customerStateCity = Sort.sort(CustomerStateCity.class);
+
+		Sort byState = customerStateCity.by(CustomerStateCity::getAddress_State).ascending();
+		Sort byCity = customerStateCity.by(CustomerStateCity::getAddress_City).ascending();
+
+		Sort sort = byState.and(byCity);
+
+		return repository.findDistinctByAddress_StateNotNull(sort);
+	}
+
+	public int countStatesByCountry(String country) {
+
+		return repository.findDistinctAddress_StateByAddress_Country(country).size();
 	}
 }

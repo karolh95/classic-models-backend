@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.CustomerContact;
+import karolh95.classicmodels.dto.query.CustomerState;
+import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.service.CustomerService;
 
 @RestController
@@ -63,5 +65,28 @@ public class CustomerController {
 		List<CustomerContact> contacts = service.findAllCustomerContactsSort(order);
 
 		return ResponseEntity.ok(contacts);
+	}
+
+	@GetMapping("state")
+	public List<CustomerState> getDistinctState() {
+
+		return service.findDistinctState();
+	}
+
+	@GetMapping("state/first/5")
+	public List<CustomerState> getFirst5State() {
+
+		return service.findFirst5States();
+	}
+
+	@GetMapping("state/city")
+	public List<CustomerStateCity> getDistinctStateCity() {
+		return service.findDistinctStateCity();
+	}
+
+	@GetMapping("{country}/states")
+	public int getStatesByCountry(@PathVariable String country) {
+
+		return service.countStatesByCountry(country);
 	}
 }
