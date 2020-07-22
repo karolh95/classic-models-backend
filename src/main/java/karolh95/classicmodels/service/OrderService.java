@@ -1,5 +1,6 @@
 package karolh95.classicmodels.service;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.dto.query.OrderDetailSummary;
 import karolh95.classicmodels.dto.query.OrderStatus;
+import karolh95.classicmodels.dto.query.OrderSummary;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.OrderDetail;
@@ -96,6 +98,18 @@ public class OrderService {
 				.collect(Collectors.toList())
 		;
 		// @formatter:on
+	}
+
+	public List<OrderSummary> findByTotalGT(BigDecimal total) {
+
+		List<Long> orderNumbers = detailService.findByTotalGreaterThan(total);
+
+		return findByOrderNumbers(orderNumbers);
+	}
+
+	private List<OrderSummary> findByOrderNumbers(List<Long> orderNumbers) {
+
+		return repository.findByOrderNumberIn(orderNumbers);
 	}
 
 	private enum Status {

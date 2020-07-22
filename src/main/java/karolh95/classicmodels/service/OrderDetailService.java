@@ -1,5 +1,6 @@
 package karolh95.classicmodels.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -76,5 +77,10 @@ public class OrderDetailService {
 	public List<OrderDetailSummary> summary() {
 
 		return repository.findAllSummary();
+	}
+
+	public List<Long> findByTotalGreaterThan(BigDecimal total) {
+
+		return repository.findByTotalGreaterThan(total);
 	}
 }

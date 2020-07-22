@@ -1,5 +1,6 @@
 package karolh95.classicmodels.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,8 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, OrderD
 	@Query("SELECT order.orderNumber as orderNumber, orderLineNumber as orderLineNumber, quantityOrdered * priceEach AS subtotal "
 			+ "FROM orderdetails ORDER BY subtotal DESC")
 	List<OrderDetailSummary> findAllSummary();
+
+	@Query("SELECT order.orderNumber FROM orderdetails " + "GROUP BY orderNumber "
+			+ "HAVING SUM( quantityOrdered * priceEach) > :total")
+	List<Long> findByTotalGreaterThan(BigDecimal total);
 }

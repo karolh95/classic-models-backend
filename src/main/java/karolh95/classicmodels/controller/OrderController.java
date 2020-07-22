@@ -1,5 +1,6 @@
 package karolh95.classicmodels.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.dto.query.OrderDetailSummary;
 import karolh95.classicmodels.dto.query.OrderStatus;
+import karolh95.classicmodels.dto.query.OrderSummary;
 import karolh95.classicmodels.service.OrderService;
 
 @RestController
@@ -97,5 +99,11 @@ public class OrderController {
 		List<OrderStatus> orders = service.getOrdersOrderByState();
 
 		return ResponseEntity.ok(orders);
+	}
+
+	@GetMapping("getByTotalGreaterThan/{total}")
+	public List<OrderSummary> ordersByOrderNumbers(@PathVariable BigDecimal total) {
+
+		return service.findByTotalGT(total);
 	}
 }
