@@ -1,6 +1,7 @@
 package karolh95.classicmodels.service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.dto.query.OrderDetailSummary;
 import karolh95.classicmodels.dto.query.OrderStatus;
 import karolh95.classicmodels.dto.query.OrderSummary;
+import karolh95.classicmodels.dto.query.RequiredOrderStatus;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.OrderDetail;
@@ -105,6 +107,16 @@ public class OrderService {
 		List<Long> orderNumbers = detailService.findByTotalGreaterThan(total);
 
 		return findByOrderNumbers(orderNumbers);
+	}
+
+	public List<RequiredOrderStatus> findByRequiredDateBetween(Date from, Date to) {
+
+		return repository.findByRequiredDateBetween(from, to);
+	}
+
+	public List<RequiredOrderStatus> findByRequiredDateNotBetween(Date from, Date to) {
+
+		return repository.findByRequiredDateBeforeOrRequiredDateAfter(from, to);
 	}
 
 	private List<OrderSummary> findByOrderNumbers(List<Long> orderNumbers) {

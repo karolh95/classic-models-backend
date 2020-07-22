@@ -1,6 +1,7 @@
 package karolh95.classicmodels.controller;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.dto.query.OrderDetailSummary;
 import karolh95.classicmodels.dto.query.OrderStatus;
 import karolh95.classicmodels.dto.query.OrderSummary;
+import karolh95.classicmodels.dto.query.RequiredOrderStatus;
 import karolh95.classicmodels.service.OrderService;
 
 @RestController
@@ -105,5 +107,17 @@ public class OrderController {
 	public List<OrderSummary> ordersByOrderNumbers(@PathVariable BigDecimal total) {
 
 		return service.findByTotalGT(total);
+	}
+
+	@GetMapping("getByRequiredDateBetween/{from}/{to}")
+	public List<RequiredOrderStatus> findByRequiredDateBetween(@PathVariable Date from, @PathVariable Date to) {
+
+		return service.findByRequiredDateBetween(from, to);
+	}
+
+	@GetMapping("getByRequiredDateNotBetween/{from}/{to}")
+	public List<RequiredOrderStatus> findByRequiredDateNotBetween(@PathVariable Date from, @PathVariable Date to) {
+
+		return service.findByRequiredDateNotBetween(from, to);
 	}
 }
