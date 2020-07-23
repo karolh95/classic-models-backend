@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.CustomerContact;
+import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
 import karolh95.classicmodels.dto.query.CustomerState;
 import karolh95.classicmodels.dto.query.CustomerStateCity;
+import karolh95.classicmodels.dto.query.CustomerSummary;
 import karolh95.classicmodels.service.CustomerService;
 
 @RestController
@@ -113,4 +115,21 @@ public class CustomerController {
 		return service.findByCountry(creditLimit, country1, country2);
 	}
 
+	@GetMapping("findByPage/{page}/{size}")
+	public List<CustomerSummary> findByPage(@PathVariable int page, @PathVariable int size) {
+
+		return service.findBy(page - 1, size);
+	}
+
+	@GetMapping("findNth/lowest/{n}")
+	public List<CustomerCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
+
+		return service.findNthLowestCreditLimit(n);
+	}
+
+	@GetMapping("findNth/highest/{n}")
+	public List<CustomerCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
+
+		return service.findNthHighestCreditLimit(n);
+	}
 }

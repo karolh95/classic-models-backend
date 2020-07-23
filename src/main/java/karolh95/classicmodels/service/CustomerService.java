@@ -3,18 +3,23 @@ package karolh95.classicmodels.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.CustomerContact;
+import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
 import karolh95.classicmodels.dto.query.CustomerState;
 import karolh95.classicmodels.dto.query.CustomerStateCity;
+import karolh95.classicmodels.dto.query.CustomerSummary;
 import karolh95.classicmodels.mapper.CustomerMapper;
 import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.repository.CustomerRepository;
@@ -146,5 +151,39 @@ public class CustomerService {
 	public List<CustomerFullDetail> findByCountry(BigDecimal creditLimit, String... countries) {
 
 		return repository.findByCreditLimitGreaterThanAndAddress_CountryIn(creditLimit, countries);
+	}
+
+	public List<CustomerSummary> findBy(int page, int size) {
+
+		TypedSort<CustomerSummary> sort = Sort.sort(CustomerSummary.class);
+
+		Sort sortByCustomerName = sort.by(CustomerSummary::getCustomerName).ascending();
+
+		Pageable pageRequest = PageRequest.of(page, size, sortByCustomerName);
+
+		return repository.findAllBy(pageRequest);
+	}
+
+	public List<CustomerCreditLimit> findNthLowestCreditLimit(int n) {
+
+		return findNthCreditLimit(n, Sort::ascending);
+	}
+
+	public List<CustomerCreditLimit> findNthHighestCreditLimit(int n) {
+
+		return findNthCreditLimit(n, Sort::descending);
+	}
+
+	private List<CustomerCreditLimit> findNthCreditLimit(int n, Function<Sort, Sort> order) {
+
+		TypedSort<CustomerCreditLimit> sort = Sort.sort(CustomerCreditLimit.class);
+
+		Sort sortByCreditLimit = sort.by(CustomerCreditLimit::getCreditLimit);
+
+		sortByCreditLimit = order.apply(sortByCreditLimit);
+
+		Pageable pageRequest = PageRequest.of(n - 1, 1, sortByCreditLimit);
+
+		return repository.findBy(pageRequest);
 	}
 }
