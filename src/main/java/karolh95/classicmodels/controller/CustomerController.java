@@ -20,6 +20,7 @@ import karolh95.classicmodels.dto.query.CustomerContact;
 import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
+import karolh95.classicmodels.dto.query.CustomerSalesRep;
 import karolh95.classicmodels.dto.query.CustomerState;
 import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.dto.query.CustomerSummary;
@@ -131,5 +132,11 @@ public class CustomerController {
 	public List<CustomerCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
 
 		return service.findNthHighestCreditLimit(n);
+	}
+
+	@GetMapping("getSalesRep")
+	public List<CustomerSalesRep> getSalesRep() {
+
+		return service.findSalesRep();
 	}
 }

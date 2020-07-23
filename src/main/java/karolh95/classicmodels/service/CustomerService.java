@@ -17,6 +17,7 @@ import karolh95.classicmodels.dto.query.CustomerContact;
 import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
+import karolh95.classicmodels.dto.query.CustomerSalesRep;
 import karolh95.classicmodels.dto.query.CustomerState;
 import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.dto.query.CustomerSummary;
@@ -172,6 +173,15 @@ public class CustomerService {
 	public List<CustomerCreditLimit> findNthHighestCreditLimit(int n) {
 
 		return findNthCreditLimit(n, Sort::descending);
+	}
+
+	public List<CustomerSalesRep> findSalesRep() {
+
+		TypedSort<CustomerSalesRep> salesRep = Sort.sort(CustomerSalesRep.class);
+
+		Sort sortByName = salesRep.by(CustomerSalesRep::getCustomerName).ascending();
+
+		return repository.findBySalesRepEmployeeNumberIsNotNull(sortByName);
 	}
 
 	private List<CustomerCreditLimit> findNthCreditLimit(int n, Function<Sort, Sort> order) {

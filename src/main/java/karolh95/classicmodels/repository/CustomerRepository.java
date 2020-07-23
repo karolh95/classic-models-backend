@@ -12,6 +12,7 @@ import karolh95.classicmodels.dto.query.CustomerContact;
 import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
+import karolh95.classicmodels.dto.query.CustomerSalesRep;
 import karolh95.classicmodels.dto.query.CustomerState;
 import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.dto.query.CustomerSummary;
@@ -45,4 +46,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	List<CustomerState> findDistinctAddress_StateByAddress_Country(String country);
 
 	List<CustomerState> findFirst5DistinctAddress_StateByAddress_StateNotNull();
+
+	List<CustomerSalesRep> findBySalesRepEmployeeNumberIsNotNull(Sort sort);
 }
