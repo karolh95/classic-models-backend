@@ -20,9 +20,7 @@ import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.dto.query.OrderDetailQuery;
-import karolh95.classicmodels.dto.query.OrderStatus;
-import karolh95.classicmodels.dto.query.OrderSummary;
-import karolh95.classicmodels.dto.query.RequiredOrderStatus;
+import karolh95.classicmodels.dto.query.OrderQuery;
 import karolh95.classicmodels.service.OrderService;
 
 @RestController
@@ -96,27 +94,29 @@ public class OrderController {
 	}
 
 	@GetMapping("status")
-	public ResponseEntity<List<OrderStatus>> ordersOrderByStatus() {
+	public ResponseEntity<List<OrderQuery.NumberStatus>> ordersOrderByStatus() {
 
-		List<OrderStatus> orders = service.getOrdersOrderByState();
+		List<OrderQuery.NumberStatus> orders = service.getOrdersOrderByState();
 
 		return ResponseEntity.ok(orders);
 	}
 
 	@GetMapping("getByTotalGreaterThan/{total}")
-	public List<OrderSummary> ordersByOrderNumbers(@PathVariable BigDecimal total) {
+	public List<OrderQuery.NumberStatusShippedCustomerNumber> ordersByOrderNumbers(@PathVariable BigDecimal total) {
 
 		return service.findByTotalGT(total);
 	}
 
 	@GetMapping("getByRequiredDateBetween/{from}/{to}")
-	public List<RequiredOrderStatus> findByRequiredDateBetween(@PathVariable Date from, @PathVariable Date to) {
+	public List<OrderQuery.NumberStatusRequired> findByRequiredDateBetween(@PathVariable Date from,
+			@PathVariable Date to) {
 
 		return service.findByRequiredDateBetween(from, to);
 	}
 
 	@GetMapping("getByRequiredDateNotBetween/{from}/{to}")
-	public List<RequiredOrderStatus> findByRequiredDateNotBetween(@PathVariable Date from, @PathVariable Date to) {
+	public List<OrderQuery.NumberStatusRequired> findByRequiredDateNotBetween(@PathVariable Date from,
+			@PathVariable Date to) {
 
 		return service.findByRequiredDateNotBetween(from, to);
 	}

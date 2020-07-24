@@ -13,9 +13,7 @@ import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
 import karolh95.classicmodels.dto.query.OrderDetailQuery;
-import karolh95.classicmodels.dto.query.OrderStatus;
-import karolh95.classicmodels.dto.query.OrderSummary;
-import karolh95.classicmodels.dto.query.RequiredOrderStatus;
+import karolh95.classicmodels.dto.query.OrderQuery;
 import karolh95.classicmodels.mapper.OrderMapper;
 import karolh95.classicmodels.model.Order;
 import karolh95.classicmodels.model.OrderDetail;
@@ -91,35 +89,35 @@ public class OrderService {
 		return detailService.summary();
 	}
 
-	public List<OrderStatus> getOrdersOrderByState() {
+	public List<OrderQuery.NumberStatus> getOrdersOrderByState() {
 
 		// @formatter:off
 		return repository.findBy()
 				.stream()
-				.sorted(Comparator.comparing(OrderStatus::getStatus, Status.COMPARATOR))
+				.sorted(Comparator.comparing(OrderQuery.NumberStatus::getStatus, Status.COMPARATOR))
 				.collect(Collectors.toList())
 		;
 		// @formatter:on
 	}
 
-	public List<OrderSummary> findByTotalGT(BigDecimal total) {
+	public List<OrderQuery.NumberStatusShippedCustomerNumber> findByTotalGT(BigDecimal total) {
 
 		List<Long> orderNumbers = detailService.findByTotalGreaterThan(total);
 
 		return findByOrderNumbers(orderNumbers);
 	}
 
-	public List<RequiredOrderStatus> findByRequiredDateBetween(Date from, Date to) {
+	public List<OrderQuery.NumberStatusRequired> findByRequiredDateBetween(Date from, Date to) {
 
 		return repository.findByRequiredDateBetween(from, to);
 	}
 
-	public List<RequiredOrderStatus> findByRequiredDateNotBetween(Date from, Date to) {
+	public List<OrderQuery.NumberStatusRequired> findByRequiredDateNotBetween(Date from, Date to) {
 
 		return repository.findByRequiredDateBeforeOrRequiredDateAfter(from, to);
 	}
 
-	private List<OrderSummary> findByOrderNumbers(List<Long> orderNumbers) {
+	private List<OrderQuery.NumberStatusShippedCustomerNumber> findByOrderNumbers(List<Long> orderNumbers) {
 
 		return repository.findByOrderNumberIn(orderNumbers);
 	}
