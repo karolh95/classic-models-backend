@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
-import karolh95.classicmodels.dto.query.OrderDetailSummary;
+import karolh95.classicmodels.dto.query.OrderDetailQuery;
 import karolh95.classicmodels.dto.query.OrderStatus;
 import karolh95.classicmodels.dto.query.OrderSummary;
 import karolh95.classicmodels.dto.query.RequiredOrderStatus;
@@ -88,9 +88,9 @@ public class OrderController {
 	}
 
 	@GetMapping("summary")
-	public ResponseEntity<List<OrderDetailSummary>> summary() {
+	public ResponseEntity<List<OrderDetailQuery.NumberOrderLineSubtotal>> summary() {
 
-		List<OrderDetailSummary> summary = service.getDetailsSummary();
+		List<OrderDetailQuery.NumberOrderLineSubtotal> summary = service.getDetailsSummary();
 
 		return ResponseEntity.ok(summary);
 	}

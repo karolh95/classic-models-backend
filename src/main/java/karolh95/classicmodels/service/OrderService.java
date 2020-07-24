@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
-import karolh95.classicmodels.dto.query.OrderDetailSummary;
+import karolh95.classicmodels.dto.query.OrderDetailQuery;
 import karolh95.classicmodels.dto.query.OrderStatus;
 import karolh95.classicmodels.dto.query.OrderSummary;
 import karolh95.classicmodels.dto.query.RequiredOrderStatus;
@@ -86,7 +86,7 @@ public class OrderService {
 		return paymentService.savePayment(payment);
 	}
 
-	public List<OrderDetailSummary> getDetailsSummary() {
+	public List<OrderDetailQuery.NumberOrderLineSubtotal> getDetailsSummary() {
 
 		return detailService.summary();
 	}

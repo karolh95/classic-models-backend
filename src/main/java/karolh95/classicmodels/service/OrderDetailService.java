@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoOrderDetail;
-import karolh95.classicmodels.dto.query.OrderDetailSummary;
+import karolh95.classicmodels.dto.query.OrderDetailQuery;
 import karolh95.classicmodels.mapper.OrderDetailMapper;
 import karolh95.classicmodels.model.OrderDetail;
 import karolh95.classicmodels.model.Product;
@@ -74,7 +74,7 @@ public class OrderDetailService {
 		return t -> seen.add(keyExtractor.apply(t));
 	}
 
-	public List<OrderDetailSummary> summary() {
+	public List<OrderDetailQuery.NumberOrderLineSubtotal> summary() {
 
 		return repository.findAllSummary();
 	}
