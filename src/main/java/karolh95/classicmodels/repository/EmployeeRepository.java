@@ -7,46 +7,45 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import karolh95.classicmodels.dto.query.EmployeeOfficeSummary;
-import karolh95.classicmodels.dto.query.EmployeeSummary;
+import karolh95.classicmodels.dto.query.EmployeeQuery;
 import karolh95.classicmodels.model.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-	List<EmployeeSummary> findAllBy();
+	List<EmployeeQuery.NameJobTitle> findAllBy();
 
-	List<EmployeeOfficeSummary> findByJobTitle(String jobTitle);
+	List<EmployeeQuery.NameJobTitleOffice> findByJobTitle(String jobTitle);
 
-	List<EmployeeOfficeSummary> findByOfficeCode(String officeCode);
+	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCode(String officeCode);
 
-	List<EmployeeOfficeSummary> findByJobTitleAndOfficeCode(String jobTitle, String officeCode);
+	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleAndOfficeCode(String jobTitle, String officeCode);
 
-	List<EmployeeOfficeSummary> findByJobTitleOrOfficeCode(String jobTitle, String officeCode, Sort sort);
+	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleOrOfficeCode(String jobTitle, String officeCode, Sort sort);
 
-	List<EmployeeOfficeSummary> findByOfficeCodeBetween(String low, String high, Sort sort);
+	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeBetween(String low, String high, Sort sort);
 
-	List<EmployeeOfficeSummary> findByOfficeCodeLessThan(String officeCode);
+	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeLessThan(String officeCode);
 
-	List<EmployeeOfficeSummary> findByOfficeCodeLessThanEqual(String officeCode);
+	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeLessThanEqual(String officeCode);
 
-	List<EmployeeOfficeSummary> findByOfficeCodeIn(Collection<String> officeCodes);
+	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeIn(Collection<String> officeCodes);
 
-	List<EmployeeOfficeSummary> findByOfficeCodeGreaterThan(String officeCode);
+	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeGreaterThan(String officeCode);
 
-	List<EmployeeSummary> findByLastNameLike(String lastName);
+	List<EmployeeQuery.NameJobTitle> findByLastNameLike(String lastName);
 
-	List<EmployeeSummary> findByLastNameNotLike(String lastName);
+	List<EmployeeQuery.NameJobTitle> findByLastNameNotLike(String lastName);
 
-	List<EmployeeSummary> findByLastNameStartingWith(String prefix);
+	List<EmployeeQuery.NameJobTitle> findByLastNameStartingWith(String prefix);
 
-	List<EmployeeSummary> findByLastNameContaining(String string);
+	List<EmployeeQuery.NameJobTitle> findByLastNameContaining(String string);
 
-	List<EmployeeSummary> findByLastNameNotContaining(String string);
+	List<EmployeeQuery.NameJobTitle> findByLastNameNotContaining(String string);
 
-	List<EmployeeSummary> findByLastNameEndingWith(String suffix);
+	List<EmployeeQuery.NameJobTitle> findByLastNameEndingWith(String suffix);
 
-	List<EmployeeSummary> findByReportsToIsNull();
+	List<EmployeeQuery.NameJobTitle> findByReportsToIsNull();
 
-	List<EmployeeSummary> findByJobTitleNot(String jobTitle);
+	List<EmployeeQuery.NameJobTitle> findByJobTitleNot(String jobTitle);
 }

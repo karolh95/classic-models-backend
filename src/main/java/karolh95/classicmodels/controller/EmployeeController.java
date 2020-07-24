@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoEmployee;
-import karolh95.classicmodels.dto.query.EmployeeOfficeSummary;
-import karolh95.classicmodels.dto.query.EmployeeSummary;
+import karolh95.classicmodels.dto.query.EmployeeQuery;
 import karolh95.classicmodels.service.EmployeeService;
 
 @RestController
@@ -59,26 +58,28 @@ public class EmployeeController {
 	}
 
 	@GetMapping("summary")
-	public ResponseEntity<List<EmployeeSummary>> summary() {
+	public ResponseEntity<List<EmployeeQuery.NameJobTitle>> summary() {
 
-		List<EmployeeSummary> summary = service.getEmployeesSummaries();
+		List<EmployeeQuery.NameJobTitle> summary = service.getEmployeesSummaries();
 		return ResponseEntity.ok(summary);
 	}
 
 	@GetMapping("summary/{jobTitle}/{officeCode}")
-	public List<EmployeeOfficeSummary> summaryOffice(@PathVariable String jobTitle, @PathVariable String officeCode) {
+	public List<EmployeeQuery.NameJobTitleOffice> summaryOffice(@PathVariable String jobTitle,
+			@PathVariable String officeCode) {
 
 		return service.getEmployeeOfficeSummaries(jobTitle, officeCode);
 	}
 
 	@GetMapping("officeCodeBetween/{low}/{high}")
-	public List<EmployeeOfficeSummary> officeCodeBetween(@PathVariable String low, @PathVariable String high) {
+	public List<EmployeeQuery.NameJobTitleOffice> officeCodeBetween(@PathVariable String low,
+			@PathVariable String high) {
 
 		return service.findEmployeeWhereOfficeCodeBetween(low, high);
 	}
 
 	@GetMapping("lastname/{lastName}")
-	public List<EmployeeSummary> lastNameContaining(@PathVariable String lastName) {
+	public List<EmployeeQuery.NameJobTitle> lastNameContaining(@PathVariable String lastName) {
 		return service.findEmployeeByLastNameContaining(lastName);
 	}
 

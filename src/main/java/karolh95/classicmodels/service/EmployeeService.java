@@ -8,8 +8,7 @@ import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoEmployee;
-import karolh95.classicmodels.dto.query.EmployeeOfficeSummary;
-import karolh95.classicmodels.dto.query.EmployeeSummary;
+import karolh95.classicmodels.dto.query.EmployeeQuery;
 import karolh95.classicmodels.mapper.EmployeeMapper;
 import karolh95.classicmodels.model.Employee;
 import karolh95.classicmodels.repository.EmployeeRepository;
@@ -73,12 +72,12 @@ public class EmployeeService {
 		}
 	}
 
-	public List<EmployeeSummary> getEmployeesSummaries() {
+	public List<EmployeeQuery.NameJobTitle> getEmployeesSummaries() {
 
 		return repository.findAllBy();
 	}
 
-	public List<EmployeeOfficeSummary> getEmployeeOfficeSummaries(String jobTitle, String officeCode) {
+	public List<EmployeeQuery.NameJobTitleOffice> getEmployeeOfficeSummaries(String jobTitle, String officeCode) {
 
 		TypedSort<Employee> employee = Sort.sort(Employee.class);
 
@@ -90,7 +89,7 @@ public class EmployeeService {
 		return repository.findByJobTitleOrOfficeCode(jobTitle, officeCode, sort);
 	}
 
-	public List<EmployeeOfficeSummary> findEmployeeWhereOfficeCodeBetween(String low, String high) {
+	public List<EmployeeQuery.NameJobTitleOffice> findEmployeeWhereOfficeCodeBetween(String low, String high) {
 
 		TypedSort<Employee> employee = Sort.sort(Employee.class);
 
@@ -102,7 +101,7 @@ public class EmployeeService {
 		return repository.findByOfficeCodeBetween(low, high, sort);
 	}
 
-	public List<EmployeeSummary> findEmployeeByLastNameContaining(String lastName) {
+	public List<EmployeeQuery.NameJobTitle> findEmployeeByLastNameContaining(String lastName) {
 
 		return repository.findByLastNameContaining(lastName);
 	}
