@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoCustomer;
+import karolh95.classicmodels.dto.query.AddressQuery;
 import karolh95.classicmodels.dto.query.CustomerContact;
 import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
 import karolh95.classicmodels.dto.query.CustomerSalesRep;
-import karolh95.classicmodels.dto.query.CustomerState;
-import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.dto.query.CustomerSummary;
 import karolh95.classicmodels.service.CustomerService;
 
@@ -74,19 +73,19 @@ public class CustomerController {
 	}
 
 	@GetMapping("state")
-	public List<CustomerState> getDistinctState() {
+	public List<AddressQuery.State> getDistinctState() {
 
 		return service.findDistinctState();
 	}
 
 	@GetMapping("state/first/5")
-	public List<CustomerState> getFirst5State() {
+	public List<AddressQuery.State> getFirst5State() {
 
 		return service.findFirst5States();
 	}
 
 	@GetMapping("state/city")
-	public List<CustomerStateCity> getDistinctStateCity() {
+	public List<AddressQuery.StateCity> getDistinctStateCity() {
 		return service.findDistinctStateCity();
 	}
 

@@ -1,10 +1,8 @@
 package karolh95.classicmodels.dto.query;
 
-public interface CustomerSalesRep {
+public interface CustomerSalesRep extends AddressQuery.Country {
 
 	String getCustomerName();
-
-	String getAddress_Country();
 
 	Long getSalesRepEmployeeNumber();
 }

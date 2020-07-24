@@ -13,13 +13,11 @@ import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoCustomer;
-import karolh95.classicmodels.dto.query.CustomerContact;
+import karolh95.classicmodels.dto.query.AddressQuery;
 import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
 import karolh95.classicmodels.dto.query.CustomerSalesRep;
-import karolh95.classicmodels.dto.query.CustomerState;
-import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.dto.query.CustomerSummary;
 import karolh95.classicmodels.mapper.CustomerMapper;
 import karolh95.classicmodels.model.Customer;
@@ -111,22 +109,22 @@ public class CustomerService {
 		return repository.findAllBy(sort);
 	}
 
-	public List<CustomerState> findDistinctState() {
+	public List<AddressQuery.State> findDistinctState() {
 
 		return repository.findDistinctAddress_StateBy();
 	}
 
-	public List<CustomerState> findFirst5States() {
+	public List<AddressQuery.State> findFirst5States() {
 
 		return repository.findFirst5DistinctAddress_StateByAddress_StateNotNull();
 	}
 
-	public List<CustomerStateCity> findDistinctStateCity() {
+	public List<AddressQuery.StateCity> findDistinctStateCity() {
 
-		TypedSort<CustomerStateCity> customerStateCity = Sort.sort(CustomerStateCity.class);
+		TypedSort<AddressQuery.StateCity> customerStateCity = Sort.sort(AddressQuery.StateCity.class);
 
-		Sort byState = customerStateCity.by(CustomerStateCity::getAddress_State).ascending();
-		Sort byCity = customerStateCity.by(CustomerStateCity::getAddress_City).ascending();
+		Sort byState = customerStateCity.by(AddressQuery.StateCity::getAddress_State).ascending();
+		Sort byCity = customerStateCity.by(AddressQuery.StateCity::getAddress_City).ascending();
 
 		Sort sort = byState.and(byCity);
 

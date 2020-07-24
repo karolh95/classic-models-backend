@@ -1,12 +1,6 @@
 package karolh95.classicmodels.dto.query;
 
-public interface OfficeDetail {
+public interface OfficeDetail extends AddressQuery.City, AddressQuery.Country, AddressQuery.Phone {
 
 	String getOfficeCode();
-
-	String getAddress_City();
-
-	String getAddress_Phone();
-
-	String getAddress_Country();
 }

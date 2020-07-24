@@ -8,13 +8,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import karolh95.classicmodels.dto.query.AddressQuery;
 import karolh95.classicmodels.dto.query.CustomerContact;
 import karolh95.classicmodels.dto.query.CustomerCreditLimit;
 import karolh95.classicmodels.dto.query.CustomerDetail;
 import karolh95.classicmodels.dto.query.CustomerFullDetail;
 import karolh95.classicmodels.dto.query.CustomerSalesRep;
-import karolh95.classicmodels.dto.query.CustomerState;
-import karolh95.classicmodels.dto.query.CustomerStateCity;
 import karolh95.classicmodels.dto.query.CustomerSummary;
 import karolh95.classicmodels.model.Customer;
 
@@ -39,13 +38,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 	List<CustomerCreditLimit> findBy(Pageable pageRequest);
 
-	List<CustomerState> findDistinctAddress_StateBy();
+	List<AddressQuery.State> findDistinctAddress_StateBy();
 
-	List<CustomerStateCity> findDistinctByAddress_StateNotNull(Sort sort);
+	List<AddressStateCity> findDistinctByAddress_StateNotNull(Sort sort);
 
-	List<CustomerState> findDistinctAddress_StateByAddress_Country(String country);
+	List<AddressQuery.State> findDistinctAddress_StateByAddress_Country(String country);
 
-	List<CustomerState> findFirst5DistinctAddress_StateByAddress_StateNotNull();
+	List<AddressQuery.State> findFirst5DistinctAddress_StateByAddress_StateNotNull();
 
 	List<CustomerSalesRep> findBySalesRepEmployeeNumberIsNotNull(Sort sort);
 }
