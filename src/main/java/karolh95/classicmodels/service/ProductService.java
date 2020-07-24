@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import karolh95.classicmodels.dto.DtoProduct;
-import karolh95.classicmodels.dto.query.ProductDetail;
+import karolh95.classicmodels.dto.query.ProductQuery;
 import karolh95.classicmodels.mapper.ProductMapper;
 import karolh95.classicmodels.model.Product;
 import karolh95.classicmodels.repository.ProductRepository;
@@ -53,12 +53,12 @@ public class ProductService {
 		return mapper.productToDto(product);
 	}
 
-	public List<ProductDetail> findByPriceBetween(BigDecimal low, BigDecimal high) {
+	public List<ProductQuery.CodeNameBuyPrice> findByPriceBetween(BigDecimal low, BigDecimal high) {
 
 		return repository.findByBuyPriceBetween(low, high);
 	}
 
-	public List<ProductDetail> findByPriceNotBetween(BigDecimal low, BigDecimal high) {
+	public List<ProductQuery.CodeNameBuyPrice> findByPriceNotBetween(BigDecimal low, BigDecimal high) {
 
 		return repository.findByBuyPriceLessThanOrBuyPriceGreaterThan(low, high);
 	}
