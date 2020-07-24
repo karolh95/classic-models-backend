@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoOffice;
-import karolh95.classicmodels.dto.query.OfficeDetail;
+import karolh95.classicmodels.dto.query.OfficeQuery;
 import karolh95.classicmodels.service.OfficeService;
 
 @RestController
@@ -58,13 +58,15 @@ public class OfficeController {
 	}
 
 	@GetMapping("byCountries/{country1}/{country2}")
-	public List<OfficeDetail> findByCountries(@PathVariable String country1, @PathVariable String country2) {
+	public List<OfficeQuery.CodeCityCountryPhone> findByCountries(@PathVariable String country1,
+			@PathVariable String country2) {
 
 		return service.getOfficesByCountries(country1, country2);
 	}
 
 	@GetMapping("byCountriesNot/{country1}/{country2}")
-	public List<OfficeDetail> findByCountriesNot(@PathVariable String country1, @PathVariable String country2) {
+	public List<OfficeQuery.CodeCityCountryPhone> findByCountriesNot(@PathVariable String country1,
+			@PathVariable String country2) {
 
 		return service.getOfficesByCountriesNot(country1, country2);
 	}
