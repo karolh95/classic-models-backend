@@ -9,42 +9,37 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import karolh95.classicmodels.dto.query.AddressQuery;
-import karolh95.classicmodels.dto.query.CustomerContact;
-import karolh95.classicmodels.dto.query.CustomerCreditLimit;
-import karolh95.classicmodels.dto.query.CustomerDetail;
-import karolh95.classicmodels.dto.query.CustomerFullDetail;
-import karolh95.classicmodels.dto.query.CustomerSalesRep;
-import karolh95.classicmodels.dto.query.CustomerSummary;
+import karolh95.classicmodels.dto.query.CustomerQuery;
 import karolh95.classicmodels.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-	List<CustomerContact> findAllByOrderByContactLastName();
+	List<CustomerQuery.Contact> findAllByOrderByContactLastName();
 
-	List<CustomerContact> findAllByOrderByContactLastNameDesc();
+	List<CustomerQuery.Contact> findAllByOrderByContactLastNameDesc();
 
-	List<CustomerContact> findAllBy(Sort sort);
+	List<CustomerQuery.Contact> findAllBy(Sort sort);
 
-	List<CustomerDetail> findByAddress_CountryAndAddress_State(String country, String state);
+	List<CustomerQuery.NameCountryState> findByAddress_CountryAndAddress_State(String country, String state);
 
-	List<CustomerFullDetail> findByAddress_CountryAndAddress_StateAndCreditLimitGreaterThan(String country,
-			String state, BigDecimal creditlimit);
+	List<CustomerQuery.NameCreditLimitCountryState> findByAddress_CountryAndAddress_StateAndCreditLimitGreaterThan(
+			String country, String state, BigDecimal creditlimit);
 
-	List<CustomerFullDetail> findByCreditLimitGreaterThanAndAddress_CountryIn(BigDecimal creditLimit,
-			String... strings);
+	List<CustomerQuery.NameCreditLimitCountryState> findByCreditLimitGreaterThanAndAddress_CountryIn(
+			BigDecimal creditLimit, String... strings);
 
-	List<CustomerSummary> findAllBy(Pageable pageRequest);
+	List<CustomerQuery.NameNumber> findAllBy(Pageable pageRequest);
 
-	List<CustomerCreditLimit> findBy(Pageable pageRequest);
+	List<CustomerQuery.NameCreditLimit> findBy(Pageable pageRequest);
 
 	List<AddressQuery.State> findDistinctAddress_StateBy();
 
-	List<AddressStateCity> findDistinctByAddress_StateNotNull(Sort sort);
+	List<AddressQuery.StateCity> findDistinctByAddress_StateNotNull(Sort sort);
 
 	List<AddressQuery.State> findDistinctAddress_StateByAddress_Country(String country);
 
 	List<AddressQuery.State> findFirst5DistinctAddress_StateByAddress_StateNotNull();
 
-	List<CustomerSalesRep> findBySalesRepEmployeeNumberIsNotNull(Sort sort);
+	List<CustomerQuery.NameSalesRepCountry> findBySalesRepEmployeeNumberIsNotNull(Sort sort);
 }

@@ -17,12 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.AddressQuery;
-import karolh95.classicmodels.dto.query.CustomerContact;
-import karolh95.classicmodels.dto.query.CustomerCreditLimit;
-import karolh95.classicmodels.dto.query.CustomerDetail;
-import karolh95.classicmodels.dto.query.CustomerFullDetail;
-import karolh95.classicmodels.dto.query.CustomerSalesRep;
-import karolh95.classicmodels.dto.query.CustomerSummary;
+import karolh95.classicmodels.dto.query.CustomerQuery;
 import karolh95.classicmodels.service.CustomerService;
 
 @RestController
@@ -65,9 +60,9 @@ public class CustomerController {
 	}
 
 	@GetMapping("contacts/{order}")
-	public ResponseEntity<List<CustomerContact>> contacts(@PathVariable String order) {
+	public ResponseEntity<List<CustomerQuery.Contact>> contacts(@PathVariable String order) {
 
-		List<CustomerContact> contacts = service.findAllCustomerContactsSort(order);
+		List<CustomerQuery.Contact> contacts = service.findAllCustomerContactsSort(order);
 
 		return ResponseEntity.ok(contacts);
 	}
@@ -96,45 +91,46 @@ public class CustomerController {
 	}
 
 	@GetMapping("find/{country}/{state}")
-	public List<CustomerDetail> findByCountryAndState(@PathVariable String country, @PathVariable String state) {
+	public List<CustomerQuery.NameCountryState> findByCountryAndState(@PathVariable String country,
+			@PathVariable String state) {
 
 		return service.findByCountryAndState(country, state);
 	}
 
 	@GetMapping("find/{country}/{state}/{creditLimit}")
-	public List<CustomerFullDetail> findByCountryStateAndCreditlimit(@PathVariable String country,
-			@PathVariable String state, @PathVariable BigDecimal creditLimit) {
+	public List<CustomerQuery.NameCreditLimitCountryState> findByCountryStateAndCreditlimit(
+			@PathVariable String country, @PathVariable String state, @PathVariable BigDecimal creditLimit) {
 
 		return service.findByCountryAndStateAndCreditLimitGreaterThan(country, state, creditLimit);
 	}
 
 	@GetMapping("creditlimit/{creditLimit}/countries/{country1}/{country2}")
-	public List<CustomerFullDetail> findOr(@PathVariable BigDecimal creditLimit, @PathVariable String country1,
-			@PathVariable String country2) {
+	public List<CustomerQuery.NameCreditLimitCountryState> findOr(@PathVariable BigDecimal creditLimit,
+			@PathVariable String country1, @PathVariable String country2) {
 
 		return service.findByCountry(creditLimit, country1, country2);
 	}
 
 	@GetMapping("findByPage/{page}/{size}")
-	public List<CustomerSummary> findByPage(@PathVariable int page, @PathVariable int size) {
+	public List<CustomerQuery.NameNumber> findByPage(@PathVariable int page, @PathVariable int size) {
 
 		return service.findBy(page - 1, size);
 	}
 
 	@GetMapping("findNth/lowest/{n}")
-	public List<CustomerCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
+	public List<CustomerQuery.NameCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
 
 		return service.findNthLowestCreditLimit(n);
 	}
 
 	@GetMapping("findNth/highest/{n}")
-	public List<CustomerCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
+	public List<CustomerQuery.NameCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
 
 		return service.findNthHighestCreditLimit(n);
 	}
 
 	@GetMapping("getSalesRep")
-	public List<CustomerSalesRep> getSalesRep() {
+	public List<CustomerQuery.NameSalesRepCountry> getSalesRep() {
 
 		return service.findSalesRep();
 	}
