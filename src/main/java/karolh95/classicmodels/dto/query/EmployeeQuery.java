@@ -2,25 +2,25 @@ package karolh95.classicmodels.dto.query;
 
 public class EmployeeQuery {
 
-	public static interface Name {
+	public interface Name {
 		String getLastName();
 
 		String getFirstName();
 	}
 
-	public static interface JobTitle {
+	public interface JobTitle {
 		String getJobTitle();
 	}
 
-	public static interface OfficeCode {
+	public interface OfficeCode {
 		String getOfficeCode();
 	}
 
-	public static interface NameJobTitle extends Name, JobTitle {
+	public interface NameJobTitle extends Name, JobTitle {
 
 	}
 
-	public static interface NameJobTitleOffice extends NameJobTitle, OfficeCode {
+	public interface NameJobTitleOffice extends NameJobTitle, OfficeCode {
 
 	}
 }

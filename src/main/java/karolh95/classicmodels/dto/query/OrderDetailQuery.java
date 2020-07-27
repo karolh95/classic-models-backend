@@ -4,19 +4,19 @@ import java.math.BigDecimal;
 
 public class OrderDetailQuery {
 
-	public static interface Number {
+	public interface Number {
 		Long getOrderNumber();
 	}
 
-	public static interface OrderLine {
+	public interface OrderLine {
 		short getOrderLineNumber();
 	}
 
-	public static interface Subtotal {
+	public interface Subtotal {
 		BigDecimal getSubtotal();
 	}
 
-	public static interface NumberOrderLineSubtotal extends Number, OrderLine, Subtotal {
+	public interface NumberOrderLineSubtotal extends Number, OrderLine, Subtotal {
 
 	}
 }

@@ -4,35 +4,35 @@ import java.sql.Date;
 
 public class OrderQuery {
 
-	public static interface Number {
+	public interface Number {
 
 		Long getOrderNumber();
 	}
 
-	public static interface Status {
+	public interface Status {
 
 		String getStatus();
 	}
 
-	public static interface Shipped {
+	public interface Shipped {
 
 		Date getShippedDate();
 	}
 
-	public static interface Required {
+	public interface Required {
 
 		Date getRequiredDate();
 	}
 
-	public static interface NumberStatus extends Number, Status {
+	public interface NumberStatus extends Number, Status {
 
 	}
 
-	public static interface NumberStatusShippedCustomerNumber extends NumberStatus, Shipped, CustomerQuery.Number {
+	public interface NumberStatusShippedCustomerNumber extends NumberStatus, Shipped, CustomerQuery.Number {
 
 	}
 
-	public static interface NumberStatusRequired extends NumberStatus, Required {
+	public interface NumberStatusRequired extends NumberStatus, Required {
 
 	}
 }

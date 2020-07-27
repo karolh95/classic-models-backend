@@ -4,22 +4,22 @@ import java.math.BigDecimal;
 
 public class ProductQuery {
 
-	public static interface Code {
+	public interface Code {
 
 		String getProductCode();
 	}
 
-	public static interface Name {
+	public interface Name {
 
 		String getProductName();
 	}
 
-	public static interface BuyPrice {
+	public interface BuyPrice {
 
 		BigDecimal getBuyPrice();
 	}
 
-	public static interface CodeNameBuyPrice extends Name, Code, BuyPrice {
+	public interface CodeNameBuyPrice extends Name, Code, BuyPrice {
 
 	}
 }

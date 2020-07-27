@@ -2,19 +2,19 @@ package karolh95.classicmodels.dto.query;
 
 public class AddressQuery {
 
-	public static interface State {
+	public interface State {
 		String getAddress_State();
 	}
 
-	public static interface City {
+	public interface City {
 		String getAddress_City();
 	}
 
-	public static interface Country {
+	public interface Country {
 		String getAddress_Country();
 	}
 
-	public static interface Phone {
+	public interface Phone {
 		String getAddress_Phone();
 	}
 
