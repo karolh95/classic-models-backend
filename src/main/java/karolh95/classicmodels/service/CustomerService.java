@@ -3,7 +3,6 @@ package karolh95.classicmodels.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.springframework.data.domain.PageRequest;
@@ -159,16 +158,6 @@ public class CustomerService {
 		return repository.findAllBy(pageRequest);
 	}
 
-	public List<CustomerQuery.NameCreditLimit> findNthLowestCreditLimit(int n) {
-
-		return findNthCreditLimit(n, Sort::ascending);
-	}
-
-	public List<CustomerQuery.NameCreditLimit> findNthHighestCreditLimit(int n) {
-
-		return findNthCreditLimit(n, Sort::descending);
-	}
-
 	public List<CustomerQuery.NameSalesRepCountry> findSalesRep() {
 
 		TypedSort<CustomerQuery.NameSalesRepCountry> salesRep = Sort.sort(CustomerQuery.NameSalesRepCountry.class);
@@ -176,18 +165,5 @@ public class CustomerService {
 		Sort sortByName = salesRep.by(CustomerQuery.NameSalesRepCountry::getCustomerName).ascending();
 
 		return repository.findBySalesRepEmployeeNumberIsNotNull(sortByName);
-	}
-
-	private List<CustomerQuery.NameCreditLimit> findNthCreditLimit(int n, Function<Sort, Sort> order) {
-
-		TypedSort<CustomerQuery.NameCreditLimit> sort = Sort.sort(CustomerQuery.NameCreditLimit.class);
-
-		Sort sortByCreditLimit = sort.by(CustomerQuery.NameCreditLimit::getCreditLimit);
-
-		sortByCreditLimit = order.apply(sortByCreditLimit);
-
-		Pageable pageRequest = PageRequest.of(n - 1, 1, sortByCreditLimit);
-
-		return repository.findBy(pageRequest);
 	}
 }

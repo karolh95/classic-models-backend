@@ -19,6 +19,7 @@ import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.AddressQuery;
 import karolh95.classicmodels.dto.query.CustomerQuery;
 import karolh95.classicmodels.service.CustomerService;
+import karolh95.classicmodels.service.NthCustomerByCreditLimit;
 
 @RestController
 @RequestMapping("customers")
@@ -26,6 +27,9 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService service;
+
+	@Autowired
+	private NthCustomerByCreditLimit customerByCreditLimit;
 
 	@GetMapping("all")
 	public List<DtoCustomer> getAllCustomers() {
@@ -120,13 +124,13 @@ public class CustomerController {
 	@GetMapping("findNth/lowest/{n}")
 	public List<CustomerQuery.NameCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
 
-		return service.findNthLowestCreditLimit(n);
+		return customerByCreditLimit.findNthLowest(n);
 	}
 
 	@GetMapping("findNth/highest/{n}")
 	public List<CustomerQuery.NameCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
 
-		return service.findNthHighestCreditLimit(n);
+		return customerByCreditLimit.findNthHighest(n);
 	}
 
 	@GetMapping("getSalesRep")

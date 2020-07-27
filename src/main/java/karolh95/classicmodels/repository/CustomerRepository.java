@@ -11,9 +11,10 @@ import org.springframework.stereotype.Repository;
 import karolh95.classicmodels.dto.query.AddressQuery;
 import karolh95.classicmodels.dto.query.CustomerQuery;
 import karolh95.classicmodels.model.Customer;
+import karolh95.classicmodels.service.NthByField.Find;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, Long>, Find<CustomerQuery.NameCreditLimit> {
 
 	List<CustomerQuery.Contact> findAllByOrderByContactLastName();
 
@@ -30,8 +31,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 			BigDecimal creditLimit, String... strings);
 
 	List<CustomerQuery.NameNumber> findAllBy(Pageable pageRequest);
-
-	List<CustomerQuery.NameCreditLimit> findBy(Pageable pageRequest);
 
 	List<AddressQuery.State> findDistinctAddress_StateBy();
 
