@@ -1,11 +1,7 @@
 package karolh95.classicmodels.controller;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,12 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
-import karolh95.classicmodels.dto.query.OrderDetailQuery;
-import karolh95.classicmodels.dto.query.OrderQuery;
 import karolh95.classicmodels.service.OrderService;
 
 @RestController
@@ -48,7 +41,8 @@ public class OrderController {
 	}
 
 	@PostMapping("save")
-	public ResponseEntity<DtoFullOrder> save(@Valid @RequestBody DtoFullOrder order, BindingResult bindingResult) {
+	public ResponseEntity<DtoFullOrder> save(@Valid @RequestBody DtoFullOrder order,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(order);
@@ -83,41 +77,5 @@ public class OrderController {
 		}
 		return ResponseEntity.ok(response);
 
-	}
-
-	@GetMapping("summary")
-	public ResponseEntity<List<OrderDetailQuery.NumberOrderLineSubtotal>> summary() {
-
-		List<OrderDetailQuery.NumberOrderLineSubtotal> summary = service.getDetailsSummary();
-
-		return ResponseEntity.ok(summary);
-	}
-
-	@GetMapping("status")
-	public ResponseEntity<List<OrderQuery.NumberStatus>> ordersOrderByStatus() {
-
-		List<OrderQuery.NumberStatus> orders = service.getOrdersOrderByState();
-
-		return ResponseEntity.ok(orders);
-	}
-
-	@GetMapping("getByTotalGreaterThan/{total}")
-	public List<OrderQuery.NumberStatusShippedCustomerNumber> ordersByOrderNumbers(@PathVariable BigDecimal total) {
-
-		return service.findByTotalGT(total);
-	}
-
-	@GetMapping("getByRequiredDateBetween/{from}/{to}")
-	public List<OrderQuery.NumberStatusRequired> findByRequiredDateBetween(@PathVariable Date from,
-			@PathVariable Date to) {
-
-		return service.findByRequiredDateBetween(from, to);
-	}
-
-	@GetMapping("getByRequiredDateNotBetween/{from}/{to}")
-	public List<OrderQuery.NumberStatusRequired> findByRequiredDateNotBetween(@PathVariable Date from,
-			@PathVariable Date to) {
-
-		return service.findByRequiredDateNotBetween(from, to);
 	}
 }

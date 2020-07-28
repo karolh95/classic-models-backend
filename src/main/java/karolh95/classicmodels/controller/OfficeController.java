@@ -1,9 +1,7 @@
 package karolh95.classicmodels.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import karolh95.classicmodels.dto.DtoOffice;
-import karolh95.classicmodels.dto.query.OfficeQuery;
 import karolh95.classicmodels.service.OfficeService;
 
 @RestController
@@ -43,7 +39,8 @@ public class OfficeController {
 	}
 
 	@PostMapping("save")
-	public ResponseEntity<DtoOffice> save(@Valid @RequestBody DtoOffice office, BindingResult bindingResult) {
+	public ResponseEntity<DtoOffice> save(@Valid @RequestBody DtoOffice office,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(office);
@@ -55,19 +52,5 @@ public class OfficeController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(response);
-	}
-
-	@GetMapping("byCountries/{country1}/{country2}")
-	public List<OfficeQuery.CodeCityCountryPhone> findByCountries(@PathVariable String country1,
-			@PathVariable String country2) {
-
-		return service.getOfficesByCountries(country1, country2);
-	}
-
-	@GetMapping("byCountriesNot/{country1}/{country2}")
-	public List<OfficeQuery.CodeCityCountryPhone> findByCountriesNot(@PathVariable String country1,
-			@PathVariable String country2) {
-
-		return service.getOfficesByCountriesNot(country1, country2);
 	}
 }

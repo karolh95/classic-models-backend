@@ -1,10 +1,7 @@
 package karolh95.classicmodels.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import karolh95.classicmodels.dto.DtoProduct;
-import karolh95.classicmodels.dto.query.ProductQuery;
 import karolh95.classicmodels.service.ProductService;
 
 @RestController
@@ -43,7 +38,8 @@ public class ProductController {
 	}
 
 	@PostMapping("save")
-	public ResponseEntity<DtoProduct> save(@Valid @RequestBody DtoProduct product, BindingResult bindingResult) {
+	public ResponseEntity<DtoProduct> save(@Valid @RequestBody DtoProduct product,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(product);
@@ -55,19 +51,5 @@ public class ProductController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(response);
-	}
-
-	@GetMapping("byPriceBetween/{low}/{high}")
-	public List<ProductQuery.CodeNameBuyPrice> findByPriceBetween(@PathVariable BigDecimal low,
-			@PathVariable BigDecimal high) {
-
-		return service.findByPriceBetween(low, high);
-	}
-
-	@GetMapping("byPriceNotBetween/{low}/{high}")
-	public List<ProductQuery.CodeNameBuyPrice> findByPriceNotBetween(@PathVariable BigDecimal low,
-			@PathVariable BigDecimal high) {
-
-		return service.findByPriceNotBetween(low, high);
 	}
 }

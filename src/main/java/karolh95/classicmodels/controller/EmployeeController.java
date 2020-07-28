@@ -1,9 +1,7 @@
 package karolh95.classicmodels.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import karolh95.classicmodels.dto.DtoEmployee;
-import karolh95.classicmodels.dto.query.EmployeeQuery;
 import karolh95.classicmodels.service.EmployeeService;
 
 @RestController
@@ -43,7 +39,8 @@ public class EmployeeController {
 	}
 
 	@PostMapping("save")
-	public ResponseEntity<DtoEmployee> save(@Valid @RequestBody DtoEmployee employee, BindingResult bindingResult) {
+	public ResponseEntity<DtoEmployee> save(@Valid @RequestBody DtoEmployee employee,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(employee);
@@ -56,31 +53,4 @@ public class EmployeeController {
 		}
 		return ResponseEntity.ok(response);
 	}
-
-	@GetMapping("summary")
-	public ResponseEntity<List<EmployeeQuery.NameJobTitle>> summary() {
-
-		List<EmployeeQuery.NameJobTitle> summary = service.getEmployeesSummaries();
-		return ResponseEntity.ok(summary);
-	}
-
-	@GetMapping("summary/{jobTitle}/{officeCode}")
-	public List<EmployeeQuery.NameJobTitleOffice> summaryOffice(@PathVariable String jobTitle,
-			@PathVariable String officeCode) {
-
-		return service.getEmployeeOfficeSummaries(jobTitle, officeCode);
-	}
-
-	@GetMapping("officeCodeBetween/{low}/{high}")
-	public List<EmployeeQuery.NameJobTitleOffice> officeCodeBetween(@PathVariable String low,
-			@PathVariable String high) {
-
-		return service.findEmployeeWhereOfficeCodeBetween(low, high);
-	}
-
-	@GetMapping("lastname/{lastName}")
-	public List<EmployeeQuery.NameJobTitle> lastNameContaining(@PathVariable String lastName) {
-		return service.findEmployeeByLastNameContaining(lastName);
-	}
-
 }
