@@ -94,7 +94,7 @@ public class OrderService {
 		// @formatter:off
 		return repository.findBy()
 				.stream()
-				.sorted(Comparator.comparing(OrderQuery.NumberStatus::getStatus, Status.COMPARATOR))
+				.sorted(Comparator.comparing(OrderQuery.NumberStatus::getStatus, OrderStatus.COMPARATOR))
 				.collect(Collectors.toList())
 		;
 		// @formatter:on
@@ -121,54 +121,4 @@ public class OrderService {
 
 		return repository.findByOrderNumberIn(orderNumbers);
 	}
-
-	private enum Status {
-
-		// @formatter:off
-		In_PROCESS("In Process"), 
-		ON_HOLD("On Hold"), 
-		CANCELLED("Cancelled"), 
-		RESOLVED("Resolved"),
-		DISPUTED("Disputed"), 
-		SHIPPED("Shipped");
-		// @formatter:on
-
-		public static final StatusComparator COMPARATOR = new StatusComparator();
-
-		private String status;
-
-		Status(String status) {
-			this.status = status;
-		}
-
-		public static Status fromString(String text) {
-
-			for (Status value : values()) {
-				if (value.status.equalsIgnoreCase(text)) {
-					return value;
-				}
-			}
-			throw new IllegalArgumentException(String.format("Cannot cast '%s' to Status enum", text));
-		}
-
-		private static class StatusComparator implements Comparator<String> {
-
-			@Override
-			public int compare(String o1, String o2) {
-
-				Status s1, s2;
-
-				try {
-
-					s1 = Status.fromString(o1);
-					s2 = Status.fromString(o2);
-
-				} catch (IllegalArgumentException e) {
-					return 0;
-				}
-
-				return s1.compareTo(s2);
-			}
-		}
-	};
 }
