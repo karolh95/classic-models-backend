@@ -36,6 +36,9 @@ public class OrderDetail {
 	@JoinColumn(name = "orderNumber")
 	private Order order;
 
+	@Column(name = "orderNumber", insertable = false, updatable = false)
+	private Long orderNumber;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("productCode")
 	@JoinColumn(name = "productCode")

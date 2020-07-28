@@ -60,7 +60,8 @@ public class OrderService {
 
 		order = repository.save(order);
 
-		List<OrderDetail> orderDetails = detailService.save(order.getOrderNumber(), dtoOrder.getOrderDetails());
+		List<OrderDetail> orderDetails =
+				detailService.save(order.getOrderNumber(), dtoOrder.getOrderDetails());
 
 		order.setOrderDetails(orderDetails);
 
@@ -117,7 +118,22 @@ public class OrderService {
 		return repository.findByRequiredDateBeforeOrRequiredDateAfter(from, to);
 	}
 
-	private List<OrderQuery.NumberStatusShippedCustomerNumber> findByOrderNumbers(List<Long> orderNumbers) {
+	public List<OrderQuery.NumberStatusTotal> getOrdersWithTotal() {
+		return repository.getOrdersWithTotal();
+	};
+
+	public List<OrderQuery.WithProductAndPrice> getOrdersWithProductAndPrice() {
+
+		return repository.getOrdersWithProductAndPrice();
+	}
+
+	public List<OrderQuery.WithCustomerAndPrice> getOrdersWithCustomerAndPrice() {
+
+		return repository.getOrdersWithCustomerAndPrice();
+	}
+
+	private List<OrderQuery.NumberStatusShippedCustomerNumber> findByOrderNumbers(
+			List<Long> orderNumbers) {
 
 		return repository.findByOrderNumberIn(orderNumbers);
 	}

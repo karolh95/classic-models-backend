@@ -56,4 +56,22 @@ public class OrderRaports {
 
 		return service.findByRequiredDateNotBetween(from, to);
 	}
+
+	@GetMapping("ordersWithTotal")
+	public List<OrderQuery.NumberStatusTotal> getordersWithTotal() {
+
+		return service.getOrdersWithTotal();
+	}
+
+	@GetMapping("ordersWithProductAndPrice")
+	public List<OrderQuery.WithProductAndPrice> getOrdersWithProductAndPrice() {
+
+		return service.getOrdersWithProductAndPrice();
+	}
+
+	@GetMapping("ordersWithCustomerAndPrice")
+	public List<OrderQuery.WithCustomerAndPrice> getOrdersWithCustomerAndPrice() {
+
+		return service.getOrdersWithCustomerAndPrice();
+	}
 }

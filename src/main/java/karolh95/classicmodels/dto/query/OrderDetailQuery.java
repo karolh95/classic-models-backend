@@ -16,6 +16,16 @@ public class OrderDetailQuery {
 		BigDecimal getSubtotal();
 	}
 
+	public interface Quantity {
+
+		int getQuantityOrdered();
+	}
+
+	public interface PriceEach {
+
+		BigDecimal getPriceEach();
+	}
+
 	public interface NumberOrderLineSubtotal extends Number, OrderLine, Subtotal {
 
 	}

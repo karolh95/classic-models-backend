@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.dto.query.ProductQuery;
+import karolh95.classicmodels.dto.query.ProductQuery.WithOrderNumberMsrpPrice;
 import karolh95.classicmodels.service.ProductService;
 import lombok.RequiredArgsConstructor;
 
@@ -29,5 +30,18 @@ public class ProductRaports {
 			@PathVariable BigDecimal high) {
 
 		return service.findByPriceNotBetween(low, high);
+	}
+
+	@GetMapping("withDescription")
+	public List<ProductQuery.CodeNameDescription> getProductsWithDescription() {
+
+		return service.getProductsWithDescription();
+	}
+
+	@GetMapping("withOrderNumberMsrpAndPrice/{code}")
+	public List<WithOrderNumberMsrpPrice> getProductsWithOrderNumberMsrpAndPrice(
+			@PathVariable String code) {
+
+		return service.getProductsWithOrderNumberMsrpAndPrice(code);
 	}
 }

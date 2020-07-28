@@ -58,9 +58,21 @@ public class ProductService {
 		return repository.findByBuyPriceBetween(low, high);
 	}
 
-	public List<ProductQuery.CodeNameBuyPrice> findByPriceNotBetween(BigDecimal low, BigDecimal high) {
+	public List<ProductQuery.CodeNameBuyPrice> findByPriceNotBetween(BigDecimal low,
+			BigDecimal high) {
 
 		return repository.findByBuyPriceLessThanOrBuyPriceGreaterThan(low, high);
+	}
+
+	public List<ProductQuery.CodeNameDescription> getProductsWithDescription() {
+
+		return repository.getProductsWithDescription();
+	}
+
+	public List<ProductQuery.WithOrderNumberMsrpPrice> getProductsWithOrderNumberMsrpAndPrice(
+			String code) {
+
+		return repository.getProductsWithOrderNumberMsrpAndPrice(code);
 	}
 
 	private Product getOne(String productCode) {
