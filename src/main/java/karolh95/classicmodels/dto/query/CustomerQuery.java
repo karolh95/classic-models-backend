@@ -46,4 +46,11 @@ public class CustomerQuery {
 
 	}
 
+	public interface WithOrderNameStatus extends Number, Name {
+
+		Long getOrders_OrderNumber();
+
+		String getOrders_Status();
+	}
+
 }

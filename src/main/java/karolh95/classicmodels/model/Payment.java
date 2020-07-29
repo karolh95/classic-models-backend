@@ -24,6 +24,9 @@ public class Payment {
 	@EmbeddedId
 	private PaymentPK paymentPK;
 
+	@Column(name = "checkNumber", insertable = false, updatable = false)
+	private String checkNumber;
+
 	private Date paymentDate;
 
 	@Column(precision = 10, scale = 2)

@@ -19,11 +19,14 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCode(String officeCode);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleAndOfficeCode(String jobTitle, String officeCode);
+	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleAndOfficeCode(String jobTitle,
+			String officeCode);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleOrOfficeCode(String jobTitle, String officeCode, Sort sort);
+	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleOrOfficeCode(String jobTitle,
+			String officeCode, Sort sort);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeBetween(String low, String high, Sort sort);
+	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeBetween(String low, String high,
+			Sort sort);
 
 	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeLessThan(String officeCode);
 
@@ -48,4 +51,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<EmployeeQuery.NameJobTitle> findByReportsToIsNull();
 
 	List<EmployeeQuery.NameJobTitle> findByJobTitleNot(String jobTitle);
+
+	List<EmployeeQuery.WithCustomerNameAndPayments> findAllByOrderByCustomers_CustomerNameAscCustomers_Payments_CheckNumber();
 }

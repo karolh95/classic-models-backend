@@ -14,7 +14,8 @@ import karolh95.classicmodels.model.Customer;
 import karolh95.classicmodels.service.NthByField.Find;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long>, Find<CustomerQuery.NameCreditLimit> {
+public interface CustomerRepository
+		extends JpaRepository<Customer, Long>, Find<CustomerQuery.NameCreditLimit> {
 
 	List<CustomerQuery.Contact> findAllByOrderByContactLastName();
 
@@ -22,7 +23,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>, Find<
 
 	List<CustomerQuery.Contact> findAllBy(Sort sort);
 
-	List<CustomerQuery.NameCountryState> findByAddress_CountryAndAddress_State(String country, String state);
+	List<CustomerQuery.NameCountryState> findByAddress_CountryAndAddress_State(String country,
+			String state);
 
 	List<CustomerQuery.NameCreditLimitCountryState> findByAddress_CountryAndAddress_StateAndCreditLimitGreaterThan(
 			String country, String state, BigDecimal creditlimit);
@@ -41,4 +43,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>, Find<
 	List<AddressQuery.State> findFirst5DistinctAddress_StateByAddress_StateNotNull();
 
 	List<CustomerQuery.NameSalesRepCountry> findBySalesRepEmployeeNumberIsNotNull(Sort sort);
+
+	List<CustomerQuery.WithOrderNameStatus> findAllByOrders_OrderNumberIsNotNull();
+
+	List<CustomerQuery.WithOrderNameStatus> findAllByOrders_OrderNumberIsNull();
 }

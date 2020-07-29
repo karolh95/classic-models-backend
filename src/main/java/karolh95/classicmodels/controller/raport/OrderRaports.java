@@ -74,4 +74,10 @@ public class OrderRaports {
 
 		return service.getOrdersWithCustomerAndPrice();
 	}
+
+	@GetMapping("withNumber/{orderNumber}")
+	public List<OrderQuery.WithDetail> getOrdersWithProductCode(@PathVariable Long orderNumber) {
+
+		return service.getOrdersWithOrderNumber(orderNumber);
+	}
 }

@@ -79,7 +79,8 @@ public class CustomerService {
 
 	public List<CustomerQuery.Contact> findAllCustomerContacts(String order) {
 
-		Supplier<List<CustomerQuery.Contact>> contacts = repository::findAllByOrderByContactLastName;
+		Supplier<List<CustomerQuery.Contact>> contacts =
+				repository::findAllByOrderByContactLastName;
 
 		if (order.equalsIgnoreCase("DESC")) {
 			contacts = repository::findAllByOrderByContactLastNameDesc;
@@ -116,7 +117,8 @@ public class CustomerService {
 
 	public List<AddressQuery.StateCity> findDistinctStateCity() {
 
-		TypedSort<AddressQuery.StateCity> customerStateCity = Sort.sort(AddressQuery.StateCity.class);
+		TypedSort<AddressQuery.StateCity> customerStateCity =
+				Sort.sort(AddressQuery.StateCity.class);
 
 		Sort byState = customerStateCity.by(AddressQuery.StateCity::getAddress_State).ascending();
 		Sort byCity = customerStateCity.by(AddressQuery.StateCity::getAddress_City).ascending();
@@ -131,7 +133,8 @@ public class CustomerService {
 		return repository.findDistinctAddress_StateByAddress_Country(country).size();
 	}
 
-	public List<CustomerQuery.NameCountryState> findByCountryAndState(String country, String state) {
+	public List<CustomerQuery.NameCountryState> findByCountryAndState(String country,
+			String state) {
 
 		return repository.findByAddress_CountryAndAddress_State(country, state);
 	}
@@ -139,10 +142,12 @@ public class CustomerService {
 	public List<CustomerQuery.NameCreditLimitCountryState> findByCountryAndStateAndCreditLimitGreaterThan(
 			String country, String state, BigDecimal creditlimit) {
 
-		return repository.findByAddress_CountryAndAddress_StateAndCreditLimitGreaterThan(country, state, creditlimit);
+		return repository.findByAddress_CountryAndAddress_StateAndCreditLimitGreaterThan(country,
+				state, creditlimit);
 	}
 
-	public List<CustomerQuery.NameCreditLimitCountryState> findByCountry(BigDecimal creditLimit, String... countries) {
+	public List<CustomerQuery.NameCreditLimitCountryState> findByCountry(BigDecimal creditLimit,
+			String... countries) {
 
 		return repository.findByCreditLimitGreaterThanAndAddress_CountryIn(creditLimit, countries);
 	}
@@ -160,10 +165,22 @@ public class CustomerService {
 
 	public List<CustomerQuery.NameSalesRepCountry> findSalesRep() {
 
-		TypedSort<CustomerQuery.NameSalesRepCountry> salesRep = Sort.sort(CustomerQuery.NameSalesRepCountry.class);
+		TypedSort<CustomerQuery.NameSalesRepCountry> salesRep =
+				Sort.sort(CustomerQuery.NameSalesRepCountry.class);
 
-		Sort sortByName = salesRep.by(CustomerQuery.NameSalesRepCountry::getCustomerName).ascending();
+		Sort sortByName =
+				salesRep.by(CustomerQuery.NameSalesRepCountry::getCustomerName).ascending();
 
 		return repository.findBySalesRepEmployeeNumberIsNotNull(sortByName);
+	}
+
+	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithOrders() {
+
+		return repository.findAllByOrders_OrderNumberIsNotNull();
+	}
+
+	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithoutOrders() {
+
+		return repository.findAllByOrders_OrderNumberIsNull();
 	}
 }

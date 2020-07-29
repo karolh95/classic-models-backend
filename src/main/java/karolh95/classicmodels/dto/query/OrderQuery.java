@@ -10,6 +10,11 @@ public class OrderQuery {
 		Long getOrderNumber();
 	}
 
+	public interface CustomerNumber {
+
+		Long getCustomerNumber();
+	}
+
 	public interface Status {
 
 		String getStatus();
@@ -55,5 +60,10 @@ public class OrderQuery {
 
 	public interface WithCustomerAndPrice extends WithProductAndPrice, CustomerQuery.Name {
 
+	}
+
+	public interface WithDetail extends Number, CustomerNumber {
+
+		String getOrderDetails_ProductCode();
 	}
 }

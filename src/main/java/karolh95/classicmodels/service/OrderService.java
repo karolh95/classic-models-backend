@@ -132,6 +132,11 @@ public class OrderService {
 		return repository.getOrdersWithCustomerAndPrice();
 	}
 
+	public List<OrderQuery.WithDetail> getOrdersWithOrderNumber(Long orderNumber) {
+
+		return repository.findAllByOrderNumber(orderNumber);
+	}
+
 	private List<OrderQuery.NumberStatusShippedCustomerNumber> findByOrderNumbers(
 			List<Long> orderNumbers) {
 

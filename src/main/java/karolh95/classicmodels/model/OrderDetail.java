@@ -44,6 +44,9 @@ public class OrderDetail {
 	@JoinColumn(name = "productCode")
 	private Product product;
 
+	@Column(name = "productCode", insertable = false, updatable = false)
+	private String productCode;
+
 	public boolean hasValidIds() {
 
 		if (orderDetailPK == null) {

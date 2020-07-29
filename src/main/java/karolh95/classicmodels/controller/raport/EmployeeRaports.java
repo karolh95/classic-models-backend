@@ -42,4 +42,10 @@ public class EmployeeRaports {
 	public List<EmployeeQuery.NameJobTitle> lastNameContaining(@PathVariable String lastName) {
 		return service.findEmployeeByLastNameContaining(lastName);
 	}
+
+	@GetMapping("withCustomerPayments")
+	public List<EmployeeQuery.WithCustomerNameAndPayments> getEmployeesWithCustomersPayments() {
+
+		return service.getEmployeesWithCustomersPayments();
+	}
 }

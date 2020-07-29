@@ -96,4 +96,16 @@ public class CustomerRaports {
 
 		return service.findSalesRep();
 	}
+
+	@GetMapping("withOrders")
+	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithOrders() {
+
+		return service.getCustomersWithOrders();
+	}
+
+	@GetMapping("withoutOrders")
+	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithoutOrders() {
+
+		return service.getCustomersWithoutOrders();
+	}
 }

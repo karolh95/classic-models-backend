@@ -2,11 +2,9 @@ package karolh95.classicmodels.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoEmployee;
 import karolh95.classicmodels.dto.query.EmployeeQuery;
 import karolh95.classicmodels.mapper.EmployeeMapper;
@@ -77,7 +75,8 @@ public class EmployeeService {
 		return repository.findAllBy();
 	}
 
-	public List<EmployeeQuery.NameJobTitleOffice> getEmployeeOfficeSummaries(String jobTitle, String officeCode) {
+	public List<EmployeeQuery.NameJobTitleOffice> getEmployeeOfficeSummaries(String jobTitle,
+			String officeCode) {
 
 		TypedSort<Employee> employee = Sort.sort(Employee.class);
 
@@ -89,7 +88,8 @@ public class EmployeeService {
 		return repository.findByJobTitleOrOfficeCode(jobTitle, officeCode, sort);
 	}
 
-	public List<EmployeeQuery.NameJobTitleOffice> findEmployeeWhereOfficeCodeBetween(String low, String high) {
+	public List<EmployeeQuery.NameJobTitleOffice> findEmployeeWhereOfficeCodeBetween(String low,
+			String high) {
 
 		TypedSort<Employee> employee = Sort.sort(Employee.class);
 
@@ -104,5 +104,10 @@ public class EmployeeService {
 	public List<EmployeeQuery.NameJobTitle> findEmployeeByLastNameContaining(String lastName) {
 
 		return repository.findByLastNameContaining(lastName);
+	}
+
+	public List<EmployeeQuery.WithCustomerNameAndPayments> getEmployeesWithCustomersPayments() {
+
+		return repository.findAllByOrderByCustomers_CustomerNameAscCustomers_Payments_CheckNumber();
 	}
 }

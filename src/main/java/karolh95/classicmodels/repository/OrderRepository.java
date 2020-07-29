@@ -43,4 +43,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 			+ "ORDER BY orderNumber, orderLineNumber")
 
 	List<OrderQuery.WithCustomerAndPrice> getOrdersWithCustomerAndPrice();
+
+	List<OrderQuery.WithDetail> findAllByOrderNumber(Long orderNumber);
 }
