@@ -110,4 +110,19 @@ public class EmployeeService {
 
 		return repository.findAllByOrderByCustomers_CustomerNameAscCustomers_Payments_CheckNumber();
 	}
+
+	public List<EmployeeQuery.WithCustomerNumber> getEmployeesWithCustomerNumbers() {
+
+		return repository.findAllByCustomers_CustomerNumberIsNotNullOrderByEmployeeNumber();
+	}
+
+	public List<EmployeeQuery.WithCustomerNumber> getEmployeesWithoutCustomerNumbers() {
+
+		return repository.findAllByCustomers_CustomerNumberIsNullOrderByEmployeeNumber();
+	}
+
+	public List<EmployeeQuery.WithReportsTo> getEmployeesWithReportsTo() {
+
+		return repository.findAllByOrderByEmployee_LastNameAscEmployee_FirstName();
+	}
 }

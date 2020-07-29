@@ -53,4 +53,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<EmployeeQuery.NameJobTitle> findByJobTitleNot(String jobTitle);
 
 	List<EmployeeQuery.WithCustomerNameAndPayments> findAllByOrderByCustomers_CustomerNameAscCustomers_Payments_CheckNumber();
+
+	List<EmployeeQuery.WithCustomerNumber> findAllByCustomers_CustomerNumberIsNotNullOrderByEmployeeNumber();
+
+	List<EmployeeQuery.WithCustomerNumber> findAllByCustomers_CustomerNumberIsNullOrderByEmployeeNumber();
+
+	List<EmployeeQuery.WithReportsTo> findAllByOrderByEmployee_LastNameAscEmployee_FirstName();
 }

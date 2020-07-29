@@ -18,6 +18,10 @@ public class EmployeeQuery {
 		String getOfficeCode();
 	}
 
+	public interface EmployeeNumber {
+		Long getEmployeeNumber();
+	}
+
 	public interface NameJobTitle extends Name, JobTitle {
 
 	}
@@ -33,5 +37,20 @@ public class EmployeeQuery {
 		String getCustomers_Payments_CheckNumber();
 
 		BigDecimal getCustomers_Payments_Amount();
+	}
+
+	public interface WithCustomerNumber extends EmployeeNumber {
+
+		Long getCustomers_CustomerNumber();
+	}
+
+	public interface WithReportsTo extends Name, ReportsTo {
+
+	}
+
+	private interface ReportsTo {
+		String getEmployee_LastName();
+
+		String getEmployee_FirstName();
 	}
 }

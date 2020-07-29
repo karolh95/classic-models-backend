@@ -48,4 +48,22 @@ public class EmployeeRaports {
 
 		return service.getEmployeesWithCustomersPayments();
 	}
+
+	@GetMapping("withCustomerNumber")
+	public List<EmployeeQuery.WithCustomerNumber> getEmployeesWithCustomersNumbers() {
+
+		return service.getEmployeesWithCustomerNumbers();
+	}
+
+	@GetMapping("withoutCustomerNumber")
+	public List<EmployeeQuery.WithCustomerNumber> getEmployeesWithoutCustomersNumbers() {
+
+		return service.getEmployeesWithoutCustomerNumbers();
+	}
+
+	@GetMapping("withReportsTo")
+	public List<EmployeeQuery.WithReportsTo> getEmployeesWithReportsTo() {
+
+		return service.getEmployeesWithReportsTo();
+	}
 }
