@@ -2,7 +2,15 @@ package karolh95.classicmodels.dto.query;
 
 import java.math.BigDecimal;
 
-public class CustomerQuery {
+public class CustomerQuery extends AddressQuery {
+
+	public interface Number {
+		Long getCustomerNumber();
+	}
+
+	public interface Name {
+		String getCustomerName();
+	}
 
 	public interface Contact {
 		String getContactFirstName();
@@ -10,47 +18,36 @@ public class CustomerQuery {
 		String getContactLastName();
 	}
 
-	public interface Number {
-		Long getCustomerNumber();
-	}
-
-	public interface SalesRep {
-		Long getSalesRepEmployeeNumber();
-	}
-
-	public interface Name {
-		String getCustomerName();
+	public interface PostalCode {
+		String getPostalCode();
 	}
 
 	public interface CreditLimit {
 		BigDecimal getCreditLimit();
 	}
 
-	public interface NameNumber extends Number, Name {
+	public interface SalesRep {
+		Long getSalesRepEmployeeNumber();
+	}
 
+	public interface NameNumber extends Number, Name {
 	}
 
 	public interface NameCreditLimit extends Name, CreditLimit {
-
 	}
 
-	public interface NameSalesRepCountry extends Name, SalesRep, AddressQuery.Country {
-
+	public interface NameSalesRepCountry extends Name, SalesRep, Country {
 	}
 
-	public interface NameCountryState extends Name, AddressQuery.Country, AddressQuery.State {
-
+	public interface NameCountryState extends Name, Country, State {
 	}
 
 	public interface NameCreditLimitCountryState extends NameCountryState, CreditLimit {
-
 	}
 
 	public interface WithOrderNameStatus extends Number, Name {
-
 		Long getOrders_OrderNumber();
 
 		String getOrders_Status();
 	}
-
 }

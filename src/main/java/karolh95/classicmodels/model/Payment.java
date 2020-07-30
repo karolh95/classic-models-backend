@@ -24,8 +24,11 @@ public class Payment {
 	@EmbeddedId
 	private PaymentPK paymentPK;
 
-	@Column(name = "checkNumber", insertable = false, updatable = false)
+	@Column(insertable = false, updatable = false)
 	private String checkNumber;
+
+	@Column(insertable = false, updatable = false)
+	private Long customerNumber;
 
 	private Date paymentDate;
 

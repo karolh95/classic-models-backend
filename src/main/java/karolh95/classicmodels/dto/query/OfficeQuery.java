@@ -1,12 +1,20 @@
 package karolh95.classicmodels.dto.query;
 
-public class OfficeQuery {
+public class OfficeQuery extends AddressQuery {
 
 	public interface Code {
 		String getOfficeCode();
 	}
 
-	public interface CodeCityCountryPhone extends Code, AddressQuery.City, AddressQuery.Country, AddressQuery.Phone {
+	public interface PostalCode {
+		String getPostalCode();
+	}
+
+	public interface Territory {
+		String getTerritory();
+	}
+
+	public interface CodeCityCountryPhone extends Code, City, Country, Phone {
 
 	}
 }

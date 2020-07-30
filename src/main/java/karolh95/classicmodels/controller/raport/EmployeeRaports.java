@@ -18,28 +18,28 @@ public class EmployeeRaports {
 	private final EmployeeService service;
 
 	@GetMapping("summary")
-	public ResponseEntity<List<EmployeeQuery.NameJobTitle>> summary() {
+	public ResponseEntity<List<EmployeeQuery.NameJob>> summary() {
 
-		List<EmployeeQuery.NameJobTitle> summary = service.getEmployeesSummaries();
+		List<EmployeeQuery.NameJob> summary = service.getEmployeesSummaries();
 		return ResponseEntity.ok(summary);
 	}
 
 	@GetMapping("summary/{jobTitle}/{officeCode}")
-	public List<EmployeeQuery.NameJobTitleOffice> summaryOffice(@PathVariable String jobTitle,
+	public List<EmployeeQuery.NameJobOffice> summaryOffice(@PathVariable String jobTitle,
 			@PathVariable String officeCode) {
 
 		return service.getEmployeeOfficeSummaries(jobTitle, officeCode);
 	}
 
 	@GetMapping("officeCodeBetween/{low}/{high}")
-	public List<EmployeeQuery.NameJobTitleOffice> officeCodeBetween(@PathVariable String low,
+	public List<EmployeeQuery.NameJobOffice> officeCodeBetween(@PathVariable String low,
 			@PathVariable String high) {
 
 		return service.findEmployeeWhereOfficeCodeBetween(low, high);
 	}
 
 	@GetMapping("lastname/{lastName}")
-	public List<EmployeeQuery.NameJobTitle> lastNameContaining(@PathVariable String lastName) {
+	public List<EmployeeQuery.NameJob> lastNameContaining(@PathVariable String lastName) {
 		return service.findEmployeeByLastNameContaining(lastName);
 	}
 
@@ -62,7 +62,7 @@ public class EmployeeRaports {
 	}
 
 	@GetMapping("withReportsTo")
-	public List<EmployeeQuery.WithReportsTo> getEmployeesWithReportsTo() {
+	public List<EmployeeQuery.WithManager> getEmployeesWithReportsTo() {
 
 		return service.getEmployeesWithReportsTo();
 	}

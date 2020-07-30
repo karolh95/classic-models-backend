@@ -47,6 +47,9 @@ public class Product {
 	@JoinColumn(name = "productline", nullable = false)
 	private Productline productline;
 
+	@Column(name = "productline", insertable = false, updatable = false)
+	private String productline_id;
+
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<OrderDetail> orderDetails;
 

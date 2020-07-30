@@ -49,7 +49,7 @@ public class Customer {
 	@JoinColumn(name = "salesRepEmployeeNumber")
 	private Employee employee;
 
-	@Column(name = "salesRepEmployeeNumber", insertable = false, updatable = false)
+	@Column(insertable = false, updatable = false)
 	private Long salesRepEmployeeNumber;
 
 	@OneToMany(mappedBy = "customer")

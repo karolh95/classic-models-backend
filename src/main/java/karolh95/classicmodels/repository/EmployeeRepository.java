@@ -13,44 +13,43 @@ import karolh95.classicmodels.model.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-	List<EmployeeQuery.NameJobTitle> findAllBy();
+	List<EmployeeQuery.NameJob> findAllBy();
 
-	List<EmployeeQuery.NameJobTitleOffice> findByJobTitle(String jobTitle);
+	List<EmployeeQuery.NameJobOffice> findByJobTitle(String jobTitle);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCode(String officeCode);
+	List<EmployeeQuery.NameJobOffice> findByOfficeCode(String officeCode);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleAndOfficeCode(String jobTitle,
+	List<EmployeeQuery.NameJobOffice> findByJobTitleAndOfficeCode(String jobTitle,
 			String officeCode);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByJobTitleOrOfficeCode(String jobTitle,
-			String officeCode, Sort sort);
-
-	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeBetween(String low, String high,
+	List<EmployeeQuery.NameJobOffice> findByJobTitleOrOfficeCode(String jobTitle, String officeCode,
 			Sort sort);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeLessThan(String officeCode);
+	List<EmployeeQuery.NameJobOffice> findByOfficeCodeBetween(String low, String high, Sort sort);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeLessThanEqual(String officeCode);
+	List<EmployeeQuery.NameJobOffice> findByOfficeCodeLessThan(String officeCode);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeIn(Collection<String> officeCodes);
+	List<EmployeeQuery.NameJobOffice> findByOfficeCodeLessThanEqual(String officeCode);
 
-	List<EmployeeQuery.NameJobTitleOffice> findByOfficeCodeGreaterThan(String officeCode);
+	List<EmployeeQuery.NameJobOffice> findByOfficeCodeIn(Collection<String> officeCodes);
 
-	List<EmployeeQuery.NameJobTitle> findByLastNameLike(String lastName);
+	List<EmployeeQuery.NameJobOffice> findByOfficeCodeGreaterThan(String officeCode);
 
-	List<EmployeeQuery.NameJobTitle> findByLastNameNotLike(String lastName);
+	List<EmployeeQuery.NameJob> findByLastNameLike(String lastName);
 
-	List<EmployeeQuery.NameJobTitle> findByLastNameStartingWith(String prefix);
+	List<EmployeeQuery.NameJob> findByLastNameNotLike(String lastName);
 
-	List<EmployeeQuery.NameJobTitle> findByLastNameContaining(String string);
+	List<EmployeeQuery.NameJob> findByLastNameStartingWith(String prefix);
 
-	List<EmployeeQuery.NameJobTitle> findByLastNameNotContaining(String string);
+	List<EmployeeQuery.NameJob> findByLastNameContaining(String string);
 
-	List<EmployeeQuery.NameJobTitle> findByLastNameEndingWith(String suffix);
+	List<EmployeeQuery.NameJob> findByLastNameNotContaining(String string);
 
-	List<EmployeeQuery.NameJobTitle> findByReportsToIsNull();
+	List<EmployeeQuery.NameJob> findByLastNameEndingWith(String suffix);
 
-	List<EmployeeQuery.NameJobTitle> findByJobTitleNot(String jobTitle);
+	List<EmployeeQuery.NameJob> findByReportsToIsNull();
+
+	List<EmployeeQuery.NameJob> findByJobTitleNot(String jobTitle);
 
 	List<EmployeeQuery.WithCustomerNameAndPayments> findAllByOrderByCustomers_CustomerNameAscCustomers_Payments_CheckNumber();
 
@@ -58,5 +57,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 	List<EmployeeQuery.WithCustomerNumber> findAllByCustomers_CustomerNumberIsNullOrderByEmployeeNumber();
 
-	List<EmployeeQuery.WithReportsTo> findAllByOrderByEmployee_LastNameAscEmployee_FirstName();
+	List<EmployeeQuery.WithManager> findAllByOrderByEmployee_LastNameAscEmployee_FirstName();
 }

@@ -36,7 +36,7 @@ public class OrderDetail {
 	@JoinColumn(name = "orderNumber")
 	private Order order;
 
-	@Column(name = "orderNumber", insertable = false, updatable = false)
+	@Column(insertable = false, updatable = false)
 	private Long orderNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +44,7 @@ public class OrderDetail {
 	@JoinColumn(name = "productCode")
 	private Product product;
 
-	@Column(name = "productCode", insertable = false, updatable = false)
+	@Column(insertable = false, updatable = false)
 	private String productCode;
 
 	public boolean hasValidIds() {

@@ -70,12 +70,12 @@ public class EmployeeService {
 		}
 	}
 
-	public List<EmployeeQuery.NameJobTitle> getEmployeesSummaries() {
+	public List<EmployeeQuery.NameJob> getEmployeesSummaries() {
 
 		return repository.findAllBy();
 	}
 
-	public List<EmployeeQuery.NameJobTitleOffice> getEmployeeOfficeSummaries(String jobTitle,
+	public List<EmployeeQuery.NameJobOffice> getEmployeeOfficeSummaries(String jobTitle,
 			String officeCode) {
 
 		TypedSort<Employee> employee = Sort.sort(Employee.class);
@@ -88,7 +88,7 @@ public class EmployeeService {
 		return repository.findByJobTitleOrOfficeCode(jobTitle, officeCode, sort);
 	}
 
-	public List<EmployeeQuery.NameJobTitleOffice> findEmployeeWhereOfficeCodeBetween(String low,
+	public List<EmployeeQuery.NameJobOffice> findEmployeeWhereOfficeCodeBetween(String low,
 			String high) {
 
 		TypedSort<Employee> employee = Sort.sort(Employee.class);
@@ -101,7 +101,7 @@ public class EmployeeService {
 		return repository.findByOfficeCodeBetween(low, high, sort);
 	}
 
-	public List<EmployeeQuery.NameJobTitle> findEmployeeByLastNameContaining(String lastName) {
+	public List<EmployeeQuery.NameJob> findEmployeeByLastNameContaining(String lastName) {
 
 		return repository.findByLastNameContaining(lastName);
 	}
@@ -121,7 +121,7 @@ public class EmployeeService {
 		return repository.findAllByCustomers_CustomerNumberIsNullOrderByEmployeeNumber();
 	}
 
-	public List<EmployeeQuery.WithReportsTo> getEmployeesWithReportsTo() {
+	public List<EmployeeQuery.WithManager> getEmployeesWithReportsTo() {
 
 		return repository.findAllByOrderByEmployee_LastNameAscEmployee_FirstName();
 	}

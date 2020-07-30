@@ -8,25 +8,23 @@ public class OrderDetailQuery {
 		Long getOrderNumber();
 	}
 
-	public interface OrderLine {
-		short getOrderLineNumber();
-	}
-
-	public interface Subtotal {
-		BigDecimal getSubtotal();
+	public interface ProductCode {
+		String getProductCode();
 	}
 
 	public interface Quantity {
-
 		int getQuantityOrdered();
 	}
 
 	public interface PriceEach {
-
 		BigDecimal getPriceEach();
 	}
 
-	public interface NumberOrderLineSubtotal extends Number, OrderLine, Subtotal {
+	public interface OrderLine {
+		short getOrderLineNumber();
+	}
 
+	public interface NumberOrderLineSubtotal extends Number, OrderLine {
+		BigDecimal getSubtotal();
 	}
 }
