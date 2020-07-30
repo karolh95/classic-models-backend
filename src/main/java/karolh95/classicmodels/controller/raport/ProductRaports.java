@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.dto.query.ProductQuery;
 import karolh95.classicmodels.dto.query.ProductQuery.WithOrderNumberMsrpPrice;
-import karolh95.classicmodels.service.ProductService;
+import karolh95.classicmodels.service.raport.ProductRaport;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -16,32 +16,32 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("product/raports")
 public class ProductRaports {
 
-	private final ProductService service;
+	private final ProductRaport raport;
 
 	@GetMapping("byPriceBetween/{low}/{high}")
 	public List<ProductQuery.CodeNameBuyPrice> findByPriceBetween(@PathVariable BigDecimal low,
 			@PathVariable BigDecimal high) {
 
-		return service.findByPriceBetween(low, high);
+		return raport.findByPriceBetween(low, high);
 	}
 
 	@GetMapping("byPriceNotBetween/{low}/{high}")
 	public List<ProductQuery.CodeNameBuyPrice> findByPriceNotBetween(@PathVariable BigDecimal low,
 			@PathVariable BigDecimal high) {
 
-		return service.findByPriceNotBetween(low, high);
+		return raport.findByPriceNotBetween(low, high);
 	}
 
 	@GetMapping("withDescription")
 	public List<ProductQuery.CodeNameDescription> getProductsWithDescription() {
 
-		return service.getProductsWithDescription();
+		return raport.getProductsWithDescription();
 	}
 
 	@GetMapping("withOrderNumberMsrpAndPrice/{code}")
 	public List<WithOrderNumberMsrpPrice> getProductsWithOrderNumberMsrpAndPrice(
 			@PathVariable String code) {
 
-		return service.getProductsWithOrderNumberMsrpAndPrice(code);
+		return raport.getProductsWithOrderNumberMsrpAndPrice(code);
 	}
 }

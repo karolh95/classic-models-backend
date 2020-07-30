@@ -1,17 +1,13 @@
 package karolh95.classicmodels.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoOrderDetail;
-import karolh95.classicmodels.dto.query.OrderDetailQuery;
 import karolh95.classicmodels.mapper.OrderDetailMapper;
 import karolh95.classicmodels.model.OrderDetail;
 import karolh95.classicmodels.model.Product;
@@ -72,15 +68,5 @@ public class OrderDetailService {
 		Set<Object> seen = new HashSet<>();
 
 		return t -> seen.add(keyExtractor.apply(t));
-	}
-
-	public List<OrderDetailQuery.NumberOrderLineSubtotal> summary() {
-
-		return repository.findAllSummary();
-	}
-
-	public List<Long> findByTotalGreaterThan(BigDecimal total) {
-
-		return repository.findByTotalGreaterThan(total);
 	}
 }

@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.dto.query.AddressQuery;
 import karolh95.classicmodels.dto.query.CustomerQuery;
-import karolh95.classicmodels.service.CustomerService;
-import karolh95.classicmodels.service.NthCustomerByCreditLimit;
+import karolh95.classicmodels.service.raport.CustomerRaport;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,49 +16,48 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("customer/raport")
 public class CustomerRaports {
 
-	private final CustomerService service;
-	private final NthCustomerByCreditLimit customerByCreditLimit;
+	private final CustomerRaport raport;
 
 	@GetMapping("contacts/asc")
 	public List<CustomerQuery.Contact> contactsAsc() {
 
-		return service.findAllContactsAsc();
+		return raport.findAllContactsAsc();
 	}
 
 	@GetMapping("contacts/desc")
 	public List<CustomerQuery.Contact> contactsDesc() {
 
-		return service.findAllContactsDesc();
+		return raport.findAllContactsDesc();
 	}
 
 	@GetMapping("state")
 	public List<AddressQuery.State> getDistinctState() {
 
-		return service.findDistinctState();
+		return raport.findDistinctState();
 	}
 
 	@GetMapping("state/first/5")
 	public List<AddressQuery.State> getFirst5State() {
 
-		return service.findFirst5States();
+		return raport.findFirst5States();
 	}
 
 	@GetMapping("state/city")
 	public List<AddressQuery.StateCity> getDistinctStateCity() {
-		return service.findDistinctStateCity();
+		return raport.findDistinctStateCity();
 	}
 
 	@GetMapping("{country}/states")
 	public int getStatesByCountry(@PathVariable String country) {
 
-		return service.countStatesByCountry(country);
+		return raport.countStatesByCountry(country);
 	}
 
 	@GetMapping("find/{country}/{state}")
 	public List<CustomerQuery.NameCountryState> findByCountryAndState(@PathVariable String country,
 			@PathVariable String state) {
 
-		return service.findByCountryAndState(country, state);
+		return raport.findByCountryAndState(country, state);
 	}
 
 	@GetMapping("find/{country}/{state}/{creditLimit}")
@@ -67,7 +65,7 @@ public class CustomerRaports {
 			@PathVariable String country, @PathVariable String state,
 			@PathVariable BigDecimal creditLimit) {
 
-		return service.findByCountryAndStateAndCreditLimitGreaterThan(country, state, creditLimit);
+		return raport.findByCountryAndStateAndCreditLimitGreaterThan(country, state, creditLimit);
 	}
 
 	@GetMapping("creditlimit/{creditLimit}/countries/{country1}/{country2}")
@@ -75,43 +73,43 @@ public class CustomerRaports {
 			@PathVariable BigDecimal creditLimit, @PathVariable String country1,
 			@PathVariable String country2) {
 
-		return service.findByCountry(creditLimit, country1, country2);
+		return raport.findByCountry(creditLimit, country1, country2);
 	}
 
 	@GetMapping("findByPage/{page}/{size}")
 	public List<CustomerQuery.NameNumber> findByPage(@PathVariable int page,
 			@PathVariable int size) {
 
-		return service.findBy(page - 1, size);
+		return raport.findBy(page - 1, size);
 	}
 
 	@GetMapping("findNth/lowest/{n}")
 	public List<CustomerQuery.NameCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
 
-		return customerByCreditLimit.findNthLowest(n);
+		return raport.findNthLowest(n);
 	}
 
 	@GetMapping("findNth/highest/{n}")
 	public List<CustomerQuery.NameCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
 
-		return customerByCreditLimit.findNthHighest(n);
+		return raport.findNthHighest(n);
 	}
 
 	@GetMapping("getSalesRep")
 	public List<CustomerQuery.NameSalesRepCountry> getSalesRep() {
 
-		return service.findSalesRep();
+		return raport.findSalesRep();
 	}
 
 	@GetMapping("withOrders")
 	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithOrders() {
 
-		return service.getCustomersWithOrders();
+		return raport.getCustomersWithOrders();
 	}
 
 	@GetMapping("withoutOrders")
 	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithoutOrders() {
 
-		return service.getCustomersWithoutOrders();
+		return raport.getCustomersWithoutOrders();
 	}
 }

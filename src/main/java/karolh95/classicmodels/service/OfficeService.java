@@ -2,11 +2,8 @@ package karolh95.classicmodels.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoOffice;
-import karolh95.classicmodels.dto.query.OfficeQuery;
 import karolh95.classicmodels.mapper.OfficeMapper;
 import karolh95.classicmodels.model.Office;
 import karolh95.classicmodels.repository.OfficeRepository;
@@ -51,16 +48,6 @@ public class OfficeService {
 
 		return mapper.officeToDto(office);
 
-	}
-
-	public List<OfficeQuery.CodeCityCountryPhone> getOfficesByCountries(String... countries) {
-
-		return repository.findByAddress_CountryIn(countries);
-	}
-
-	public List<OfficeQuery.CodeCityCountryPhone> getOfficesByCountriesNot(String... countries) {
-
-		return repository.findByAddress_CountryNotIn(countries);
 	}
 
 	private Office getOne(String officeCode) {

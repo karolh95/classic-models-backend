@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.dto.query.EmployeeQuery;
-import karolh95.classicmodels.service.EmployeeService;
+import karolh95.classicmodels.service.raport.EmployeeRaport;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("employee/raports")
+@RequestMapping("employee/raport")
 public class EmployeeRaports {
 
-	private final EmployeeService service;
+	private final EmployeeRaport raport;
 
 	@GetMapping("summary")
 	public ResponseEntity<List<EmployeeQuery.NameJob>> summary() {
 
-		List<EmployeeQuery.NameJob> summary = service.getEmployeesSummaries();
+		List<EmployeeQuery.NameJob> summary = raport.getEmployeesSummaries();
 		return ResponseEntity.ok(summary);
 	}
 
@@ -28,42 +28,42 @@ public class EmployeeRaports {
 	public List<EmployeeQuery.NameJobOffice> summaryOffice(@PathVariable String jobTitle,
 			@PathVariable String officeCode) {
 
-		return service.getEmployeeOfficeSummaries(jobTitle, officeCode);
+		return raport.getEmployeeOfficeSummaries(jobTitle, officeCode);
 	}
 
 	@GetMapping("officeCodeBetween/{low}/{high}")
 	public List<EmployeeQuery.NameJobOffice> officeCodeBetween(@PathVariable String low,
 			@PathVariable String high) {
 
-		return service.findEmployeeWhereOfficeCodeBetween(low, high);
+		return raport.findEmployeeWhereOfficeCodeBetween(low, high);
 	}
 
 	@GetMapping("lastname/{lastName}")
 	public List<EmployeeQuery.NameJob> lastNameContaining(@PathVariable String lastName) {
-		return service.findEmployeeByLastNameContaining(lastName);
+		return raport.findEmployeeByLastNameContaining(lastName);
 	}
 
 	@GetMapping("withCustomerPayments")
 	public List<EmployeeQuery.WithCustomerNameAndPayments> getEmployeesWithCustomersPayments() {
 
-		return service.getEmployeesWithCustomersPayments();
+		return raport.getEmployeesWithCustomersPayments();
 	}
 
 	@GetMapping("withCustomerNumber")
 	public List<EmployeeQuery.WithCustomerNumber> getEmployeesWithCustomersNumbers() {
 
-		return service.getEmployeesWithCustomerNumbers();
+		return raport.getEmployeesWithCustomerNumbers();
 	}
 
 	@GetMapping("withoutCustomerNumber")
 	public List<EmployeeQuery.WithCustomerNumber> getEmployeesWithoutCustomersNumbers() {
 
-		return service.getEmployeesWithoutCustomerNumbers();
+		return raport.getEmployeesWithoutCustomerNumbers();
 	}
 
 	@GetMapping("withReportsTo")
 	public List<EmployeeQuery.WithManager> getEmployeesWithReportsTo() {
 
-		return service.getEmployeesWithReportsTo();
+		return raport.getEmployeesWithReportsTo();
 	}
 }

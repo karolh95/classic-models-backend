@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.dto.query.OrderDetailQuery;
 import karolh95.classicmodels.dto.query.OrderQuery;
-import karolh95.classicmodels.service.OrderService;
+import karolh95.classicmodels.service.raport.OrderRaport;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,12 +18,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("order/raports")
 public class OrderRaports {
 
-	private final OrderService service;
+	private final OrderRaport raport;
 
 	@GetMapping("summary")
 	public ResponseEntity<List<OrderDetailQuery.NumberOrderLineSubtotal>> summary() {
 
-		List<OrderDetailQuery.NumberOrderLineSubtotal> summary = service.getDetailsSummary();
+		List<OrderDetailQuery.NumberOrderLineSubtotal> summary = raport.getDetailsSummary();
 
 		return ResponseEntity.ok(summary);
 	}
@@ -31,7 +31,7 @@ public class OrderRaports {
 	@GetMapping("status")
 	public ResponseEntity<List<OrderQuery.NumberStatus>> ordersOrderByStatus() {
 
-		List<OrderQuery.NumberStatus> orders = service.getOrdersOrderByState();
+		List<OrderQuery.NumberStatus> orders = raport.getOrdersOrderByState();
 
 		return ResponseEntity.ok(orders);
 	}
@@ -40,44 +40,44 @@ public class OrderRaports {
 	public List<OrderQuery.NumberStatusShippedCustomerNumber> ordersByOrderNumbers(
 			@PathVariable BigDecimal total) {
 
-		return service.findByTotalGT(total);
+		return raport.findByTotalGT(total);
 	}
 
 	@GetMapping("getByRequiredDateBetween/{from}/{to}")
 	public List<OrderQuery.NumberStatusRequired> findByRequiredDateBetween(@PathVariable Date from,
 			@PathVariable Date to) {
 
-		return service.findByRequiredDateBetween(from, to);
+		return raport.findByRequiredDateBetween(from, to);
 	}
 
 	@GetMapping("getByRequiredDateNotBetween/{from}/{to}")
 	public List<OrderQuery.NumberStatusRequired> findByRequiredDateNotBetween(
 			@PathVariable Date from, @PathVariable Date to) {
 
-		return service.findByRequiredDateNotBetween(from, to);
+		return raport.findByRequiredDateNotBetween(from, to);
 	}
 
 	@GetMapping("ordersWithTotal")
 	public List<OrderQuery.NumberStatusTotal> getordersWithTotal() {
 
-		return service.getOrdersWithTotal();
+		return raport.getOrdersWithTotal();
 	}
 
 	@GetMapping("ordersWithProductAndPrice")
 	public List<OrderQuery.WithProductAndPrice> getOrdersWithProductAndPrice() {
 
-		return service.getOrdersWithProductAndPrice();
+		return raport.getOrdersWithProductAndPrice();
 	}
 
 	@GetMapping("ordersWithCustomerAndPrice")
 	public List<OrderQuery.WithCustomerAndPrice> getOrdersWithCustomerAndPrice() {
 
-		return service.getOrdersWithCustomerAndPrice();
+		return raport.getOrdersWithCustomerAndPrice();
 	}
 
 	@GetMapping("withNumber/{orderNumber}")
 	public List<OrderQuery.WithDetail> getOrdersWithProductCode(@PathVariable Long orderNumber) {
 
-		return service.getOrdersWithOrderNumber(orderNumber);
+		return raport.getOrdersWithOrderNumber(orderNumber);
 	}
 }
