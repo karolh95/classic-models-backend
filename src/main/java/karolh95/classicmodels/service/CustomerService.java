@@ -3,14 +3,12 @@ package karolh95.classicmodels.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
-
+import java.util.function.Function;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoCustomer;
 import karolh95.classicmodels.dto.query.AddressQuery;
 import karolh95.classicmodels.dto.query.CustomerQuery;
@@ -77,32 +75,14 @@ public class CustomerService {
 		}
 	}
 
-	public List<CustomerQuery.Contact> findAllCustomerContacts(String order) {
+	public List<CustomerQuery.Contact> findAllContactsAsc() {
 
-		Supplier<List<CustomerQuery.Contact>> contacts =
-				repository::findAllByOrderByContactLastName;
-
-		if (order.equalsIgnoreCase("DESC")) {
-			contacts = repository::findAllByOrderByContactLastNameDesc;
-		}
-
-		return contacts.get();
+		return findAllContacts(Sort::ascending);
 	}
 
-	public List<CustomerQuery.Contact> findAllCustomerContactsSort(String order) {
+	public List<CustomerQuery.Contact> findAllContactsDesc() {
 
-		TypedSort<Customer> customer = Sort.sort(Customer.class);
-
-		Sort sortByLastName = customer.by(Customer::getContactLastName).ascending();
-		Sort sortByFirstName = customer.by(Customer::getContactFirstName).ascending();
-
-		if (order.equalsIgnoreCase("DESC")) {
-			sortByLastName = sortByLastName.descending();
-		}
-
-		Sort sort = sortByLastName.and(sortByFirstName);
-
-		return repository.findAllBy(sort);
+		return findAllContacts(Sort::descending);
 	}
 
 	public List<AddressQuery.State> findDistinctState() {
@@ -182,5 +162,18 @@ public class CustomerService {
 	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithoutOrders() {
 
 		return repository.findAllByOrders_OrderNumberIsNull();
+	}
+
+	private List<CustomerQuery.Contact> findAllContacts(Function<Sort, Sort> order) {
+
+		TypedSort<CustomerQuery.Contact> contact = Sort.sort(CustomerQuery.Contact.class);
+
+		Sort byLastName = contact.by(CustomerQuery.Contact::getContactLastName);
+		Sort byFirstName = contact.by(CustomerQuery.Contact::getContactFirstName);
+
+		Sort sortByLastName = order.apply(byLastName);
+		Sort sortByFirstName = order.apply(byFirstName);
+
+		return repository.findAllBy(sortByLastName.and(sortByFirstName));
 	}
 }

@@ -20,10 +20,16 @@ public class CustomerRaports {
 	private final CustomerService service;
 	private final NthCustomerByCreditLimit customerByCreditLimit;
 
-	@GetMapping("contacts/{order}")
-	public List<CustomerQuery.Contact> contacts(@PathVariable String order) {
+	@GetMapping("contacts/asc")
+	public List<CustomerQuery.Contact> contactsAsc() {
 
-		return service.findAllCustomerContactsSort(order);
+		return service.findAllContactsAsc();
+	}
+
+	@GetMapping("contacts/desc")
+	public List<CustomerQuery.Contact> contactsDesc() {
+
+		return service.findAllContactsDesc();
 	}
 
 	@GetMapping("state")

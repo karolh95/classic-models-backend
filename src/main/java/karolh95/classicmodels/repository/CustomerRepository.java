@@ -17,10 +17,6 @@ import karolh95.classicmodels.service.NthByField.Find;
 public interface CustomerRepository
 		extends JpaRepository<Customer, Long>, Find<CustomerQuery.NameCreditLimit> {
 
-	List<CustomerQuery.Contact> findAllByOrderByContactLastName();
-
-	List<CustomerQuery.Contact> findAllByOrderByContactLastNameDesc();
-
 	List<CustomerQuery.Contact> findAllBy(Sort sort);
 
 	List<CustomerQuery.NameCountryState> findByAddress_CountryAndAddress_State(String country,
