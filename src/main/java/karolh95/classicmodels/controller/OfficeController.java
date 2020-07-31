@@ -11,26 +11,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import karolh95.classicmodels.controller.mapping.Mappings;
+import karolh95.classicmodels.controller.mapping.Office;
 import karolh95.classicmodels.dto.DtoOffice;
 import karolh95.classicmodels.service.OfficeService;
 
 @RestController
-@RequestMapping("offices")
+@RequestMapping(Mappings.OFFICE)
 public class OfficeController {
 
 	@Autowired
 	private OfficeService service;
 
-	@GetMapping("all")
+	@GetMapping(Office.ALL)
 	public List<DtoOffice> getAllOffices() {
 
 		return service.getAllOffices();
 	}
 
-	@GetMapping("detail/{officeCode}")
-	public ResponseEntity<DtoOffice> getOffice(@PathVariable String officeCode) {
+	@GetMapping(Office.GET)
+	public ResponseEntity<DtoOffice> getOffice(@PathVariable String id) {
 
-		DtoOffice response = service.getOffice(officeCode);
+		DtoOffice response = service.getOffice(id);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();
@@ -38,7 +40,7 @@ public class OfficeController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping("save")
+	@PostMapping(Office.SAVE)
 	public ResponseEntity<DtoOffice> save(@Valid @RequestBody DtoOffice office,
 			BindingResult bindingResult) {
 
