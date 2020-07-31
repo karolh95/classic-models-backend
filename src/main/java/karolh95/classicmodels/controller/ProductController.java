@@ -11,33 +11,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import karolh95.classicmodels.controller.mapping.Mappings;
+import karolh95.classicmodels.controller.mapping.Product;
 import karolh95.classicmodels.dto.DtoProduct;
 import karolh95.classicmodels.service.ProductService;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping(Mappings.PRODUCT)
 public class ProductController {
 
 	@Autowired
 	private ProductService service;
 
-	@GetMapping("all")
+	@GetMapping(Product.ALL)
 	public List<DtoProduct> getAllProducts() {
 
 		return service.getAllProducts();
 	}
 
-	@GetMapping("detail/{productCode}")
-	public ResponseEntity<DtoProduct> getProduct(@PathVariable String productCode) {
+	@GetMapping(Product.GET)
+	public ResponseEntity<DtoProduct> getProduct(@PathVariable String id) {
 
-		DtoProduct response = service.getProduct(productCode);
+		DtoProduct response = service.getProduct(id);
 		if (response == null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping("save")
+	@PostMapping(Product.SAVE)
 	public ResponseEntity<DtoProduct> save(@Valid @RequestBody DtoProduct product,
 			BindingResult bindingResult) {
 
