@@ -36,10 +36,16 @@ public class OrderDetail {
 	@JoinColumn(name = "orderNumber")
 	private Order order;
 
+	@Column(insertable = false, updatable = false)
+	private Long orderNumber;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("productCode")
 	@JoinColumn(name = "productCode")
 	private Product product;
+
+	@Column(insertable = false, updatable = false)
+	private String productCode;
 
 	public boolean hasValidIds() {
 

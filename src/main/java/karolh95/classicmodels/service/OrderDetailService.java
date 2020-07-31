@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoOrderDetail;
 import karolh95.classicmodels.mapper.OrderDetailMapper;
 import karolh95.classicmodels.model.OrderDetail;

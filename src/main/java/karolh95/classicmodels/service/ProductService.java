@@ -2,9 +2,7 @@ package karolh95.classicmodels.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoProduct;
 import karolh95.classicmodels.mapper.ProductMapper;
 import karolh95.classicmodels.model.Product;

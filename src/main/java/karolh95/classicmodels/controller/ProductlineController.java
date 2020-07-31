@@ -13,27 +13,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import karolh95.classicmodels.controller.mapping.Mappings;
+import karolh95.classicmodels.controller.mapping.Productline;
 import karolh95.classicmodels.dto.DtoProductline;
 import karolh95.classicmodels.service.ProductlineService;
 
 @RestController
-@RequestMapping("productlines")
+@RequestMapping(Mappings.PRODUCTLINE)
 public class ProductlineController {
 
 	@Autowired
 	private ProductlineService service;
 
-	@GetMapping("all")
+	@GetMapping(Productline.ALL)
 	public List<DtoProductline> getAllProductlines() {
 
 		return service.getAllProductlines();
 	}
 
-	@GetMapping("detail/{productline}")
-	public ResponseEntity<DtoProductline> getProductline(@PathVariable String productline) {
+	@GetMapping(Productline.GET)
+	public ResponseEntity<DtoProductline> getProductline(@PathVariable String id) {
 
-		DtoProductline response = service.getProductline(productline);
+		DtoProductline response = service.getProductline(id);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();
@@ -41,7 +42,7 @@ public class ProductlineController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping("save")
+	@PostMapping(Productline.SAVE)
 	public ResponseEntity<DtoProductline> save(@Valid @RequestBody DtoProductline productline,
 			BindingResult bindingResult) {
 

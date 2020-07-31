@@ -13,30 +13,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import karolh95.classicmodels.controller.mapping.Mappings;
+import karolh95.classicmodels.controller.mapping.Payment;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.service.PaymentService;
 
 @RestController
-@RequestMapping("payments")
+@RequestMapping(Mappings.PAYMENT)
 public class PaymentController {
 
 	@Autowired
 	private PaymentService service;
 
-	@GetMapping("all")
+	@GetMapping(Payment.ALL)
 	public List<DtoPayment> getAllPayments() {
 
 		return service.getAllPayments();
 	}
 
-	@GetMapping("detail/{customerNumber}")
+	@GetMapping(Payment.GET_BY_CUSTOMER)
 	public List<DtoPayment> getPayments(@PathVariable Long customerNumber) {
 		return service.getPayments(customerNumber);
 	}
 
-	@GetMapping("detail/{customerNumber}/{checkNumber}")
-	public ResponseEntity<DtoPayment> getPayment(@PathVariable Long customerNumber, @PathVariable String checkNumber) {
+	@GetMapping(Payment.GET_PAYMENT)
+	public ResponseEntity<DtoPayment> getPayment(@PathVariable Long customerNumber,
+			@PathVariable String checkNumber) {
 
 		DtoPayment response = service.getPayment(customerNumber, checkNumber);
 
@@ -46,8 +48,9 @@ public class PaymentController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping("save")
-	public ResponseEntity<DtoPayment> save(@Valid @RequestBody DtoPayment payment, BindingResult bindingResult) {
+	@PostMapping(Payment.SAVE)
+	public ResponseEntity<DtoPayment> save(@Valid @RequestBody DtoPayment payment,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(payment);

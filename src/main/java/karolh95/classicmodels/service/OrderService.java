@@ -1,10 +1,9 @@
 package karolh95.classicmodels.service;
 
+
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoFullOrder;
 import karolh95.classicmodels.dto.DtoPayment;
 import karolh95.classicmodels.dto.DtoSimpleOrder;
@@ -54,7 +53,8 @@ public class OrderService {
 
 		order = repository.save(order);
 
-		List<OrderDetail> orderDetails = detailService.save(order.getOrderNumber(), dtoOrder.getOrderDetails());
+		List<OrderDetail> orderDetails =
+				detailService.save(order.getOrderNumber(), dtoOrder.getOrderDetails());
 
 		order.setOrderDetails(orderDetails);
 

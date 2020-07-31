@@ -49,6 +49,9 @@ public class Order {
 	@JoinColumn(name = "customerNumber", nullable = false)
 	private Customer customer;
 
+	@Column(insertable = false, updatable = false)
+	private Long customerNumber;
+
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 

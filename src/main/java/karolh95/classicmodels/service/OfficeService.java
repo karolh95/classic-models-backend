@@ -2,9 +2,7 @@ package karolh95.classicmodels.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import karolh95.classicmodels.dto.DtoOffice;
 import karolh95.classicmodels.mapper.OfficeMapper;
 import karolh95.classicmodels.model.Office;

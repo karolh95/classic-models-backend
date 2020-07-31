@@ -1,9 +1,7 @@
 package karolh95.classicmodels.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,27 +11,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import karolh95.classicmodels.controller.mapping.Employee;
+import karolh95.classicmodels.controller.mapping.Mappings;
 import karolh95.classicmodels.dto.DtoEmployee;
 import karolh95.classicmodels.service.EmployeeService;
 
 @RestController
-@RequestMapping("employees")
+@RequestMapping(Mappings.EMPLOYEE)
 public class EmployeeController {
 
 	@Autowired
 	private EmployeeService service;
 
-	@GetMapping("all")
+	@GetMapping(Employee.ALL)
 	public List<DtoEmployee> getAllEmployees() {
 
 		return service.getAllEmployees();
 	}
 
-	@GetMapping("detail/{employeeNumber}")
-	public ResponseEntity<DtoEmployee> getEmployee(@PathVariable Long employeeNumber) {
+	@GetMapping(Employee.GET)
+	public ResponseEntity<DtoEmployee> getEmployee(@PathVariable Long id) {
 
-		DtoEmployee response = service.getEmployee(employeeNumber);
+		DtoEmployee response = service.getEmployee(id);
 
 		if (response == null) {
 			return ResponseEntity.notFound().build();
@@ -41,8 +40,9 @@ public class EmployeeController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping("save")
-	public ResponseEntity<DtoEmployee> save(@Valid @RequestBody DtoEmployee employee, BindingResult bindingResult) {
+	@PostMapping(Employee.SAVE)
+	public ResponseEntity<DtoEmployee> save(@Valid @RequestBody DtoEmployee employee,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(employee);
