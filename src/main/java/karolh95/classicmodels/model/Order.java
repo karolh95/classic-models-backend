@@ -46,13 +46,13 @@ public class Order {
 	private String comments;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customerNumber", nullable = false)
+	@JoinColumn(name = Customer_.CUSTOMER_NUMBER, nullable = false)
 	private Customer customer;
 
 	@Column(insertable = false, updatable = false)
 	private Long customerNumber;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = OrderDetail_.ORDER, cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;
 
 	public OrderDetail addOrderDetails(OrderDetail orderDetail) {

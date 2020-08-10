@@ -44,13 +44,13 @@ public class Product {
 	private BigDecimal MSRP;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "productline", nullable = false)
+	@JoinColumn(name = Productline_.PRODUCTLINE, nullable = false)
 	private Productline productline;
 
-	@Column(name = "productline", insertable = false, updatable = false)
+	@Column(name = Product_.PRODUCTLINE, insertable = false, updatable = false)
 	private String productline_id;
 
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = OrderDetail_.PRODUCT, cascade = CascadeType.ALL)
 	List<OrderDetail> orderDetails;
 
 	public OrderDetail addOrderDetail(OrderDetail orderDetail) {

@@ -32,16 +32,16 @@ public class OrderDetail {
 	private short orderLineNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("customerNumber")
-	@JoinColumn(name = "orderNumber")
+	@MapsId(OrderDetailPK_.ORDER_NUMBER)
+	@JoinColumn(name = Order_.ORDER_NUMBER)
 	private Order order;
 
 	@Column(insertable = false, updatable = false)
 	private Long orderNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("productCode")
-	@JoinColumn(name = "productCode")
+	@MapsId(OrderDetailPK_.PRODUCT_CODE)
+	@JoinColumn(name = Product_.PRODUCT_CODE)
 	private Product product;
 
 	@Column(insertable = false, updatable = false)

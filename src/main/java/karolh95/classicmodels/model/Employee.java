@@ -38,23 +38,23 @@ public class Employee {
 	private String jobTitle;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "reportsTo")
+	@JoinColumn(name = Employee_.REPORTS_TO)
 	private Employee employee;
 
 	@Column(insertable = false, updatable = false)
 	private Long reportsTo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "officeCode", nullable = false)
+	@JoinColumn(name = Office_.OFFICE_CODE, nullable = false)
 	private Office office;
 
 	@Column(insertable = false, updatable = false)
 	private String officeCode;
 
-	@OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = Employee_.EMPLOYEE)
 	private List<Employee> employees;
 
-	@OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = Customer_.EMPLOYEE)
 	private List<Customer> customers;
 
 	public Employee addEmployee(Employee employee) {

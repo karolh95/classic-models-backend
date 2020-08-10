@@ -36,8 +36,8 @@ public class Payment {
 	private BigDecimal amount;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("customerNumber")
-	@JoinColumn(name = "customerNumber")
+	@MapsId(PaymentPK_.CUSTOMER_NUMBER)
+	@JoinColumn(name = Customer_.CUSTOMER_NUMBER)
 	private Customer customer;
 
 	public boolean hasValidIds() {

@@ -27,7 +27,7 @@ public class Office {
 	@Column(length = 10, nullable = false)
 	private String territory;
 
-	@OneToMany(mappedBy = "office")
+	@OneToMany(mappedBy = Employee_.OFFICE)
 	private List<Employee> employees;
 
 	public Employee addEmployee(Employee employee) {
