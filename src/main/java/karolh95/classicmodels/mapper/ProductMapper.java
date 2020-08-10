@@ -9,15 +9,17 @@ import org.mapstruct.MappingTarget;
 import karolh95.classicmodels.dto.DtoProduct;
 import karolh95.classicmodels.mapper.resolver.ProductlineResolver;
 import karolh95.classicmodels.model.Product;
+import karolh95.classicmodels.model.Product_;
+import karolh95.classicmodels.model.Productline_;
 
-@Mapper(componentModel = "spring", uses = { ProductlineResolver.class })
+@Mapper(componentModel = "spring", uses = {ProductlineResolver.class})
 public interface ProductMapper {
 
-	@Mapping(target = "productline", source = "productline.productline")
+	@Mapping(target = Productline_.PRODUCTLINE, source = Product_.PRODUCTLINE_ID)
 	DtoProduct productToDto(Product product);
 
 	List<DtoProduct> productsToDtos(List<Product> products);
 
-	@Mapping(target = "productCode", ignore = true)
+	@Mapping(target = Product_.PRODUCT_CODE, ignore = true)
 	void updateFromDto(DtoProduct dtoProduct, @MappingTarget Product product);
 }

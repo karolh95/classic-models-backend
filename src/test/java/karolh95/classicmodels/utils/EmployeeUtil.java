@@ -49,7 +49,9 @@ public final class EmployeeUtil {
 		employee.setEmail(EMAIL);
 		employee.setJobTitle(JOB_TITLE);
 
-		employee.setOffice(OfficeUtil.office());
+		Office office = OfficeUtil.office();
+		employee.setOffice(office);
+		employee.setOfficeCode(office.getOfficeCode());
 
 		return employee;
 	}
@@ -72,7 +74,8 @@ public final class EmployeeUtil {
 
 		List<Employee> employees = new ArrayList<>();
 
-		for (Long employeeNumber = EMPLOYEE_NUMBER_MIN; employeeNumber < EMPLOYEE_NUMBER_MAX; employeeNumber++) {
+		for (Long employeeNumber =
+				EMPLOYEE_NUMBER_MIN; employeeNumber < EMPLOYEE_NUMBER_MAX; employeeNumber++) {
 			employees.add(employee(employeeNumber));
 		}
 
@@ -89,7 +92,8 @@ public final class EmployeeUtil {
 		assertOfficesCodesEquals(employee.getOffice(), dtoEmployee.getOfficeCode());
 	}
 
-	public static void assertUpdated(final Employee original, DtoEmployee dtoEmployee, Employee employee) {
+	public static void assertUpdated(final Employee original, DtoEmployee dtoEmployee,
+			Employee employee) {
 
 		assertEmployeesNumbersEquals(original.getEmployeeNumber(), employee.getEmployeeNumber());
 		assertModifiableFieldsEquals(employee, dtoEmployee);
@@ -102,11 +106,15 @@ public final class EmployeeUtil {
 
 	private static void assertModifiableFieldsEquals(Employee employee, DtoEmployee dtoEmployee) {
 
-		Assertions.assertEquals(dtoEmployee.getLastName(), employee.getLastName(), "Last name should match");
-		Assertions.assertEquals(dtoEmployee.getFirstName(), employee.getFirstName(), "First name should match");
-		Assertions.assertEquals(dtoEmployee.getExtension(), employee.getExtension(), "Extenstion should match");
+		Assertions.assertEquals(dtoEmployee.getLastName(), employee.getLastName(),
+				"Last name should match");
+		Assertions.assertEquals(dtoEmployee.getFirstName(), employee.getFirstName(),
+				"First name should match");
+		Assertions.assertEquals(dtoEmployee.getExtension(), employee.getExtension(),
+				"Extenstion should match");
 		Assertions.assertEquals(dtoEmployee.getEmail(), employee.getEmail(), "Email should match");
-		Assertions.assertEquals(dtoEmployee.getJobTitle(), employee.getJobTitle(), "Job title should match");
+		Assertions.assertEquals(dtoEmployee.getJobTitle(), employee.getJobTitle(),
+				"Job title should match");
 	}
 
 	private static void assertOfficesCodesEquals(Office office, String officeCode) {
