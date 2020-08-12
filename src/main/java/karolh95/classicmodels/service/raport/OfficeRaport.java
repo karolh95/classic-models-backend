@@ -2,7 +2,7 @@ package karolh95.classicmodels.service.raport;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import karolh95.classicmodels.dto.query.OfficeQuery;
+import karolh95.classicmodels.dto.projection.office.CodeCityCountryPhone;
 import karolh95.classicmodels.repository.OfficeRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -12,13 +12,13 @@ public class OfficeRaport {
 
 	private final OfficeRepository repository;
 
-	public List<OfficeQuery.CodeCityCountryPhone> getOfficesByCountries(String... countries) {
+	public List<CodeCityCountryPhone> getOfficesByCountries(String... countries) {
 
-		return repository.findByAddress_CountryIn(countries);
+		return repository.findInCountries(countries);
 	}
 
-	public List<OfficeQuery.CodeCityCountryPhone> getOfficesByCountriesNot(String... countries) {
+	public List<CodeCityCountryPhone> getOfficesByCountriesNot(String... countries) {
 
-		return repository.findByAddress_CountryNotIn(countries);
+		return repository.findNotInCountries(countries);
 	}
 }

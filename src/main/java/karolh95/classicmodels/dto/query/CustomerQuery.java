@@ -2,7 +2,7 @@ package karolh95.classicmodels.dto.query;
 
 import java.math.BigDecimal;
 
-public class CustomerQuery extends AddressQuery {
+public class CustomerQuery {
 
 	public interface Number {
 		Long getCustomerNumber();
