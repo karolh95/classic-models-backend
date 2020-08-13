@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import karolh95.classicmodels.controller.mapping.Order;
-import karolh95.classicmodels.dto.query.OrderDetailQuery;
+import karolh95.classicmodels.dto.projection.orderdetail.NumberOrderLineSubtotal;
 import karolh95.classicmodels.dto.query.OrderQuery;
 import karolh95.classicmodels.service.raport.OrderRaport;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ public class OrderRaports {
 	private final OrderRaport raport;
 
 	@GetMapping(Order.Raport.SUMMARY)
-	public ResponseEntity<List<OrderDetailQuery.NumberOrderLineSubtotal>> summary() {
+	public ResponseEntity<List<NumberOrderLineSubtotal>> summary() {
 
-		List<OrderDetailQuery.NumberOrderLineSubtotal> summary = raport.getDetailsSummary();
+		List<NumberOrderLineSubtotal> summary = raport.getDetailsSummary();
 
 		return ResponseEntity.ok(summary);
 	}

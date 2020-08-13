@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
-import karolh95.classicmodels.dto.query.OrderDetailQuery;
+import karolh95.classicmodels.dto.projection.orderdetail.NumberOrderLineSubtotal;
 import karolh95.classicmodels.dto.query.OrderQuery;
 import karolh95.classicmodels.repository.OrderRepository;
 import karolh95.classicmodels.service.OrderStatus;
@@ -19,7 +19,7 @@ public class OrderRaport {
 	private final OrderRepository repository;
 	private final OrderDetailRaport detailRaport;
 
-	public List<OrderDetailQuery.NumberOrderLineSubtotal> getDetailsSummary() {
+	public List<NumberOrderLineSubtotal> getDetailsSummary() {
 
 		return detailRaport.summary();
 	}

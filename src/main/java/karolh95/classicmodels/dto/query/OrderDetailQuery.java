@@ -4,14 +4,6 @@ import java.math.BigDecimal;
 
 public class OrderDetailQuery {
 
-	public interface Number {
-		Long getOrderNumber();
-	}
-
-	public interface ProductCode {
-		String getProductCode();
-	}
-
 	public interface Quantity {
 		int getQuantityOrdered();
 	}
@@ -22,9 +14,5 @@ public class OrderDetailQuery {
 
 	public interface OrderLine {
 		short getOrderLineNumber();
-	}
-
-	public interface NumberOrderLineSubtotal extends Number, OrderLine {
-		BigDecimal getSubtotal();
 	}
 }
