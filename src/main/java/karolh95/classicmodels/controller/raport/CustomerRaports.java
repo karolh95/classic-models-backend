@@ -10,11 +10,11 @@ import karolh95.classicmodels.controller.mapping.Customer;
 import karolh95.classicmodels.dto.projection.address.StateCity;
 import karolh95.classicmodels.dto.projection.customer.Contact;
 import karolh95.classicmodels.dto.projection.customer.NameCountryState;
+import karolh95.classicmodels.dto.projection.customer.NameCreditLimit;
 import karolh95.classicmodels.dto.projection.customer.NameCreditLimitCountryState;
 import karolh95.classicmodels.dto.projection.customer.NameNumber;
 import karolh95.classicmodels.dto.projection.customer.NameSalesRepCountry;
 import karolh95.classicmodels.dto.projection.customer.WithOrderNameStatus;
-import karolh95.classicmodels.dto.query.CustomerQuery;
 import karolh95.classicmodels.service.raport.CustomerRaport;
 import lombok.RequiredArgsConstructor;
 
@@ -89,13 +89,13 @@ public class CustomerRaports {
 	}
 
 	@GetMapping(Customer.Raport.CREDITLIMIT_NTH_LOWEST)
-	public List<CustomerQuery.NameCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
+	public List<NameCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
 
 		return raport.findNthLowest(n);
 	}
 
 	@GetMapping(Customer.Raport.CREDITLIMIT_NTH_HIGHEST)
-	public List<CustomerQuery.NameCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
+	public List<NameCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
 
 		return raport.findNthHighest(n);
 	}

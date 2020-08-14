@@ -7,11 +7,11 @@ import karolh95.classicmodels.criteria.util.CriteriaUtil;
 import karolh95.classicmodels.dto.projection.address.StateCity;
 import karolh95.classicmodels.dto.projection.customer.Contact;
 import karolh95.classicmodels.dto.projection.customer.NameCountryState;
+import karolh95.classicmodels.dto.projection.customer.NameCreditLimit;
 import karolh95.classicmodels.dto.projection.customer.NameCreditLimitCountryState;
 import karolh95.classicmodels.dto.projection.customer.NameNumber;
 import karolh95.classicmodels.dto.projection.customer.NameSalesRepCountry;
 import karolh95.classicmodels.dto.projection.customer.WithOrderNameStatus;
-import karolh95.classicmodels.dto.query.CustomerQuery;
 import karolh95.classicmodels.repository.CustomerRepository;
 import karolh95.classicmodels.service.NthCustomerByCreditLimit;
 import lombok.RequiredArgsConstructor;
@@ -90,11 +90,11 @@ public class CustomerRaport {
 		return repository.findByOrderNumberNull();
 	}
 
-	public List<CustomerQuery.NameCreditLimit> findNthLowest(int n) {
+	public List<NameCreditLimit> findNthLowest(int n) {
 		return customerByCreditLimit.findNthLowest(n);
 	}
 
-	public List<CustomerQuery.NameCreditLimit> findNthHighest(int n) {
+	public List<NameCreditLimit> findNthHighest(int n) {
 		return customerByCreditLimit.findNthHighest(n);
 	}
 }
