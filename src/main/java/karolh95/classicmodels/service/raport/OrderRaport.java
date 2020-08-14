@@ -1,13 +1,19 @@
 package karolh95.classicmodels.service.raport;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import karolh95.classicmodels.dto.projection.order.NumberStatus;
+import karolh95.classicmodels.dto.projection.order.NumberStatusRequired;
+import karolh95.classicmodels.dto.projection.order.NumberStatusShippedCustomer;
+import karolh95.classicmodels.dto.projection.order.NumberStatusTotal;
+import karolh95.classicmodels.dto.projection.order.WithCustomerPrice;
+import karolh95.classicmodels.dto.projection.order.WithDetails;
+import karolh95.classicmodels.dto.projection.order.WithProductPrice;
 import karolh95.classicmodels.dto.projection.orderdetail.NumberOrderLineSubtotal;
-import karolh95.classicmodels.dto.query.OrderQuery;
 import karolh95.classicmodels.repository.OrderRepository;
 import karolh95.classicmodels.service.OrderStatus;
 import lombok.RequiredArgsConstructor;
@@ -24,55 +30,59 @@ public class OrderRaport {
 		return detailRaport.summary();
 	}
 
-	public List<OrderQuery.NumberStatus> getOrdersOrderByState() {
+	public List<NumberStatus> getOrdersOrderByState() {
 
 		// @formatter:off
-		return repository.findBy()
+		return repository.findStatus()
 				.stream()
-				.sorted(Comparator.comparing(OrderQuery.NumberStatus::getStatus, OrderStatus.COMPARATOR))
+				.sorted(Comparator.comparing(NumberStatus::getStatus, OrderStatus.COMPARATOR))
 				.collect(Collectors.toList())
 		;
 		// @formatter:on
 	}
 
-	public List<OrderQuery.NumberStatusShippedCustomerNumber> findByTotalGT(BigDecimal total) {
+	public List<NumberStatus> getOrdersOrderByDistinctState() {
+
+		return repository.findOrdersOrderByStatus();
+	}
+
+	public List<NumberStatusShippedCustomer> findByTotalGT(BigDecimal total) {
 
 		List<Long> orderNumbers = detailRaport.findByTotalGreaterThan(total);
 
 		return findByOrderNumbers(orderNumbers);
 	}
 
-	public List<OrderQuery.NumberStatusRequired> findByRequiredDateBetween(Date from, Date to) {
+	public List<NumberStatusRequired> findByRequiredDateBetween(Date from, Date to) {
 
 		return repository.findByRequiredDateBetween(from, to);
 	}
 
-	public List<OrderQuery.NumberStatusRequired> findByRequiredDateNotBetween(Date from, Date to) {
+	public List<NumberStatusRequired> findByRequiredDateNotBetween(Date from, Date to) {
 
-		return repository.findByRequiredDateBeforeOrRequiredDateAfter(from, to);
+		return repository.findByRequiredDateNotBetween(from, to);
 	}
 
-	public List<OrderQuery.NumberStatusTotal> getOrdersWithTotal() {
-		return repository.getOrdersWithTotal();
+	public List<NumberStatusTotal> getOrdersWithTotal() {
+		return repository.findOrdersWithTotal();
 	};
 
-	public List<OrderQuery.WithProductAndPrice> getOrdersWithProductAndPrice() {
+	public List<WithProductPrice> getOrdersWithProductAndPrice() {
 
-		return repository.getOrdersWithProductAndPrice();
+		return repository.findOrdersWithProductPrice();
 	}
 
-	public List<OrderQuery.WithCustomerAndPrice> getOrdersWithCustomerAndPrice() {
+	public List<WithCustomerPrice> getOrdersWithCustomerAndPrice() {
 
-		return repository.getOrdersWithCustomerAndPrice();
+		return repository.findOrdersWithCustomerPrice();
 	}
 
-	public List<OrderQuery.WithDetail> getOrdersWithOrderNumber(Long orderNumber) {
+	public List<WithDetails> getOrdersWithOrderNumber(Long orderNumber) {
 
-		return repository.findAllByOrderNumber(orderNumber);
+		return repository.findOrdersByOrderNumber(orderNumber);
 	}
 
-	private List<OrderQuery.NumberStatusShippedCustomerNumber> findByOrderNumbers(
-			List<Long> orderNumbers) {
+	private List<NumberStatusShippedCustomer> findByOrderNumbers(List<Long> orderNumbers) {
 
 		return repository.findByOrderNumberIn(orderNumbers);
 	}

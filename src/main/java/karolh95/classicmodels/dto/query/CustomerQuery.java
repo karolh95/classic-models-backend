@@ -4,10 +4,6 @@ import java.math.BigDecimal;
 
 public class CustomerQuery {
 
-	public interface Number {
-		Long getCustomerNumber();
-	}
-
 	public interface Name {
 		String getCustomerName();
 	}
