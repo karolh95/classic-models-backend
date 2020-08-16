@@ -32,7 +32,7 @@ public class DtoProduct {
 	private String productDescription;
 
 	@NotNull
-	private short quantityInStock;
+	private int quantityInStock;
 
 	@NotNull
 	@Digits(integer = 8, fraction = 2)
