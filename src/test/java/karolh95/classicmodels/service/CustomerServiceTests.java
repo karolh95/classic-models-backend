@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 
 import javax.persistence.EntityNotFoundException;
-
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,7 @@ import karolh95.classicmodels.repository.CustomerRepository;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
+@Disabled
 public class CustomerServiceTests {
 
 	@MockBean

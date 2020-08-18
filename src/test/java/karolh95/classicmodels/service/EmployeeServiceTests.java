@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import javax.persistence.EntityNotFoundException;
-
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import karolh95.classicmodels.model.Office;
 import karolh95.classicmodels.repository.EmployeeRepository;
 
 @SpringBootTest
+@Disabled
 public class EmployeeServiceTests {
 
 	@MockBean
