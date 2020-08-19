@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import javax.persistence.EntityNotFoundException;
-
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import karolh95.classicmodels.model.Office;
 import karolh95.classicmodels.repository.OfficeRepository;
 
 @SpringBootTest
+@Disabled
 public class OfficeServiceTests {
 
 	@MockBean
@@ -43,7 +44,7 @@ public class OfficeServiceTests {
 
 		assertEquals(office, response, "Office and response should match");
 	}
-	
+
 	@Test
 	@DisplayName("Should update Office")
 	public void updateOffice() {

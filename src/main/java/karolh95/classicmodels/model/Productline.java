@@ -26,7 +26,7 @@ public class Productline {
 	@Column(columnDefinition = "mediumblob")
 	private byte[] image;
 
-	@OneToMany(mappedBy = "productline")
+	@OneToMany(mappedBy = Product_.PRODUCTLINE)
 	private List<Product> products;
 
 	public Product addProduct(Product product) {

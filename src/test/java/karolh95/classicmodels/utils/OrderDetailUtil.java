@@ -40,7 +40,9 @@ public final class OrderDetailUtil {
 		OrderDetail orderDetail = new OrderDetail();
 
 		orderDetail.setOrder(order);
+		orderDetail.setOrderNumber(order.getOrderNumber());
 		orderDetail.setProduct(product);
+		orderDetail.setProductCode(product.getProductCode());
 		orderDetail.setQuantityOrdered(QUANTITY_ORDERED);
 		orderDetail.setOrderDetailPK(pk);
 		orderDetail.setPriceEach(PRICE_EACH);
@@ -112,22 +114,27 @@ public final class OrderDetailUtil {
 		assertProductsCodesEquals(orderDetail.getProduct(), dtoOrderDetail.getProductCode());
 	}
 
-	private static void assertOrderDetailPKsEquals(OrderDetail orderDetail, DtoOrderDetail dtoOrderDetail) {
+	private static void assertOrderDetailPKsEquals(OrderDetail orderDetail,
+			DtoOrderDetail dtoOrderDetail) {
 
 		OrderDetailPK pk = orderDetail.getOrderDetailPK();
 
 		assertNotNull(pk, "Order detail PK should not be null");
-		Assertions.assertEquals(pk.getOrderNumber(), dtoOrderDetail.getOrderNumber(), "Order number should match");
-		Assertions.assertEquals(pk.getProductCode(), dtoOrderDetail.getProductCode(), "Product code should match");
+		Assertions.assertEquals(pk.getOrderNumber(), dtoOrderDetail.getOrderNumber(),
+				"Order number should match");
+		Assertions.assertEquals(pk.getProductCode(), dtoOrderDetail.getProductCode(),
+				"Product code should match");
 	}
 
-	private static void assertModifiableFieldsEquals(OrderDetail orderDetail, DtoOrderDetail dtoOrderDetail) {
+	private static void assertModifiableFieldsEquals(OrderDetail orderDetail,
+			DtoOrderDetail dtoOrderDetail) {
 
-		Assertions.assertEquals(orderDetail.getQuantityOrdered(), dtoOrderDetail.getQuantityOrdered(),
-				"Quantity ordered should match");
-		Assertions.assertEquals(orderDetail.getPriceEach(), dtoOrderDetail.getPriceEach(), "Price each should match");
-		Assertions.assertEquals(orderDetail.getOrderLineNumber(), dtoOrderDetail.getOrderLineNumber(),
-				"Order line number should match");
+		Assertions.assertEquals(orderDetail.getQuantityOrdered(),
+				dtoOrderDetail.getQuantityOrdered(), "Quantity ordered should match");
+		Assertions.assertEquals(orderDetail.getPriceEach(), dtoOrderDetail.getPriceEach(),
+				"Price each should match");
+		Assertions.assertEquals(orderDetail.getOrderLineNumber(),
+				dtoOrderDetail.getOrderLineNumber(), "Order line number should match");
 	}
 
 	private static void assertOrdersNumberEquals(Order order, Long orderNumber) {

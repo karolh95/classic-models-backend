@@ -38,6 +38,8 @@ public final class PaymentUtil {
 		PaymentPK pk = new PaymentPK(customer.getCustomerNumber(), String.valueOf(checkNumber));
 
 		payment.setPaymentPK(pk);
+		payment.setCustomerNumber(pk.getCustomerNumber());
+		payment.setCheckNumber(pk.getCheckNumber());
 		payment.setAmount(AMOUNT);
 		payment.setPaymentDate(PAYMENT_DATE);
 
@@ -94,19 +96,22 @@ public final class PaymentUtil {
 		PaymentPK pk = payment.getPaymentPK();
 
 		assertNotNull(pk, "Payment PK should not be null");
-		Assertions.assertEquals(pk.getCheckNumber(), dtoPayment.getCheckNumber(), "Check number should match");
+		Assertions.assertEquals(pk.getCheckNumber(), dtoPayment.getCheckNumber(),
+				"Check number should match");
 		Assertions.assertEquals(pk.getCustomerNumber(), dtoPayment.getCustomerNumber());
 	}
 
 	private static void assertModifiabkeFieldsEquals(Payment payment, DtoPayment dtoPayment) {
 
 		Assertions.assertEquals(payment.getAmount(), dtoPayment.getAmount(), "Amount should match");
-		Assertions.assertEquals(payment.getPaymentDate(), dtoPayment.getPaymentDate(), "Date should match");
+		Assertions.assertEquals(payment.getPaymentDate(), dtoPayment.getPaymentDate(),
+				"Date should match");
 	}
 
 	private static void assertCustomersNumbersEquals(Customer customer, Long customerNumber) {
 
 		assertNotNull(customer, "Customer should not be null");
-		Assertions.assertEquals(customer.getCustomerNumber(), customerNumber, "Customer number should match");
+		Assertions.assertEquals(customer.getCustomerNumber(), customerNumber,
+				"Customer number should match");
 	}
 }

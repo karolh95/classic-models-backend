@@ -8,6 +8,7 @@ import org.mapstruct.MappingTarget;
 
 import karolh95.classicmodels.dto.DtoProductline;
 import karolh95.classicmodels.model.Productline;
+import karolh95.classicmodels.model.Productline_;
 
 @Mapper(componentModel = "spring")
 public interface ProductlineMapper {
@@ -16,6 +17,6 @@ public interface ProductlineMapper {
 
 	List<DtoProductline> productlinesToDtos(List<Productline> productlines);
 
-	@Mapping(target = "productline", ignore = true)
+	@Mapping(target = Productline_.PRODUCTLINE, ignore = true)
 	void updateFromDto(DtoProductline dtoProductline, @MappingTarget Productline productline);
 }

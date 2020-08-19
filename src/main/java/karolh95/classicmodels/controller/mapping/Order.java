@@ -13,6 +13,7 @@ public final class Order extends BasicMapping {
 
 		public static final String SUMMARY = "summary";
 		public static final String STATUS = "status";
+		public static final String STATUS_DISTINCT = STATUS + "/distinct";
 		public static final String TOTAL_GREATER_THAN = "total/greater/{total}";
 		public static final String REQUIRED_BETWEEN = "required/between/{from}/{to}";
 		public static final String REQUIRED_NOTBETWEEN = "required/notBetween/{from}/{to}";

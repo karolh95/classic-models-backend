@@ -2,14 +2,16 @@ package karolh95.classicmodels.service.raport;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.Function;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Service;
-import karolh95.classicmodels.dto.query.AddressQuery;
-import karolh95.classicmodels.dto.query.CustomerQuery;
+import karolh95.classicmodels.criteria.util.CriteriaUtil;
+import karolh95.classicmodels.dto.projection.address.StateCity;
+import karolh95.classicmodels.dto.projection.customer.Contact;
+import karolh95.classicmodels.dto.projection.customer.NameCountryState;
+import karolh95.classicmodels.dto.projection.customer.NameCreditLimit;
+import karolh95.classicmodels.dto.projection.customer.NameCreditLimitCountryState;
+import karolh95.classicmodels.dto.projection.customer.NameNumber;
+import karolh95.classicmodels.dto.projection.customer.NameSalesRepCountry;
+import karolh95.classicmodels.dto.projection.customer.WithOrderNameStatus;
 import karolh95.classicmodels.repository.CustomerRepository;
 import karolh95.classicmodels.service.NthCustomerByCreditLimit;
 import lombok.RequiredArgsConstructor;
@@ -21,113 +23,78 @@ public class CustomerRaport {
 	private final CustomerRepository repository;
 	private final NthCustomerByCreditLimit customerByCreditLimit;
 
-	public List<CustomerQuery.Contact> findAllContactsAsc() {
+	public List<Contact> findAllContactsAsc() {
 
-		return findAllContacts(Sort::ascending);
+		return repository.findAllContacts(CriteriaUtil::asc);
 	}
 
-	public List<CustomerQuery.Contact> findAllContactsDesc() {
+	public List<Contact> findAllContactsDesc() {
 
-		return findAllContacts(Sort::descending);
+		return repository.findAllContacts(CriteriaUtil::desc);
 	}
 
-	public List<AddressQuery.State> findDistinctState() {
+	public List<String> findDistinctState() {
 
-		return repository.findDistinctAddress_StateBy();
+		return repository.findDistinctStates();
 	}
 
-	public List<AddressQuery.State> findFirst5States() {
+	public List<String> findFirst5States() {
 
-		return repository.findFirst5DistinctAddress_StateByAddress_StateNotNull();
+		return repository.findFirst5DistinctStates();
 	}
 
-	public List<AddressQuery.StateCity> findDistinctStateCity() {
+	public List<StateCity> findDistinctStateCity() {
 
-		TypedSort<AddressQuery.StateCity> customerStateCity =
-				Sort.sort(AddressQuery.StateCity.class);
-
-		Sort byState = customerStateCity.by(AddressQuery.StateCity::getAddress_State).ascending();
-		Sort byCity = customerStateCity.by(AddressQuery.StateCity::getAddress_City).ascending();
-
-		Sort sort = byState.and(byCity);
-
-		return repository.findDistinctByAddress_StateNotNull(sort);
+		return repository.findDistinctStateCity();
 	}
 
-	public int countStatesByCountry(String country) {
+	public Long countStatesByCountry(String country) {
 
-		return repository.findDistinctAddress_StateByAddress_Country(country).size();
+		return repository.countStatesByCountry(country);
 	}
 
-	public List<CustomerQuery.NameCountryState> findByCountryAndState(String country,
-			String state) {
+	public List<NameCountryState> findByCountryAndState(String country, String state) {
 
-		return repository.findByAddress_CountryAndAddress_State(country, state);
+		return repository.findByCountryState(country, state);
 	}
 
-	public List<CustomerQuery.NameCreditLimitCountryState> findByCountryAndStateAndCreditLimitGreaterThan(
-			String country, String state, BigDecimal creditlimit) {
+	public List<NameCreditLimitCountryState> findByCountryAndStateAndCreditLimitGreaterThan(
+			String country, String state, BigDecimal creditLimit) {
 
-		return repository.findByAddress_CountryAndAddress_StateAndCreditLimitGreaterThan(country,
-				state, creditlimit);
+		return repository.findByCountryStateMinCreditLimit(creditLimit, country, state);
 	}
 
-	public List<CustomerQuery.NameCreditLimitCountryState> findByCountry(BigDecimal creditLimit,
+	public List<NameCreditLimitCountryState> findByCountry(BigDecimal creditLimit,
 			String... countries) {
 
-		return repository.findByCreditLimitGreaterThanAndAddress_CountryIn(creditLimit, countries);
+		return repository.findByMinCreditLimitCountries(creditLimit, countries);
 	}
 
-	public List<CustomerQuery.NameNumber> findBy(int page, int size) {
+	public List<NameNumber> findBy(int page, int size) {
 
-		TypedSort<CustomerQuery.NameNumber> sort = Sort.sort(CustomerQuery.NameNumber.class);
-
-		Sort sortByCustomerName = sort.by(CustomerQuery.NameNumber::getCustomerName).ascending();
-
-		Pageable pageRequest = PageRequest.of(page, size, sortByCustomerName);
-
-		return repository.findAllBy(pageRequest);
+		return repository.find(page, size);
 	}
 
-	public List<CustomerQuery.NameSalesRepCountry> findSalesRep() {
+	public List<NameSalesRepCountry> findSalesRep() {
 
-		TypedSort<CustomerQuery.NameSalesRepCountry> salesRep =
-				Sort.sort(CustomerQuery.NameSalesRepCountry.class);
-
-		Sort sortByName =
-				salesRep.by(CustomerQuery.NameSalesRepCountry::getCustomerName).ascending();
-
-		return repository.findBySalesRepEmployeeNumberIsNotNull(sortByName);
+		return repository.findSalesRepCountry();
 	}
 
-	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithOrders() {
+	public List<WithOrderNameStatus> getCustomersWithOrders() {
 
-		return repository.findAllByOrders_OrderNumberIsNotNull();
+		return repository.findByOrderNumberNotNull();
 	}
 
-	public List<CustomerQuery.WithOrderNameStatus> getCustomersWithoutOrders() {
+	public List<WithOrderNameStatus> getCustomersWithoutOrders() {
 
-		return repository.findAllByOrders_OrderNumberIsNull();
+		return repository.findByOrderNumberNull();
 	}
 
-	public List<CustomerQuery.NameCreditLimit> findNthLowest(int n) {
+	public List<NameCreditLimit> findNthLowest(int n) {
 		return customerByCreditLimit.findNthLowest(n);
 	}
 
-	public List<CustomerQuery.NameCreditLimit> findNthHighest(int n) {
+	public List<NameCreditLimit> findNthHighest(int n) {
 		return customerByCreditLimit.findNthHighest(n);
-	}
-
-	private List<CustomerQuery.Contact> findAllContacts(Function<Sort, Sort> order) {
-
-		TypedSort<CustomerQuery.Contact> contact = Sort.sort(CustomerQuery.Contact.class);
-
-		Sort byLastName = contact.by(CustomerQuery.Contact::getContactLastName);
-		Sort byFirstName = contact.by(CustomerQuery.Contact::getContactFirstName);
-
-		Sort sortByLastName = order.apply(byLastName);
-		Sort sortByFirstName = order.apply(byFirstName);
-
-		return repository.findAllBy(sortByLastName.and(sortByFirstName));
 	}
 }

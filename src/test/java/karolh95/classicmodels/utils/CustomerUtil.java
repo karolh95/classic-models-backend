@@ -50,7 +50,12 @@ public final class CustomerUtil {
 		customer.setCreditLimit(CREDIT_LIMIT);
 
 		customer.setAddress(AddressUtil.address());
-		customer.setEmployee(EmployeeUtil.employee());
+
+		Employee employee = EmployeeUtil.employee();
+
+		customer.setEmployee(employee);
+		customer.setSalesRepEmployeeNumber(employee.getEmployeeNumber());
+
 
 		return customer;
 	}
@@ -76,7 +81,8 @@ public final class CustomerUtil {
 
 		List<Customer> customers = new ArrayList<>();
 
-		for (Long customerNumber = CUSTOMER_NUMBER_MIN; customerNumber < CUSTOMER_NUMBER_MAX; customerNumber++) {
+		for (Long customerNumber =
+				CUSTOMER_NUMBER_MIN; customerNumber < CUSTOMER_NUMBER_MAX; customerNumber++) {
 			customers.add(customer(customerNumber));
 		}
 
@@ -90,10 +96,12 @@ public final class CustomerUtil {
 
 		assertCustomersNumbersEquals(customer.getCustomerNumber(), dtoCustomer.getCustomerNumber());
 		assertModifiableFieldsEquals(customer, dtoCustomer);
-		assertEmployeesNumbersEquals(customer.getEmployee(), dtoCustomer.getSalesRepEmployeeNumber());
+		assertEmployeesNumbersEquals(customer.getEmployee(),
+				dtoCustomer.getSalesRepEmployeeNumber());
 	}
 
-	public static void assertUpdated(Customer original, DtoCustomer dtoCustomer, Customer customer) {
+	public static void assertUpdated(Customer original, DtoCustomer dtoCustomer,
+			Customer customer) {
 
 		assertCustomersNumbersEquals(original.getCustomerNumber(), customer.getCustomerNumber());
 		assertModifiableFieldsEquals(customer, dtoCustomer);
@@ -107,7 +115,8 @@ public final class CustomerUtil {
 	private static void assertEmployeesNumbersEquals(Employee employee, Long employeeNumber) {
 
 		assertNotNull(employee, "Employee should not be null");
-		Assertions.assertEquals(employee.getEmployeeNumber(), employeeNumber, "Employee number should match");
+		Assertions.assertEquals(employee.getEmployeeNumber(), employeeNumber,
+				"Employee number should match");
 	}
 
 	private static void assertModifiableFieldsEquals(Customer customer, DtoCustomer dtoCustomer) {
@@ -119,7 +128,9 @@ public final class CustomerUtil {
 		Assertions.assertEquals(customer.getContactFirstName(), dtoCustomer.getContactFirstName(),
 				"Contact first name should match");
 
-		Assertions.assertEquals(customer.getPostalCode(), dtoCustomer.getPostalCode(), "Postal code should match");
-		Assertions.assertEquals(customer.getCreditLimit(), dtoCustomer.getCreditLimit(), "Credit limit should match");
+		Assertions.assertEquals(customer.getPostalCode(), dtoCustomer.getPostalCode(),
+				"Postal code should match");
+		Assertions.assertEquals(customer.getCreditLimit(), dtoCustomer.getCreditLimit(),
+				"Credit limit should match");
 	}
 }

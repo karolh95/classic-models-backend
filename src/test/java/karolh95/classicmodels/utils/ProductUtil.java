@@ -57,7 +57,9 @@ public final class ProductUtil {
 		product.setBuyPrice(BUY_PRICE);
 		product.setMSRP(MSRP);
 
-		product.setProductline(productline());
+		Productline productline = productline();
+		product.setProductline(productline);
+		product.setProductline_id(productline.getProductline());
 
 		return product;
 	}
@@ -117,15 +119,18 @@ public final class ProductUtil {
 
 	private static void assertModifiableFieldsEquals(Product product, DtoProduct dtoProduct) {
 
-		Assertions.assertEquals(dtoProduct.getProductName(), product.getProductName(), "Product name should match");
-		Assertions.assertEquals(dtoProduct.getProductScale(), product.getProductScale(), "Product scale should match");
+		Assertions.assertEquals(dtoProduct.getProductName(), product.getProductName(),
+				"Product name should match");
+		Assertions.assertEquals(dtoProduct.getProductScale(), product.getProductScale(),
+				"Product scale should match");
 		Assertions.assertEquals(dtoProduct.getProductVendor(), product.getProductVendor(),
 				"Product vendor should match");
 		Assertions.assertEquals(dtoProduct.getProductDescription(), product.getProductDescription(),
 				"Product description should match");
 		Assertions.assertEquals(dtoProduct.getQuantityInStock(), product.getQuantityInStock(),
 				"Quantity in stock should match");
-		Assertions.assertEquals(dtoProduct.getBuyPrice(), product.getBuyPrice(), "Buy price should match");
+		Assertions.assertEquals(dtoProduct.getBuyPrice(), product.getBuyPrice(),
+				"Buy price should match");
 		Assertions.assertEquals(dtoProduct.getMSRP(), product.getMSRP(), "MSRP should match");
 	}
 

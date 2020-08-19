@@ -49,7 +49,9 @@ public final class OrderUtil {
 		order.setStatus(STATUS);
 		order.setComments(COMMENTS);
 
-		order.setCustomer(customer());
+		Customer customer = customer();
+		order.setCustomer(customer);
+		order.setCustomerNumber(customer.getCustomerNumber());
 
 		return order;
 	}
@@ -91,16 +93,21 @@ public final class OrderUtil {
 
 	private static void assertModifiableFieldsEquals(Order order, DtoSimpleOrder dtoOrder) {
 
-		Assertions.assertEquals(order.getOrderDate(), dtoOrder.getOrderDate(), "Order date should match");
-		Assertions.assertEquals(order.getRequiredDate(), dtoOrder.getRequiredDate(), "Required date should match");
-		Assertions.assertEquals(order.getShippedDate(), dtoOrder.getShippedDate(), "Shipped date should match");
+		Assertions.assertEquals(order.getOrderDate(), dtoOrder.getOrderDate(),
+				"Order date should match");
+		Assertions.assertEquals(order.getRequiredDate(), dtoOrder.getRequiredDate(),
+				"Required date should match");
+		Assertions.assertEquals(order.getShippedDate(), dtoOrder.getShippedDate(),
+				"Shipped date should match");
 		Assertions.assertEquals(order.getStatus(), dtoOrder.getStatus(), "Status should match");
-		Assertions.assertEquals(order.getComments(), dtoOrder.getComments(), "Comments should match");
+		Assertions.assertEquals(order.getComments(), dtoOrder.getComments(),
+				"Comments should match");
 	}
 
 	private static void assertCustomersNumbersEquals(Customer customer, Long customerNumber) {
 
 		assertNotNull(customer, "Customer should not be nnull");
-		Assertions.assertEquals(customer.getCustomerNumber(), customerNumber, "Customer number should match");
+		Assertions.assertEquals(customer.getCustomerNumber(), customerNumber,
+				"Customer number should match");
 	}
 }

@@ -46,16 +46,16 @@ public class Customer {
 
 	@EqualsAndHashCode.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "salesRepEmployeeNumber")
+	@JoinColumn(name = Customer_.SALES_REP_EMPLOYEE_NUMBER)
 	private Employee employee;
 
 	@Column(insertable = false, updatable = false)
 	private Long salesRepEmployeeNumber;
 
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = Order_.CUSTOMER)
 	private List<Order> orders;
 
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = Payment_.CUSTOMER, cascade = CascadeType.ALL)
 	private List<Payment> payments;
 
 	public Order addOrder(Order order) {

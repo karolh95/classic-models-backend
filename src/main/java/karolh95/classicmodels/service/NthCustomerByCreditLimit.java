@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.TypedSort;
 import org.springframework.stereotype.Component;
-
-import karolh95.classicmodels.dto.query.CustomerQuery.NameCreditLimit;
+import karolh95.classicmodels.dto.projection.customer.NameCreditLimit;
 import karolh95.classicmodels.repository.CustomerRepository;
 import lombok.Getter;
 

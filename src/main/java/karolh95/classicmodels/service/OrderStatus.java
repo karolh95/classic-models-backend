@@ -32,6 +32,10 @@ public enum OrderStatus {
 				String.format("Cannot cast '%s' to OrderStatus enum", text));
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
 	private static class StatusComparator implements Comparator<String> {
 
 		@Override
