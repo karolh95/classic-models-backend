@@ -1,4 +1,4 @@
-package karolh95.classicmodels.controller.raport;
+package karolh95.classicmodels.controller.report;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,32 +15,32 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(Product.RAPORT)
-public class ProductRaports {
+@RequestMapping(Product.REPORT)
+public class ProductReports {
 
 	private final ProductRaport raport;
 
-	@GetMapping(Product.Raport.BY_PRICE_BETWEEN)
+	@GetMapping(Product.Report.BY_PRICE_BETWEEN)
 	public List<CodeNamePrice> findByPriceBetween(@PathVariable BigDecimal low,
 			@PathVariable BigDecimal high) {
 
 		return raport.findByPriceBetween(low, high);
 	}
 
-	@GetMapping(Product.Raport.BY_PRICE_NOT_BETWEEN)
+	@GetMapping(Product.Report.BY_PRICE_NOT_BETWEEN)
 	public List<CodeNamePrice> findByPriceNotBetween(@PathVariable BigDecimal low,
 			@PathVariable BigDecimal high) {
 
 		return raport.findByPriceNotBetween(low, high);
 	}
 
-	@GetMapping(Product.Raport.DESCRIPTION)
+	@GetMapping(Product.Report.DESCRIPTION)
 	public List<CodeNameDescription> getProductsWithDescription() {
 
 		return raport.getProductsWithDescription();
 	}
 
-	@GetMapping(Product.Raport.DETAILS_BY_PRODUCTCODE)
+	@GetMapping(Product.Report.DETAILS_BY_PRODUCTCODE)
 	public List<WithOrderNumberMsrpPrice> getProductsWithOrderNumberMsrpAndPrice(
 			@PathVariable String productCode) {
 

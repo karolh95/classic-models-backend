@@ -1,4 +1,4 @@
-package karolh95.classicmodels.controller.raport;
+package karolh95.classicmodels.controller.report;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,19 +12,19 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(Office.RAPORT)
-public class OfficeRaports {
+@RequestMapping(Office.REPORT)
+public class OfficeReports {
 
 	private final OfficeRaport raport;
 
-	@GetMapping(Office.Raport.COUNTRIES_IN)
+	@GetMapping(Office.Report.COUNTRIES_IN)
 	public List<CodeCityCountryPhone> findByCountries(@PathVariable String country1,
 			@PathVariable String country2) {
 
 		return raport.getOfficesByCountries(country1, country2);
 	}
 
-	@GetMapping(Office.Raport.COUNTRIES_NOT_IN)
+	@GetMapping(Office.Report.COUNTRIES_NOT_IN)
 	public List<CodeCityCountryPhone> findByCountriesNot(@PathVariable String country1,
 			@PathVariable String country2) {
 

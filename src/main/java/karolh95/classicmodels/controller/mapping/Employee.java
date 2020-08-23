@@ -4,9 +4,9 @@ import karolh95.classicmodels.controller.mapping.Mappings.BasicMapping;
 
 public final class Employee extends BasicMapping {
 
-	public static final String RAPORT = Mappings.EMPLOYEE + "/raport";
+	public static final String REPORT = Mappings.EMPLOYEE + "/report";
 
-	public static final class Raport {
+	public static final class Report {
 
 		public static final String SUMMARY = "summary";
 

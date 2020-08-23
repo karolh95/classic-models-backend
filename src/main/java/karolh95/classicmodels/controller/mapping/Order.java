@@ -7,9 +7,9 @@ public final class Order extends BasicMapping {
 	public static final String PAYMENT_GENERATE = "payment/generate";
 	public static final String PAYMENT_MAKE = "payment/make";
 
-	public static final String RAPORT = Mappings.ORDER + "/raport";
+	public static final String REPORT = Mappings.ORDER + "/report";
 
-	public static final class Raport {
+	public static final class Report {
 
 		public static final String SUMMARY = "summary";
 		public static final String STATUS = "status";

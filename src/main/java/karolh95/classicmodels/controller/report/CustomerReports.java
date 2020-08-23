@@ -1,4 +1,4 @@
-package karolh95.classicmodels.controller.raport;
+package karolh95.classicmodels.controller.report;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,54 +20,54 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(Customer.RAPORT)
-public class CustomerRaports {
+@RequestMapping(Customer.REPORT)
+public class CustomerReports {
 
 	private final CustomerRaport raport;
 
-	@GetMapping(Customer.Raport.CONTACTS_ASC)
+	@GetMapping(Customer.Report.CONTACTS_ASC)
 	public List<Contact> contactsAsc() {
 
 		return raport.findAllContactsAsc();
 	}
 
-	@GetMapping(Customer.Raport.CONTACTS_DESC)
+	@GetMapping(Customer.Report.CONTACTS_DESC)
 	public List<Contact> contactsDesc() {
 
 		return raport.findAllContactsDesc();
 	}
 
-	@GetMapping(Customer.Raport.STATES_ALL)
+	@GetMapping(Customer.Report.STATES_ALL)
 	public List<String> getDistinctState() {
 
 		return raport.findDistinctState();
 	}
 
-	@GetMapping(Customer.Raport.STATES_FIRST_5)
+	@GetMapping(Customer.Report.STATES_FIRST_5)
 	public List<String> getFirst5State() {
 
 		return raport.findFirst5States();
 	}
 
-	@GetMapping(Customer.Raport.STATES_CITY)
+	@GetMapping(Customer.Report.STATES_CITY)
 	public List<StateCity> getDistinctStateCity() {
 		return raport.findDistinctStateCity();
 	}
 
-	@GetMapping(Customer.Raport.STATES_BY_COUNTRY)
+	@GetMapping(Customer.Report.STATES_BY_COUNTRY)
 	public Long getStatesByCountry(@PathVariable String country) {
 
 		return raport.countStatesByCountry(country);
 	}
 
-	@GetMapping(Customer.Raport.BY_COUNTRY_STATE)
+	@GetMapping(Customer.Report.BY_COUNTRY_STATE)
 	public List<NameCountryState> findByCountryAndState(@PathVariable String country,
 			@PathVariable String state) {
 
 		return raport.findByCountryAndState(country, state);
 	}
 
-	@GetMapping(Customer.Raport.BY_COUNTRY_STATE_CREDITLIMIT)
+	@GetMapping(Customer.Report.BY_COUNTRY_STATE_CREDITLIMIT)
 	public List<NameCreditLimitCountryState> findByCountryStateAndCreditlimit(
 			@PathVariable String country, @PathVariable String state,
 			@PathVariable BigDecimal creditLimit) {
@@ -75,44 +75,44 @@ public class CustomerRaports {
 		return raport.findByCountryAndStateAndCreditLimitGreaterThan(country, state, creditLimit);
 	}
 
-	@GetMapping(Customer.Raport.BY_CREDITLIMIT_COUNTRIES)
+	@GetMapping(Customer.Report.BY_CREDITLIMIT_COUNTRIES)
 	public List<NameCreditLimitCountryState> findOr(@PathVariable BigDecimal creditLimit,
 			@PathVariable String country1, @PathVariable String country2) {
 
 		return raport.findByCountry(creditLimit, country1, country2);
 	}
 
-	@GetMapping(Customer.Raport.BY_PAGE)
+	@GetMapping(Customer.Report.BY_PAGE)
 	public List<NameNumber> findByPage(@PathVariable int page, @PathVariable int size) {
 
 		return raport.findBy(page, size);
 	}
 
-	@GetMapping(Customer.Raport.CREDITLIMIT_NTH_LOWEST)
+	@GetMapping(Customer.Report.CREDITLIMIT_NTH_LOWEST)
 	public List<NameCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
 
 		return raport.findNthLowest(n);
 	}
 
-	@GetMapping(Customer.Raport.CREDITLIMIT_NTH_HIGHEST)
+	@GetMapping(Customer.Report.CREDITLIMIT_NTH_HIGHEST)
 	public List<NameCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
 
 		return raport.findNthHighest(n);
 	}
 
-	@GetMapping(Customer.Raport.SALESREP)
+	@GetMapping(Customer.Report.SALESREP)
 	public List<NameSalesRepCountry> getSalesRep() {
 
 		return raport.findSalesRep();
 	}
 
-	@GetMapping(Customer.Raport.WITH_ORDERS)
+	@GetMapping(Customer.Report.WITH_ORDERS)
 	public List<WithOrderNameStatus> getCustomersWithOrders() {
 
 		return raport.getCustomersWithOrders();
 	}
 
-	@GetMapping(Customer.Raport.WITHOUT_ORDERS)
+	@GetMapping(Customer.Report.WITHOUT_ORDERS)
 	public List<WithOrderNameStatus> getCustomersWithoutOrders() {
 
 		return raport.getCustomersWithoutOrders();
