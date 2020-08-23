@@ -30,7 +30,7 @@ public class OrderReport {
 		return detailReport.summary();
 	}
 
-	public List<NumberStatus> getOrdersOrderByState() {
+	public List<NumberStatus> getOrdersOrderByStatus() {
 
 		// @formatter:off
 		return repository.findStatus()

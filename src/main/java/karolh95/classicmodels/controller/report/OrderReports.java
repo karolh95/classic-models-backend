@@ -39,7 +39,7 @@ public class OrderReports {
 	@GetMapping(Order.Report.STATUS)
 	public ResponseEntity<List<NumberStatus>> ordersOrderByStatus() {
 
-		List<NumberStatus> orders = report.getOrdersOrderByState();
+		List<NumberStatus> orders = report.getOrdersOrderByStatus();
 
 		return ResponseEntity.ok(orders);
 	}
@@ -75,7 +75,7 @@ public class OrderReports {
 	}
 
 	@GetMapping(Order.Report.TOTAL)
-	public List<NumberStatusTotal> getordersWithTotal() {
+	public List<NumberStatusTotal> getOrdersWithTotal() {
 
 		return report.getOrdersWithTotal();
 	}
