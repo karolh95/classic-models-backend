@@ -1,4 +1,4 @@
-package karolh95.classicmodels.service.raport;
+package karolh95.classicmodels.service.report;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
@@ -20,14 +20,14 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OrderRaport {
+public class OrderReport {
 
 	private final OrderRepository repository;
-	private final OrderDetailRaport detailRaport;
+	private final OrderDetailReport detailReport;
 
 	public List<NumberOrderLineSubtotal> getDetailsSummary() {
 
-		return detailRaport.summary();
+		return detailReport.summary();
 	}
 
 	public List<NumberStatus> getOrdersOrderByState() {
@@ -48,7 +48,7 @@ public class OrderRaport {
 
 	public List<NumberStatusShippedCustomer> findByTotalGT(BigDecimal total) {
 
-		List<Long> orderNumbers = detailRaport.findByTotalGreaterThan(total);
+		List<Long> orderNumbers = detailReport.findByTotalGreaterThan(total);
 
 		return findByOrderNumbers(orderNumbers);
 	}

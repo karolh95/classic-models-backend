@@ -15,7 +15,7 @@ import karolh95.classicmodels.dto.projection.customer.NameCreditLimitCountryStat
 import karolh95.classicmodels.dto.projection.customer.NameNumber;
 import karolh95.classicmodels.dto.projection.customer.NameSalesRepCountry;
 import karolh95.classicmodels.dto.projection.customer.WithOrderNameStatus;
-import karolh95.classicmodels.service.raport.CustomerRaport;
+import karolh95.classicmodels.service.report.CustomerReport;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -23,48 +23,48 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(Customer.REPORT)
 public class CustomerReports {
 
-	private final CustomerRaport raport;
+	private final CustomerReport report;
 
 	@GetMapping(Customer.Report.CONTACTS_ASC)
 	public List<Contact> contactsAsc() {
 
-		return raport.findAllContactsAsc();
+		return report.findAllContactsAsc();
 	}
 
 	@GetMapping(Customer.Report.CONTACTS_DESC)
 	public List<Contact> contactsDesc() {
 
-		return raport.findAllContactsDesc();
+		return report.findAllContactsDesc();
 	}
 
 	@GetMapping(Customer.Report.STATES_ALL)
 	public List<String> getDistinctState() {
 
-		return raport.findDistinctState();
+		return report.findDistinctState();
 	}
 
 	@GetMapping(Customer.Report.STATES_FIRST_5)
 	public List<String> getFirst5State() {
 
-		return raport.findFirst5States();
+		return report.findFirst5States();
 	}
 
 	@GetMapping(Customer.Report.STATES_CITY)
 	public List<StateCity> getDistinctStateCity() {
-		return raport.findDistinctStateCity();
+		return report.findDistinctStateCity();
 	}
 
 	@GetMapping(Customer.Report.STATES_BY_COUNTRY)
 	public Long getStatesByCountry(@PathVariable String country) {
 
-		return raport.countStatesByCountry(country);
+		return report.countStatesByCountry(country);
 	}
 
 	@GetMapping(Customer.Report.BY_COUNTRY_STATE)
 	public List<NameCountryState> findByCountryAndState(@PathVariable String country,
 			@PathVariable String state) {
 
-		return raport.findByCountryAndState(country, state);
+		return report.findByCountryAndState(country, state);
 	}
 
 	@GetMapping(Customer.Report.BY_COUNTRY_STATE_CREDITLIMIT)
@@ -72,49 +72,49 @@ public class CustomerReports {
 			@PathVariable String country, @PathVariable String state,
 			@PathVariable BigDecimal creditLimit) {
 
-		return raport.findByCountryAndStateAndCreditLimitGreaterThan(country, state, creditLimit);
+		return report.findByCountryAndStateAndCreditLimitGreaterThan(country, state, creditLimit);
 	}
 
 	@GetMapping(Customer.Report.BY_CREDITLIMIT_COUNTRIES)
 	public List<NameCreditLimitCountryState> findOr(@PathVariable BigDecimal creditLimit,
 			@PathVariable String country1, @PathVariable String country2) {
 
-		return raport.findByCountry(creditLimit, country1, country2);
+		return report.findByCountry(creditLimit, country1, country2);
 	}
 
 	@GetMapping(Customer.Report.BY_PAGE)
 	public List<NameNumber> findByPage(@PathVariable int page, @PathVariable int size) {
 
-		return raport.findBy(page, size);
+		return report.findBy(page, size);
 	}
 
 	@GetMapping(Customer.Report.CREDITLIMIT_NTH_LOWEST)
 	public List<NameCreditLimit> findNthLowestCreditLimit(@PathVariable int n) {
 
-		return raport.findNthLowest(n);
+		return report.findNthLowest(n);
 	}
 
 	@GetMapping(Customer.Report.CREDITLIMIT_NTH_HIGHEST)
 	public List<NameCreditLimit> findNthHighestCreditLimit(@PathVariable int n) {
 
-		return raport.findNthHighest(n);
+		return report.findNthHighest(n);
 	}
 
 	@GetMapping(Customer.Report.SALESREP)
 	public List<NameSalesRepCountry> getSalesRep() {
 
-		return raport.findSalesRep();
+		return report.findSalesRep();
 	}
 
 	@GetMapping(Customer.Report.WITH_ORDERS)
 	public List<WithOrderNameStatus> getCustomersWithOrders() {
 
-		return raport.getCustomersWithOrders();
+		return report.getCustomersWithOrders();
 	}
 
 	@GetMapping(Customer.Report.WITHOUT_ORDERS)
 	public List<WithOrderNameStatus> getCustomersWithoutOrders() {
 
-		return raport.getCustomersWithoutOrders();
+		return report.getCustomersWithoutOrders();
 	}
 }

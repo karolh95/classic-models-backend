@@ -1,4 +1,4 @@
-package karolh95.classicmodels.service.raport;
+package karolh95.classicmodels.service.report;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeRaport {
+public class EmployeeReport {
 
 	private final EmployeeRepository repository;
 

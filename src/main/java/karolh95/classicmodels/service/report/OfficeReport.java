@@ -1,4 +1,4 @@
-package karolh95.classicmodels.service.raport;
+package karolh95.classicmodels.service.report;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OfficeRaport {
+public class OfficeReport {
 
 	private final OfficeRepository repository;
 

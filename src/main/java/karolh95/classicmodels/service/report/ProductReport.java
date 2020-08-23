@@ -1,4 +1,4 @@
-package karolh95.classicmodels.service.raport;
+package karolh95.classicmodels.service.report;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ProductRaport {
+public class ProductReport {
 
 	private final ProductRepository repository;
 

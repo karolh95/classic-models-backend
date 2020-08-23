@@ -18,7 +18,7 @@ import karolh95.classicmodels.dto.projection.order.WithCustomerPrice;
 import karolh95.classicmodels.dto.projection.order.WithDetails;
 import karolh95.classicmodels.dto.projection.order.WithProductPrice;
 import karolh95.classicmodels.dto.projection.orderdetail.NumberOrderLineSubtotal;
-import karolh95.classicmodels.service.raport.OrderRaport;
+import karolh95.classicmodels.service.report.OrderReport;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -26,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(Order.REPORT)
 public class OrderReports {
 
-	private final OrderRaport raport;
+	private final OrderReport report;
 
 	@GetMapping(Order.Report.SUMMARY)
 	public ResponseEntity<List<NumberOrderLineSubtotal>> summary() {
 
-		List<NumberOrderLineSubtotal> summary = raport.getDetailsSummary();
+		List<NumberOrderLineSubtotal> summary = report.getDetailsSummary();
 
 		return ResponseEntity.ok(summary);
 	}
@@ -39,7 +39,7 @@ public class OrderReports {
 	@GetMapping(Order.Report.STATUS)
 	public ResponseEntity<List<NumberStatus>> ordersOrderByStatus() {
 
-		List<NumberStatus> orders = raport.getOrdersOrderByState();
+		List<NumberStatus> orders = report.getOrdersOrderByState();
 
 		return ResponseEntity.ok(orders);
 	}
@@ -47,7 +47,7 @@ public class OrderReports {
 	@GetMapping(Order.Report.STATUS_DISTINCT)
 	public ResponseEntity<List<NumberStatus>> ordersOrderByDistinctStatus() {
 
-		List<NumberStatus> orders = raport.getOrdersOrderByDistinctState();
+		List<NumberStatus> orders = report.getOrdersOrderByDistinctState();
 
 		return ResponseEntity.ok(orders);
 	}
@@ -55,7 +55,7 @@ public class OrderReports {
 	@GetMapping(Order.Report.TOTAL_GREATER_THAN)
 	public List<NumberStatusShippedCustomer> ordersByOrderNumbers(@PathVariable BigDecimal total) {
 
-		return raport.findByTotalGT(total);
+		return report.findByTotalGT(total);
 	}
 
 	@GetMapping(Order.Report.REQUIRED_BETWEEN)
@@ -63,7 +63,7 @@ public class OrderReports {
 			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
 			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date to) {
 
-		return raport.findByRequiredDateBetween(from, to);
+		return report.findByRequiredDateBetween(from, to);
 	}
 
 	@GetMapping(Order.Report.REQUIRED_NOTBETWEEN)
@@ -71,30 +71,30 @@ public class OrderReports {
 			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
 			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date to) {
 
-		return raport.findByRequiredDateNotBetween(from, to);
+		return report.findByRequiredDateNotBetween(from, to);
 	}
 
 	@GetMapping(Order.Report.TOTAL)
 	public List<NumberStatusTotal> getordersWithTotal() {
 
-		return raport.getOrdersWithTotal();
+		return report.getOrdersWithTotal();
 	}
 
 	@GetMapping(Order.Report.PRODUCT_PRICE)
 	public List<WithProductPrice> getOrdersWithProductAndPrice() {
 
-		return raport.getOrdersWithProductAndPrice();
+		return report.getOrdersWithProductAndPrice();
 	}
 
 	@GetMapping(Order.Report.CUSTOMER_PRICE)
 	public List<WithCustomerPrice> getOrdersWithCustomerAndPrice() {
 
-		return raport.getOrdersWithCustomerAndPrice();
+		return report.getOrdersWithCustomerAndPrice();
 	}
 
 	@GetMapping(Order.Report.BY_ORDERNUMBER)
 	public List<WithDetails> getOrdersWithProductCode(@PathVariable Long orderNumber) {
 
-		return raport.getOrdersWithOrderNumber(orderNumber);
+		return report.getOrdersWithOrderNumber(orderNumber);
 	}
 }

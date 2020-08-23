@@ -12,7 +12,7 @@ import karolh95.classicmodels.dto.projection.employee.NameJobOffice;
 import karolh95.classicmodels.dto.projection.employee.WithCustomerNameAndPayments;
 import karolh95.classicmodels.dto.projection.employee.WithCustomerNumber;
 import karolh95.classicmodels.dto.projection.employee.WithManager;
-import karolh95.classicmodels.service.raport.EmployeeRaport;
+import karolh95.classicmodels.service.report.EmployeeReport;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,12 +20,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(Employee.REPORT)
 public class EmployeeReports {
 
-	private final EmployeeRaport raport;
+	private final EmployeeReport report;
 
 	@GetMapping(Employee.Report.SUMMARY)
 	public ResponseEntity<List<NameJob>> summary() {
 
-		List<NameJob> summary = raport.getEmployeesSummaries();
+		List<NameJob> summary = report.getEmployeesSummaries();
 		return ResponseEntity.ok(summary);
 	}
 
@@ -33,42 +33,42 @@ public class EmployeeReports {
 	public List<NameJobOffice> summaryOffice(@PathVariable String jobTitle,
 			@PathVariable String officeCode) {
 
-		return raport.getEmployeeOfficeSummaries(jobTitle, officeCode);
+		return report.getEmployeeOfficeSummaries(jobTitle, officeCode);
 	}
 
 	@GetMapping(Employee.Report.OFFICECODE_BETWEEN)
 	public List<NameJobOffice> officeCodeBetween(@PathVariable String low,
 			@PathVariable String high) {
 
-		return raport.findEmployeeWhereOfficeCodeBetween(low, high);
+		return report.findEmployeeWhereOfficeCodeBetween(low, high);
 	}
 
 	@GetMapping(Employee.Report.LASTNAME)
 	public List<NameJob> lastNameContaining(@PathVariable String lastName) {
-		return raport.findEmployeeByLastNameContaining(lastName);
+		return report.findEmployeeByLastNameContaining(lastName);
 	}
 
 	@GetMapping(Employee.Report.CUSTOMER_PAYMENTS)
 	public List<WithCustomerNameAndPayments> getEmployeesWithCustomersPayments() {
 
-		return raport.getEmployeesWithCustomersPayments();
+		return report.getEmployeesWithCustomersPayments();
 	}
 
 	@GetMapping(Employee.Report.WITH_CUSTOMER)
 	public List<WithCustomerNumber> getEmployeesWithCustomersNumbers() {
 
-		return raport.getEmployeesWithCustomerNumbers();
+		return report.getEmployeesWithCustomerNumbers();
 	}
 
 	@GetMapping(Employee.Report.WITHOUT_CUSTOMER)
 	public List<WithCustomerNumber> getEmployeesWithoutCustomersNumbers() {
 
-		return raport.getEmployeesWithoutCustomerNumbers();
+		return report.getEmployeesWithoutCustomerNumbers();
 	}
 
 	@GetMapping(Employee.Report.WITH_REPORTSTO)
 	public List<WithManager> getEmployeesWithReportsTo() {
 
-		return raport.getEmployeesWithReportsTo();
+		return report.getEmployeesWithReportsTo();
 	}
 }
